@@ -1,0 +1,281 @@
+/* ==========================================================================
+   PaySplit Mobile-First Core Architecture (Pastel Minimalist & Tab Navigation)
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-family: var(--font-body);
+  background-color: var(--bg-page);
+  color: var(--text-high);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  height: 100%;
+  overflow-x: clip;
+}
+
+body {
+  min-height: 100%;
+  background: linear-gradient(180deg, #EDF2F7 0%, #F8FAFC 100%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: clip;
+}
+
+::selection {
+  background: #A7F3D0;
+  color: #065F46;
+}
+
+/* Tabular Numerals */
+.num-tabular,
+.hero-num,
+.vault-num,
+.burn-val,
+.act-amount {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* Background Atmosphere */
+.ambient-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: 
+    radial-gradient(ellipse at 50% 0%, rgba(167, 243, 208, 0.4) 0%, transparent 60%),
+    radial-gradient(ellipse at 90% 70%, rgba(191, 219, 254, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 10% 80%, rgba(254, 240, 138, 0.25) 0%, transparent 50%);
+  filter: blur(80px);
+}
+
+/* ==========================================================================
+   Mobile-First App Shell
+   ========================================================================== */
+.mobile-shell {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px 90px;
+  background: #FFFFFF;
+}
+
+@media (min-width: 600px) {
+  body {
+    padding: 24px 0 40px;
+  }
+
+  .mobile-shell {
+    min-height: calc(100vh - 48px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.04);
+    padding: 0 20px 96px;
+  }
+}
+
+/* Top App Header */
+.mobile-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 4px 12px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  margin-bottom: 16px;
+}
+
+.brand-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.brand-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-xs);
+  background: var(--highlight-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  box-shadow: var(--shadow-highlight);
+}
+
+.brand-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -0.03em;
+  color: var(--text-pure);
+}
+
+.persona-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-subtle);
+  border: 1px solid var(--glass-border);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+
+.persona-pill:hover {
+  background: #E2E8F0;
+  color: var(--text-pure);
+}
+
+.persona-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--highlight-main);
+  box-shadow: 0 0 6px var(--highlight-main);
+}
+
+.btn-header-reset {
+  background: var(--bg-subtle);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  color: var(--text-mid);
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all var(--duration-fast);
+}
+
+.btn-header-reset:hover {
+  background: #E2E8F0;
+  color: var(--text-pure);
+}
+
+/* ==========================================================================
+   Tab Navigation Architecture (Multi-view, Not Crammed!)
+   ========================================================================== */
+.tab-view {
+  display: none;
+  animation: fadeInTab 200ms ease-out;
+}
+
+.tab-view.active {
+  display: block;
+}
+
+@keyframes fadeInTab {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Floating Bottom Navigation Bar */
+.bottom-nav-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.bottom-nav-inner {
+  pointer-events: auto;
+  width: 100%;
+  max-width: 440px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-top: 1px solid var(--glass-border);
+  padding: 8px 12px 14px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.06);
+}
+
+@media (min-width: 600px) {
+  .bottom-nav-bar {
+    bottom: 24px;
+  }
+  .bottom-nav-inner {
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12);
+  }
+}
+
+.nav-tab-btn {
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all var(--duration-fast);
+}
+
+.nav-tab-btn:hover {
+  color: var(--text-pure);
+}
+
+.nav-tab-btn.active {
+  color: var(--highlight-main);
+  background: var(--pastel-safe-bg);
+}
+
+.nav-tab-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-tab-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* Custom Sleek Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 99px;
+}

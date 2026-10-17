@@ -1,0 +1,86 @@
+/* ==========================================================================
+   PaySplit Design Tokens — Modern Minimalist Pastel & Soft Neumorphic (Light)
+   Friendly, serene, pastel palette: Cloud cream, soft sage, periwinkle, apricot, lilac
+   ========================================================================== */
+
+:root {
+  /* Canvas & Neutral Hierarchy */
+  --bg-page: #F6F8FA;
+  --bg-app: #FFFFFF;
+  --bg-surface: #FFFFFF;
+  --bg-subtle: #F1F4F9;
+  --bg-muted: #E2E8F0;
+
+  /* Frosted Glassmorphism (Light) */
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-blur: 20px;
+  --glass-border: rgba(226, 232, 240, 0.8);
+  --glass-border-light: rgba(255, 255, 255, 0.9);
+
+  /* Soft Shadows & Neumorphic Depth */
+  --shadow-sm: 0 2px 6px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
+  --shadow-card: 0 10px 25px -4px rgba(15, 23, 42, 0.06), 0 4px 10px -2px rgba(15, 23, 42, 0.03);
+  --shadow-elevated: 0 20px 35px -6px rgba(15, 23, 42, 0.08), 0 8px 16px -4px rgba(15, 23, 42, 0.04);
+  --shadow-highlight: 0 10px 24px -4px rgba(16, 185, 129, 0.35);
+  --shadow-pressed: inset 0 2px 4px rgba(15, 23, 42, 0.06);
+
+  /* Highlight CTA Button (Luminous Mint Emerald) */
+  --highlight-main: #10B981;
+  --highlight-gradient: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  --highlight-text: #FFFFFF;
+  --highlight-glow: rgba(16, 185, 129, 0.3);
+
+  /* Pastel Colorways (Soft, non-aggressive, serene) */
+  /* 1. Safe-to-Spend: Sage / Mint Pastel */
+  --pastel-safe-bg: #ECFDF5;
+  --pastel-safe-border: #A7F3D0;
+  --pastel-safe-text: #065F46;
+  --pastel-safe-accent: #10B981;
+
+  /* 2. Essentials: Periwinkle / Baby Blue Pastel */
+  --pastel-essentials-bg: #EFF6FF;
+  --pastel-essentials-border: #BFDBFE;
+  --pastel-essentials-text: #1E40AF;
+  --pastel-essentials-accent: #3B82F6;
+
+  /* 3. Buffer: Soft Apricot / Amber Pastel */
+  --pastel-buffer-bg: #FFFBEB;
+  --pastel-buffer-border: #FDE68A;
+  --pastel-buffer-text: #92400E;
+  --pastel-buffer-accent: #F59E0B;
+
+  /* 4. Savings: Soft Lilac / Lavender Pastel */
+  --pastel-savings-bg: #FAF5FF;
+  --pastel-savings-border: #E9D5FF;
+  --pastel-savings-text: #6B21A8;
+  --pastel-savings-accent: #8B5CF6;
+
+  /* 5. Expense: Soft Rose Pastel */
+  --pastel-expense-bg: #FFF1F2;
+  --pastel-expense-border: #FECDD3;
+  --pastel-expense-text: #BE123C;
+
+  /* Typography Colors */
+  --text-pure: #0F172A;
+  --text-high: #1E293B;
+  --text-mid: #475569;
+  --text-muted: #64748B;
+  --text-light: #94A3B8;
+
+  /* Typography Scales */
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Prompt', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Radii */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-pill: 9999px;
+
+  /* Transitions */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 160ms;
+  --duration-normal: 260ms;
+}
