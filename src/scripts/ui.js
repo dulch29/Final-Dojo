@@ -43,11 +43,11 @@ export function renderApp(state) {
   const statusMsg = document.getElementById('safe-status-msg');
   if (statusMsg) {
     if (!state.hasReceivedIncome || state.incomeTotal === 0) {
-      statusMsg.textContent = 'แตะ "ฉันได้รับเงิน" หรือเลือกยอดเพื่อเริ่มจัดสรร';
+      statusMsg.textContent = 'แตะรับเงินเพื่อเริ่มจัดสรร';
     } else if (state.safeSpendBalance > 0) {
-      statusMsg.textContent = 'หักค่าห้อง 4k · เน็ต 500 · ส่งแม่ 2k แล้ว ปลอดภัย 100%';
+      statusMsg.textContent = 'ล็อก 3 ซองแล้ว · ปลอดภัย 100%';
     } else {
-      statusMsg.textContent = 'เงิน Safe-to-Spend หมดแล้ว! ค่าห้องและเงินส่งแม่ยังปลอดภัย';
+      statusMsg.textContent = 'ใช้ครบแล้ว · ค่าห้องยังปลอดภัย 100%';
     }
   }
 

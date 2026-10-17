@@ -59,6 +59,21 @@ body {
     radial-gradient(circle at 85% 85%, rgba(166, 180, 200, 0.2) 0%, transparent 50%);
 }
 
+[data-theme="glassmorphism"] .ambient-glow {
+  background:
+    radial-gradient(circle at 12% 16%, rgba(167, 243, 208, 0.45) 0%, transparent 45%),
+    radial-gradient(circle at 88% 18%, rgba(199, 210, 254, 0.55) 0%, transparent 45%),
+    radial-gradient(circle at 20% 75%, rgba(254, 215, 170, 0.4) 0%, transparent 45%),
+    radial-gradient(circle at 80% 82%, rgba(221, 214, 254, 0.5) 0%, transparent 45%);
+}
+
+[data-theme="glassmorphism"] .mobile-shell {
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
 /* ==========================================================================
    Mobile-First App Shell (Thumb Zone Psychology & 440px Safe Grid)
    ========================================================================== */
@@ -291,7 +306,11 @@ body {
 .notch-cutout-svg {
   width: 84px;
   height: 24px;
-  fill: var(--bg-canvas);
+  fill: var(--nav-notch-fill, var(--bg-canvas));
+}
+
+[data-theme="glassmorphism"] .notch-cutout-svg {
+  opacity: 0;
 }
 
 /* Tab Item */
@@ -328,6 +347,10 @@ body {
   background: var(--highlight-gradient);
   color: #FFFFFF;
   box-shadow: 0 10px 22px rgba(16, 185, 129, 0.42), 0 0 0 6px #FFFFFF;
+}
+
+[data-theme="glassmorphism"] .nav-item-btn.active .nav-bubble {
+  box-shadow: 0 10px 22px rgba(16, 185, 129, 0.42), 0 0 0 5px rgba(255, 255, 255, 0.85);
 }
 
 .nav-item-label {

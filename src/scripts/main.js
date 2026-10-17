@@ -290,6 +290,11 @@ document.addEventListener('DOMContentLoaded', () => {
     btnProfileOpenPersona.addEventListener('click', openPersona);
   }
 
+  const btnSettingsOpenProfile = document.getElementById('btn-settings-open-profile');
+  if (btnSettingsOpenProfile) {
+    btnSettingsOpenProfile.addEventListener('click', openPersona);
+  }
+
   const btnEditRules = document.getElementById('btn-edit-rules');
   if (btnEditRules) {
     btnEditRules.addEventListener('click', () => {

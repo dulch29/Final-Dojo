@@ -65,7 +65,7 @@
         <div class="hero-eyebrow-row">
           <div class="hero-status-live" id="safe-status-banner">
             <span class="hero-pulse-dot"></span>
-            <span id="safe-status-msg">หักค่าห้อง 4k · เน็ต 500 · ส่งแม่ 2k แล้ว ปลอดภัย 100%</span>
+            <span id="safe-status-msg">ล็อก 3 ซองแล้ว · ปลอดภัย 100%</span>
           </div>
 
           <button class="hero-info-btn" id="btn-info-safe" aria-label="ดูสูตรการคำนวณ Safe-to-Spend">
@@ -328,39 +328,73 @@
          TAB 3: โปรไฟล์ & สูตร (Profile & Formula)
          ====================================================================== -->
     <!-- ======================================================================
-         TAB 3: โปรไฟล์ & การตั้งค่า (Realistic User Profile & UI Style Gallery)
+         TAB 3: การตั้งค่าระบบ (Settings & Smart Split Rules)
          ====================================================================== -->
-    <section class="tab-view" id="tab-profile">
+    <section class="tab-view" id="tab-settings">
       <div class="section-heading-row" style="margin-top: 4px;">
         <div>
-          <h2 class="section-h2">โปรไฟล์ผู้ใช้ & การตั้งค่า</h2>
-          <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 2px;">จัดการบัญชี, สูตรจัดสรรเงิน และสไตล์ UI</p>
+          <h2 class="section-h2">ตั้งค่าระบบ (Settings)</h2>
+          <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 2px;">ปรับแต่งสไตล์ UI, สูตรแยกเงิน และความปลอดภัย</p>
         </div>
       </div>
 
-      <!-- 1. Realistic User Profile Hero Card -->
-      <div class="profile-hero-card">
-        <div class="profile-avatar-wrap">
-          <div class="profile-avatar">MR</div>
-          <div class="avatar-status-dot" title="สถานะ: พร้อมรับงาน"></div>
-          <button class="avatar-edit-btn" id="btn-edit-avatar" title="เปลี่ยนรูปโปรไฟล์">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-          </button>
+      <!-- User Profile Link Capsule (Tap to view full profile & persona) -->
+      <div class="settings-profile-capsule" id="btn-settings-open-profile" title="เปิดดูโปรไฟล์และบริบทคุณมินท์">
+        <div class="capsule-avatar-mini">MR</div>
+        <div class="capsule-info">
+          <div class="capsule-name">มินท์ รัตนสุวรรณ (26) · หาดใหญ่</div>
+          <div class="capsule-meta">Freelance Brand & UI Designer · ยืนยัน NDID แล้ว</div>
         </div>
-        <div class="profile-hero-info">
-          <div class="profile-name-row">
-            <h3 class="profile-user-name">มินท์ รัตนสุวรรณ</h3>
-            <span class="badge-kyc-verified" title="ยืนยันตัวตนระดับ NDID เรียบร้อยแล้ว">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>ยืนยันแล้ว</span>
-            </span>
+        <div class="capsule-action">โปรไฟล์ →</div>
+      </div>
+
+      <!-- 1. UI Style Gallery (Testing Multiple UI Styles) -->
+      <div class="profile-block">
+        <div class="block-header-row">
+          <div class="block-title-group">
+            <span class="block-icon">🎨</span>
+            <span class="block-title">สไตล์การแสดงผล (UI Style System)</span>
           </div>
-          <div class="profile-user-role">Freelance Brand & UI Designer · หาดใหญ่</div>
-          <div class="profile-contact-meta">
-            <span>mint.design@email.com</span>
-            <span class="meta-separator">•</span>
-            <span>พร้อมเพย์ 081-923-8921</span>
-          </div>
+          <span class="status-tag-active" id="profile-theme-label">Neo-Tactile Hybrid</span>
+        </div>
+        <p class="block-desc">สลับทดสอบดีไซน์เพื่อประเมินความรู้สึกและการใช้งานจริง (A/B Test UI)</p>
+        
+        <div class="theme-picker-grid">
+          <!-- Style 1: Neo-Tactile Hybrid -->
+          <button class="theme-card active" data-theme-choice="neumorphic" type="button">
+            <div class="theme-card-preview preview-neu">
+              <div class="neu-sample-circle"></div>
+            </div>
+            <div class="theme-card-info">
+              <div class="theme-card-title">Neo-Tactile Hybrid <span style="font-size: 0.68rem; color: #065F46; background: #D1FAE5; padding: 2px 8px; border-radius: var(--radius-pill); font-weight: 700; margin-left: 4px;">แนะนำ</span></div>
+              <div class="theme-card-sub">ผสานจุดเด่น 3 สไตล์: ปุ่มกดสัมผัสนูน + สเปซคลีนโปร่งตา ไม่รกกล่อง + ฟรอสต์ลอยตัว</div>
+            </div>
+            <span class="theme-radio-dot"></span>
+          </button>
+
+          <!-- Style 2: Minimal -->
+          <button class="theme-card" data-theme-choice="minimal" type="button">
+            <div class="theme-card-preview preview-min">
+              <div class="min-sample-box"></div>
+            </div>
+            <div class="theme-card-info">
+              <div class="theme-card-title">Modern Minimal</div>
+              <div class="theme-card-sub">โมเดิร์นคลีน ไฮคอนทราสต์ สบายตา อ่านง่ายรวดเร็ว</div>
+            </div>
+            <span class="theme-radio-dot"></span>
+          </button>
+
+          <!-- Style 3: Glassmorphism -->
+          <button class="theme-card" data-theme-choice="glassmorphism" type="button">
+            <div class="theme-card-preview preview-glass">
+              <div class="glass-sample-box"></div>
+            </div>
+            <div class="theme-card-info">
+              <div class="theme-card-title">Glassmorphism</div>
+              <div class="theme-card-sub">กระจกใส Frosted Glass โปร่งแสง ล้ำสมัย</div>
+            </div>
+            <span class="theme-radio-dot"></span>
+          </button>
         </div>
       </div>
 
@@ -427,57 +461,7 @@
         </button>
       </div>
 
-      <!-- 3. UI Style Gallery (Testing Multiple UI Styles) -->
-      <div class="profile-block">
-        <div class="block-header-row">
-          <div class="block-title-group">
-            <span class="block-icon">🎨</span>
-            <span class="block-title">สไตล์การแสดงผล (UI Style System)</span>
-          </div>
-          <span class="status-tag-active" id="profile-theme-label">Neo-Tactile Hybrid</span>
-        </div>
-        <p class="block-desc">สลับทดสอบดีไซน์เพื่อประเมินความรู้สึกและการใช้งานจริง (A/B Test UI)</p>
-        
-        <div class="theme-picker-grid">
-          <!-- Style 1: Neo-Tactile Hybrid -->
-          <button class="theme-card active" data-theme-choice="neumorphic" type="button">
-            <div class="theme-card-preview preview-neu">
-              <div class="neu-sample-circle"></div>
-            </div>
-            <div class="theme-card-info">
-              <div class="theme-card-title">Neo-Tactile Hybrid <span style="font-size: 0.68rem; color: #065F46; background: #D1FAE5; padding: 2px 8px; border-radius: var(--radius-pill); font-weight: 700; margin-left: 4px;">แนะนำ</span></div>
-              <div class="theme-card-sub">ผสานจุดเด่น 3 สไตล์: ปุ่มกดสัมผัสนูน + สเปซคลีนโปร่งตา ไม่รกกล่อง + ฟรอสต์ลอยตัว</div>
-            </div>
-            <span class="theme-radio-dot"></span>
-          </button>
-
-          <!-- Style 2: Minimal -->
-          <button class="theme-card" data-theme-choice="minimal" type="button">
-            <div class="theme-card-preview preview-min">
-              <div class="min-sample-box"></div>
-            </div>
-            <div class="theme-card-info">
-              <div class="theme-card-title">Modern Minimal</div>
-              <div class="theme-card-sub">โมเดิร์นคลีน ไฮคอนทราสต์ สบายตา อ่านง่ายรวดเร็ว</div>
-            </div>
-            <span class="theme-radio-dot"></span>
-          </button>
-
-          <!-- Style 3: Glassmorphism -->
-          <button class="theme-card" data-theme-choice="glassmorphism" type="button">
-            <div class="theme-card-preview preview-glass">
-              <div class="glass-sample-box"></div>
-            </div>
-            <div class="theme-card-info">
-              <div class="theme-card-title">Glassmorphism</div>
-              <div class="theme-card-sub">กระจกใส Frosted Glass โปร่งแสง ล้ำสมัย</div>
-            </div>
-            <span class="theme-radio-dot"></span>
-          </button>
-        </div>
-      </div>
-
-      <!-- 4. Linked Accounts & Inbound -->
+      <!-- 3. Linked Accounts & Inbound -->
       <div class="profile-block">
         <div class="block-header-row">
           <div class="block-title-group">
@@ -508,7 +492,7 @@
         </div>
       </div>
 
-      <!-- 5. Security & App Preferences -->
+      <!-- 4. Security & App Preferences -->
       <div class="profile-block">
         <div class="block-header-row">
           <div class="block-title-group">
@@ -553,29 +537,19 @@
         </div>
       </div>
 
-      <!-- 6. Demo Persona Context Card (For Judges / Game Jam Story) -->
-      <div class="profile-block persona-card-highlight">
-        <div class="persona-highlight-top">
-          <span class="gamejam-badge">Game Jam 2026 Context</span>
-          <div class="persona-title-strong">เบื้องหลังโจทย์: คุณมินท์ (Persona)</div>
-          <div class="persona-brief-txt">
-            กรณีศึกษาฟรีแลนซ์ 26 ปี รายได้ผันผวน 8,000–25,000 ฿ ไม่กล้ากินของอร่อยเพราะกังวลค่าห้องสิ้นเดือน
-          </div>
-        </div>
-        <button class="btn-open-persona-full" id="btn-profile-open-persona" type="button">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-          <span>เปิดอ่านข้อมูล Persona & ปัญหาเชิงลึก</span>
+      <!-- 5. System Reset & About -->
+      <div class="profile-block" style="text-align: center; gap: 10px;">
+        <button class="btn-profile-reset" id="btn-strategy-reset" type="button" style="width: 100%;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+          <span>รีเซ็ตข้อมูลการทดสอบทั้งหมด</span>
         </button>
+        <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 2px;">
+          PaySplit Prototype v1.1.0 · Game Jam 2026 Edition
+        </div>
       </div>
-
-      <!-- 7. Demo Reset Button -->
-      <button class="btn-profile-reset" id="btn-strategy-reset" type="button">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-          <path d="M3 3v5h5"/>
-        </svg>
-        <span>รีเซ็ตข้อมูลการจำลองทั้งหมด (Reset Demo)</span>
-      </button>
 
     </section>
 
@@ -617,15 +591,15 @@
         <span class="nav-item-label">Vaults</span>
       </button>
 
-      <!-- Tab 3: Profile -->
-      <button class="nav-item-btn" data-tab="tab-profile" data-index="2" aria-label="โปรไฟล์">
+      <!-- Tab 3: Settings -->
+      <button class="nav-item-btn" data-tab="tab-settings" data-index="2" aria-label="ตั้งค่า">
         <div class="nav-bubble">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
-            <circle cx="12" cy="7" r="4"/>
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
           </svg>
         </div>
-        <span class="nav-item-label">Profile</span>
+        <span class="nav-item-label">Settings</span>
       </button>
 
     </div>
@@ -691,33 +665,59 @@
       <div class="drawer-drag-pill"></div>
       
       <div class="drawer-title-row">
-        <h3 class="drawer-h3">ข้อมูล Persona & บริบท PaySplit</h3>
+        <h3 class="drawer-h3">โปรไฟล์ผู้ใช้ & ข้อมูล Persona</h3>
         <button class="drawer-close" id="btn-close-persona-drawer" aria-label="ปิด">✕</button>
       </div>
 
-      <div style="font-size: 0.86rem; color: var(--text-mid); line-height: 1.6; display: flex; flex-direction: column; gap: 12px;">
-        <p>
-          <strong style="color: var(--text-pure);">คุณมินท์ (26 ปี)</strong> ฟรีแลนซ์กราฟิกดีไซเนอร์ หาดใหญ่<br>
-          รายได้ไม่แน่นอน (8k–25k บาท/เดือน) เมื่อเงินเข้า เธอเห็นเพียงยอดรวมในแอปธนาคาร และกังวลจนไม่กล้าใช้จ่าย
-        </p>
-
-        <div style="background: var(--pastel-essentials-bg); border-radius: var(--radius-sm); padding: 14px 16px; box-shadow: inset 2px 2px 5px rgba(166, 180, 200, 0.25);">
-          <strong style="color: var(--pastel-essentials-text);">ค่าใช้จ่ายคงที่ที่ต้องหักทันที (฿6,500):</strong>
-          <ul style="margin-left: 20px; margin-top: 6px; color: var(--text-high);">
-            <li>ค่าเช่าห้อง: 4,000 บาท</li>
-            <li>ค่าเน็ตไฟเบอร์: 500 บาท</li>
-            <li>ส่งเงินให้แม่: 2,000 บาท</li>
-          </ul>
+      <!-- Full Profile Hero Inside Modal -->
+      <div class="profile-hero-card" style="margin-bottom: 2px;">
+        <div class="profile-avatar-wrap">
+          <div class="profile-avatar">MR</div>
+          <div class="avatar-status-dot" title="สถานะ: พร้อมรับงาน"></div>
+          <button class="avatar-edit-btn" id="btn-edit-avatar" title="เปลี่ยนรูปโปรไฟล์">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </button>
         </div>
-
-        <p>
-          <strong style="color: #059669;">หัวใจของ PaySplit:</strong><br>
-          <em>"PaySplit ไม่ได้แค่บอกว่าเงินหายไปไหน — แต่มันบอกว่าเงินควรไปอยู่ที่ไหนตั้งแต่วินาทีที่เงินเข้าบัญชี"</em>
-        </p>
+        <div class="profile-hero-info">
+          <div class="profile-name-row">
+            <h3 class="profile-user-name">มินท์ รัตนสุวรรณ</h3>
+            <span class="badge-kyc-verified" title="ยืนยันตัวตนระดับ NDID เรียบร้อยแล้ว">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>ยืนยัน NDID แล้ว</span>
+            </span>
+          </div>
+          <div class="profile-user-role">Freelance Brand & UI Designer · หาดใหญ่</div>
+          <div class="profile-contact-meta">
+            <span>mint.design@email.com</span>
+            <span class="meta-separator">•</span>
+            <span>พร้อมเพย์ 081-923-8921</span>
+          </div>
+        </div>
       </div>
 
-      <button class="btn-frosted-expense" id="btn-close-persona-confirm" style="width: 100%; margin-top: 6px;">
-        <span>เข้าใจแล้ว ทดสอบต่อ</span>
+      <div style="font-size: 0.85rem; color: var(--text-mid); line-height: 1.6; display: flex; flex-direction: column; gap: 10px;">
+        <div style="background: var(--bg-sunken); border-radius: var(--radius-md); padding: 12px 14px; border: var(--neu-border-subtle);">
+          <strong style="color: var(--text-pure); display: block; margin-bottom: 4px;">🎯 เบื้องหลังโจทย์: คุณมินท์ (26 ปี)</strong>
+          <span>ฟรีแลนซ์ออกแบบแบรนด์ รายได้ผันผวน 8,000–25,000 ฿/เดือน เมื่อเงินเข้า บัญชีธนาคารแสดงเพียงยอดรวมก้อนเดียว ทำให้เกิดความกลัวและวิตกกังวล ไม่กล้าใช้จ่ายเพราะกลัวไม่มีเงินจ่ายค่าห้องสิ้นเดือน</span>
+        </div>
+
+        <div style="background: var(--pastel-essentials-bg); border-radius: var(--radius-md); padding: 12px 14px; border: 1px solid var(--pastel-essentials-border);">
+          <strong style="color: var(--pastel-essentials-text); display: block; margin-bottom: 4px;">🔒 ภาระจำเป็นคงที่ที่ต้องล็อกทันที (฿6,500/เดือน):</strong>
+          <div style="display: flex; flex-direction: column; gap: 4px; font-size: 0.8rem; color: var(--text-high);">
+            <div style="display: flex; justify-content: space-between;"><span>• ค่าเช่าห้องพัก (โอนทุกวันที่ 1)</span><strong>4,000 ฿</strong></div>
+            <div style="display: flex; justify-content: space-between;"><span>• อินเทอร์เน็ตไฟเบอร์ทำงาน</span><strong>500 ฿</strong></div>
+            <div style="display: flex; justify-content: space-between;"><span>• โอนให้แม่ที่บ้าน</span><strong>2,000 ฿</strong></div>
+          </div>
+        </div>
+
+        <div style="background: rgba(16, 185, 129, 0.08); border-radius: var(--radius-md); padding: 12px 14px; border: 1px solid rgba(167, 243, 208, 0.7);">
+          <strong style="color: #065F46; display: block; margin-bottom: 3px;">💡 หัวใจของ PaySplit:</strong>
+          <span style="font-style: italic; color: #065F46; font-size: 0.82rem;">"PaySplit ไม่ได้แค่บอกว่าเงินหายไปไหน — แต่มันบอกว่าเงินควรไปอยู่ที่ไหนตั้งแต่วินาทีที่เงินเข้าบัญชี"</span>
+        </div>
+      </div>
+
+      <button class="btn-highlight-receive" id="btn-close-persona-confirm" style="width: 100%; height: 50px; margin-top: 6px; font-size: 0.96rem;">
+        <span>เข้าใจภาพรวมแล้ว กลับสู่แอป</span>
       </button>
     </div>
   </div>
