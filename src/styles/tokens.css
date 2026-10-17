@@ -1,86 +1,147 @@
 /* ==========================================================================
-   PaySplit Design Tokens — Modern Minimalist Pastel & Soft Neumorphic (Light)
-   Friendly, serene, pastel palette: Cloud cream, soft sage, periwinkle, apricot, lilac
+   PaySplit Design Tokens — Multi-Theme UI System
+   Styles: Neumorphism (Soft UI), Modern Minimal, Glassmorphism
+   Master Font: IBM Plex Sans Thai
    ========================================================================== */
 
-:root {
-  /* Canvas & Neutral Hierarchy */
-  --bg-page: #F6F8FA;
+:root,
+[data-theme="hybrid"],
+[data-theme="neumorphic"] {
+  /* 1. Canvas & Architectural Palette — Neo-Tactile Hybrid */
+  --bg-canvas: #F8FAFC;
+  --bg-app: #FFFFFF;
+  --bg-surface: rgba(255, 255, 255, 0.88);
+  --bg-card: #FFFFFF;
+  --bg-subtle: #F1F5F9;
+  --bg-sunken: #F1F5F9;
+  --glass-blur: 16px;
+
+  /* 2. Tactile Dual Shadows & Elevation */
+  --neu-flat: 0 4px 14px rgba(15, 23, 42, 0.05);
+  --neu-convex: #FFFFFF;
+  --neu-concave: #F8FAFC;
+  --neu-card: 0 12px 30px -4px rgba(15, 23, 42, 0.05), 0 4px 12px -2px rgba(15, 23, 42, 0.02);
+  --neu-card-sm: 0 4px 14px -2px rgba(15, 23, 42, 0.05);
+  --neu-chip: 0 2px 8px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.03);
+  
+  /* Tactile Press States (Physical Feel) */
+  --neu-pressed: inset 2px 2px 5px rgba(15, 23, 42, 0.12), inset -2px -2px 5px rgba(255, 255, 255, 0.85);
+  --neu-pressed-deep: inset 3px 3px 6px rgba(15, 23, 42, 0.15), inset -3px -3px 6px rgba(255, 255, 255, 0.9);
+  
+  --neu-border-subtle: 1px solid rgba(226, 232, 240, 0.8);
+  --hero-card-bg: linear-gradient(180deg, #F0FDF4 0%, #FFFFFF 100%);
+  --nav-bg: rgba(255, 255, 255, 0.92);
+  --nav-notch-fill: var(--bg-canvas);
+}
+
+/* Style Option 2: Ultra Minimal (Completely Flat, Clean, Crisp) */
+[data-theme="minimal"] {
+  --bg-canvas: #FAFAFA;
   --bg-app: #FFFFFF;
   --bg-surface: #FFFFFF;
-  --bg-subtle: #F1F4F9;
-  --bg-muted: #E2E8F0;
+  --bg-card: #FFFFFF;
+  --bg-subtle: #F4F4F5;
+  --bg-sunken: #F4F4F5;
+  --glass-blur: 0px;
 
-  /* Frosted Glassmorphism (Light) */
-  --glass-bg: rgba(255, 255, 255, 0.85);
-  --glass-blur: 20px;
-  --glass-border: rgba(226, 232, 240, 0.8);
-  --glass-border-light: rgba(255, 255, 255, 0.9);
+  --neu-flat: none;
+  --neu-convex: #FFFFFF;
+  --neu-concave: #FAFAFA;
+  --neu-card: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --neu-card-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --neu-chip: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --neu-pressed: inset 0 2px 4px rgba(0, 0, 0, 0.08);
+  --neu-pressed-deep: inset 0 2px 6px rgba(0, 0, 0, 0.1);
+  --neu-border-subtle: 1px solid #E4E4E7;
+  --hero-card-bg: #FFFFFF;
+  --nav-bg: #FFFFFF;
+  --nav-notch-fill: var(--bg-canvas);
+}
 
-  /* Soft Shadows & Neumorphic Depth */
-  --shadow-sm: 0 2px 6px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
-  --shadow-card: 0 10px 25px -4px rgba(15, 23, 42, 0.06), 0 4px 10px -2px rgba(15, 23, 42, 0.03);
-  --shadow-elevated: 0 20px 35px -6px rgba(15, 23, 42, 0.08), 0 8px 16px -4px rgba(15, 23, 42, 0.04);
-  --shadow-highlight: 0 10px 24px -4px rgba(16, 185, 129, 0.35);
-  --shadow-pressed: inset 0 2px 4px rgba(15, 23, 42, 0.06);
+/* Theme 3: Glassmorphism (Translucent Frosted Crystal & Sheen) */
+[data-theme="glassmorphism"] {
+  --bg-canvas: #E2E8F0;
+  --bg-app: rgba(255, 255, 255, 0.7);
+  --bg-surface: rgba(255, 255, 255, 0.65);
+  --bg-card: rgba(255, 255, 255, 0.75);
+  --bg-subtle: rgba(255, 255, 255, 0.5);
+  --bg-sunken: rgba(241, 245, 249, 0.65);
+  --glass-blur: 18px;
 
-  /* Highlight CTA Button (Luminous Mint Emerald) */
+  --neu-flat: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
+  --neu-convex: rgba(255, 255, 255, 0.8);
+  --neu-concave: rgba(255, 255, 255, 0.5);
+  --neu-card: 0 8px 30px 0 rgba(31, 38, 135, 0.09);
+  --neu-card-sm: 0 4px 16px 0 rgba(31, 38, 135, 0.07);
+  --neu-chip: 0 2px 8px rgba(31, 38, 135, 0.05);
+  --neu-pressed: inset 0 2px 4px rgba(31, 38, 135, 0.08);
+  --neu-pressed-deep: inset 0 3px 6px rgba(31, 38, 135, 0.1);
+  --neu-border-subtle: 1px solid rgba(255, 255, 255, 0.75);
+  --hero-card-bg: rgba(236, 253, 245, 0.85);
+  --nav-bg: rgba(255, 255, 255, 0.9);
+  --nav-notch-fill: var(--bg-canvas);
+}
+
+:root {
+  /* 3. Highlight CTA (Vibrant Mint Emerald Neumorphic Button) */
   --highlight-main: #10B981;
+  --highlight-dark: #059669;
   --highlight-gradient: linear-gradient(135deg, #10B981 0%, #059669 100%);
-  --highlight-text: #FFFFFF;
-  --highlight-glow: rgba(16, 185, 129, 0.3);
+  --highlight-neu-shadow: 6px 8px 18px rgba(16, 185, 129, 0.38), -4px -4px 12px rgba(255, 255, 255, 0.9);
+  --highlight-pressed: inset 3px 3px 6px rgba(4, 120, 87, 0.5), inset -3px -3px 6px rgba(52, 211, 153, 0.3);
 
-  /* Pastel Colorways (Soft, non-aggressive, serene) */
-  /* 1. Safe-to-Spend: Sage / Mint Pastel */
-  --pastel-safe-bg: #ECFDF5;
-  --pastel-safe-border: #A7F3D0;
+  /* 4. Pastel Colors for Distinct Categories */
+  /* Safe-to-Spend: Mint Sage Pastel */
+  --pastel-safe-bg: #E8F8F0;
   --pastel-safe-text: #065F46;
   --pastel-safe-accent: #10B981;
+  --pastel-safe-border: rgba(167, 243, 208, 0.7);
 
-  /* 2. Essentials: Periwinkle / Baby Blue Pastel */
-  --pastel-essentials-bg: #EFF6FF;
-  --pastel-essentials-border: #BFDBFE;
+  /* Essentials: Periwinkle Baby Blue */
+  --pastel-essentials-bg: #EBF3FC;
   --pastel-essentials-text: #1E40AF;
   --pastel-essentials-accent: #3B82F6;
+  --pastel-essentials-border: rgba(191, 219, 254, 0.75);
 
-  /* 3. Buffer: Soft Apricot / Amber Pastel */
-  --pastel-buffer-bg: #FFFBEB;
-  --pastel-buffer-border: #FDE68A;
+  /* Buffer: Warm Peach Apricot */
+  --pastel-buffer-bg: #FEF7EA;
   --pastel-buffer-text: #92400E;
   --pastel-buffer-accent: #F59E0B;
+  --pastel-buffer-border: rgba(253, 230, 138, 0.75);
 
-  /* 4. Savings: Soft Lilac / Lavender Pastel */
-  --pastel-savings-bg: #FAF5FF;
-  --pastel-savings-border: #E9D5FF;
+  /* Savings: Soft Lilac Lavender */
+  --pastel-savings-bg: #F6EFFE;
   --pastel-savings-text: #6B21A8;
   --pastel-savings-accent: #8B5CF6;
+  --pastel-savings-border: rgba(233, 213, 255, 0.75);
 
-  /* 5. Expense: Soft Rose Pastel */
-  --pastel-expense-bg: #FFF1F2;
-  --pastel-expense-border: #FECDD3;
+  /* Expense: Soft Coral Rose */
+  --pastel-expense-bg: #FEECEE;
   --pastel-expense-text: #BE123C;
+  --pastel-expense-accent: #F43F5E;
 
-  /* Typography Colors */
-  --text-pure: #0F172A;
-  --text-high: #1E293B;
-  --text-mid: #475569;
-  --text-muted: #64748B;
-  --text-light: #94A3B8;
+  /* 5. Typography — Unified Master Font: IBM Plex Sans Thai */
+  --font-master: 'IBM Plex Sans Thai', 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: var(--font-master);
+  --font-body: var(--font-master);
 
-  /* Typography Scales */
-  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
-  --font-body: 'Prompt', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Text Contrast & Legibility */
+  --text-pure: #131E2C;
+  --text-high: #243346;
+  --text-mid: #52637A;
+  --text-muted: #7E90A6;
+  --text-light: #A5B6C8;
 
-  /* Radii */
+  /* 6. Radii & Geometry */
   --radius-xs: 8px;
-  --radius-sm: 12px;
+  --radius-sm: 14px;
   --radius-md: 18px;
   --radius-lg: 24px;
   --radius-xl: 32px;
   --radius-pill: 9999px;
 
-  /* Transitions */
-  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
-  --duration-fast: 160ms;
-  --duration-normal: 260ms;
+  /* 7. Timing & Easing */
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
 }

@@ -1,5 +1,6 @@
 /* ==========================================================================
-   PaySplit Mobile-First Core Architecture (Pastel Minimalist & Tab Navigation)
+   PaySplit Core Architecture — Neumorphic Soft UI & Thumb-Zone Ergonomics
+   Master Font: IBM Plex Sans Thai
    ========================================================================== */
 
 *, *::before, *::after {
@@ -10,8 +11,8 @@
 }
 
 html {
-  font-family: var(--font-body);
-  background-color: var(--bg-page);
+  font-family: var(--font-master);
+  background-color: var(--bg-canvas);
   color: var(--text-high);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -22,11 +23,12 @@ html {
 
 body {
   min-height: 100%;
-  background: linear-gradient(180deg, #EDF2F7 0%, #F8FAFC 100%);
+  background: var(--bg-canvas);
   display: flex;
   justify-content: center;
   align-items: flex-start;
   overflow-x: clip;
+  font-family: var(--font-master);
 }
 
 ::selection {
@@ -34,32 +36,31 @@ body {
   color: #065F46;
 }
 
-/* Tabular Numerals */
+/* Tabular Numerals for stable animations */
 .num-tabular,
 .hero-num,
 .vault-num,
 .burn-val,
-.act-amount {
-  font-family: var(--font-display);
+.preset-val,
+.tx-amount {
+  font-family: var(--font-master);
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
 }
 
-/* Background Atmosphere */
+/* Subtle Neumorphic Background Atmosphere */
 .ambient-glow {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
   background: 
-    radial-gradient(ellipse at 50% 0%, rgba(167, 243, 208, 0.4) 0%, transparent 60%),
-    radial-gradient(ellipse at 90% 70%, rgba(191, 219, 254, 0.3) 0%, transparent 50%),
-    radial-gradient(ellipse at 10% 80%, rgba(254, 240, 138, 0.25) 0%, transparent 50%);
-  filter: blur(80px);
+    radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.8) 0%, transparent 40%),
+    radial-gradient(circle at 85% 85%, rgba(166, 180, 200, 0.2) 0%, transparent 50%);
 }
 
 /* ==========================================================================
-   Mobile-First App Shell
+   Mobile-First App Shell (Thumb Zone Psychology & 440px Safe Grid)
    ========================================================================== */
 .mobile-shell {
   position: relative;
@@ -70,25 +71,24 @@ body {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  padding: 0 16px 90px;
-  background: #FFFFFF;
+  padding: 0 18px 130px;
+  background: var(--bg-canvas);
 }
 
 @media (min-width: 600px) {
   body {
-    padding: 24px 0 40px;
+    padding: 24px 0 36px;
   }
 
   .mobile-shell {
     min-height: calc(100vh - 48px);
-    border: 1px solid var(--glass-border);
     border-radius: var(--radius-xl);
-    box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(15, 23, 42, 0.04);
-    padding: 0 20px 96px;
+    box-shadow: 16px 16px 36px rgba(166, 180, 200, 0.45), -16px -16px 36px rgba(255, 255, 255, 0.95);
+    padding: 0 22px 130px;
   }
 }
 
-/* Top App Header */
+/* Top App Header (Viewing Zone) */
 .mobile-header {
   position: sticky;
   top: 0;
@@ -96,95 +96,129 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 4px 12px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  padding: 16px 4px 14px;
+  background: var(--bg-surface);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-bottom: var(--neu-border-subtle);
   margin-bottom: 16px;
+  transition: all var(--duration-normal) ease;
 }
 
 .brand-badge {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   text-decoration: none;
 }
 
 .brand-icon {
-  width: 30px;
-  height: 30px;
-  border-radius: var(--radius-xs);
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
   background: var(--highlight-gradient);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #FFFFFF;
-  box-shadow: var(--shadow-highlight);
+  box-shadow: 3px 3px 8px rgba(16, 185, 129, 0.35), -2px -2px 6px rgba(255, 255, 255, 0.9);
 }
 
 .brand-title {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.15rem;
+  font-weight: 700;
+  font-size: 1.2rem;
   letter-spacing: -0.03em;
   color: var(--text-pure);
+}
+
+.header-right-cluster {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.theme-quick-btn {
+  background: var(--bg-surface);
+  border: var(--neu-border-subtle);
+  border-radius: var(--radius-pill);
+  box-shadow: 3px 3px 8px rgba(166, 180, 200, 0.35), -3px -3px 8px rgba(255, 255, 255, 0.95);
+  color: var(--text-pure);
+  padding: 6px 11px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all var(--duration-fast);
+}
+
+.theme-quick-btn:hover {
+  transform: translateY(-1px);
+}
+
+.theme-quick-btn:active {
+  box-shadow: var(--neu-pressed);
 }
 
 .persona-pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 12px;
+  padding: 6px 14px;
   border-radius: var(--radius-pill);
-  background: var(--bg-subtle);
-  border: 1px solid var(--glass-border);
-  font-size: 0.75rem;
-  font-weight: 500;
+  background: var(--bg-surface);
+  box-shadow: 3px 3px 8px rgba(166, 180, 200, 0.35), -3px -3px 8px rgba(255, 255, 255, 0.95);
+  border: var(--neu-border-subtle);
+  font-size: 0.78rem;
+  font-weight: 600;
   color: var(--text-mid);
   cursor: pointer;
   transition: all var(--duration-fast);
 }
 
 .persona-pill:hover {
-  background: #E2E8F0;
   color: var(--text-pure);
 }
 
+.persona-pill:active {
+  box-shadow: var(--neu-pressed);
+}
+
 .persona-dot {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background-color: var(--highlight-main);
   box-shadow: 0 0 6px var(--highlight-main);
 }
 
 .btn-header-reset {
-  background: var(--bg-subtle);
-  border: 1px solid var(--glass-border);
+  background: var(--bg-surface);
+  border: var(--neu-border-subtle);
   border-radius: var(--radius-pill);
+  box-shadow: 3px 3px 8px rgba(166, 180, 200, 0.35), -3px -3px 8px rgba(255, 255, 255, 0.95);
   color: var(--text-mid);
   padding: 6px 12px;
-  font-size: 0.75rem;
+  font-size: 0.76rem;
   font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
   transition: all var(--duration-fast);
 }
 
-.btn-header-reset:hover {
-  background: #E2E8F0;
-  color: var(--text-pure);
+.btn-header-reset:active {
+  box-shadow: var(--neu-pressed);
 }
 
 /* ==========================================================================
-   Tab Navigation Architecture (Multi-view, Not Crammed!)
+   Tab View System (3 Tabs: Home, Vaults, Profile)
    ========================================================================== */
 .tab-view {
   display: none;
-  animation: fadeInTab 200ms ease-out;
+  animation: fadeInTab 220ms var(--ease-spring);
 }
 
 .tab-view.active {
@@ -192,83 +226,122 @@ body {
 }
 
 @keyframes fadeInTab {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Floating Bottom Navigation Bar */
+/* ==========================================================================
+   CURVED LIQUID BOTTOM NAVIGATION BAR (Matching User's Reference Image)
+   3 Tabs: Home (0), Vaults (1), Profile (2) with Pop-up Floating Circle Bubble
+   ========================================================================== */
 .bottom-nav-bar {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 40;
+  z-index: 45;
   display: flex;
   justify-content: center;
   pointer-events: none;
+  padding: 0 16px 14px;
 }
 
-.bottom-nav-inner {
+.curved-nav-wrapper {
   pointer-events: auto;
+  position: relative;
   width: 100%;
-  max-width: 440px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-top: 1px solid var(--glass-border);
-  padding: 8px 12px 14px;
+  max-width: 410px;
+  height: 68px;
+  background: var(--nav-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-radius: 28px;
+  box-shadow: var(--neu-card);
+  border: var(--neu-border-subtle);
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
-  box-shadow: 0 -4px 20px rgba(15, 23, 42, 0.06);
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  transition: all var(--duration-normal) ease;
 }
 
-@media (min-width: 600px) {
-  .bottom-nav-bar {
-    bottom: 24px;
-  }
-  .bottom-nav-inner {
-    border-radius: var(--radius-xl);
-    border: 1px solid var(--glass-border);
-    box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12);
-  }
+/* The Sliding Dip Notch on top of the bar */
+.nav-curved-notch {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 33.333%;
+  height: 26px;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  transition: transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 1;
 }
 
-.nav-tab-btn {
+.nav-curved-notch[data-active="0"] {
+  transform: translateX(0%);
+}
+.nav-curved-notch[data-active="1"] {
+  transform: translateX(100%);
+}
+.nav-curved-notch[data-active="2"] {
+  transform: translateX(200%);
+}
+
+.notch-cutout-svg {
+  width: 84px;
+  height: 24px;
+  fill: var(--bg-canvas);
+}
+
+/* Tab Item */
+.nav-item-btn {
   background: transparent;
   border: none;
-  border-radius: var(--radius-sm);
-  padding: 8px 4px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
   cursor: pointer;
-  color: var(--text-muted);
+  position: relative;
+  z-index: 2;
   transition: all var(--duration-fast);
 }
 
-.nav-tab-btn:hover {
-  color: var(--text-pure);
-}
-
-.nav-tab-btn.active {
-  color: var(--highlight-main);
-  background: var(--pastel-safe-bg);
-}
-
-.nav-tab-icon {
-  width: 20px;
-  height: 20px;
+/* Floating Circle Bubble Icon */
+.nav-bubble {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--text-muted);
+  transition: all 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
 }
 
-.nav-tab-label {
-  font-size: 0.68rem;
+.nav-item-btn.active .nav-bubble {
+  transform: translateY(-24px);
+  background: var(--highlight-gradient);
+  color: #FFFFFF;
+  box-shadow: 0 10px 22px rgba(16, 185, 129, 0.42), 0 0 0 6px #FFFFFF;
+}
+
+.nav-item-label {
+  font-size: 0.74rem;
   font-weight: 600;
-  letter-spacing: 0.01em;
+  color: var(--text-muted);
+  transition: all 240ms ease;
+  margin-top: 2px;
+}
+
+.nav-item-btn.active .nav-item-label {
+  color: var(--highlight-dark);
+  font-weight: 700;
+  transform: translateY(-6px);
 }
 
 /* Custom Sleek Scrollbar */

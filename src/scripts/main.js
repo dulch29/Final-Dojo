@@ -1,6 +1,6 @@
 /**
  * PaySplit Mobile-First Application Controller
- * Modern Minimalist Pastel + Tab Navigation Architecture + Luminous Highlight CTA
+ * Neumorphic Soft UI + Master Font + 3-Tab Curved Liquid Navigation
  */
 
 import { subscribe, receiveIncome, logExpense, resetDemo } from './state.js';
@@ -15,12 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
   receiveIncome(12000, 'งานรีแบรนด์ SME (มาตรฐานมินท์)');
 
   // --------------------------------------------------------------------------
-  // 2. Tab Navigation System (Home, Vaults, Activity, Strategy)
+  // 2. Exact 3-Tab Liquid Curved Navigation (Home: 0, Vaults: 1, Profile: 2)
   // --------------------------------------------------------------------------
-  const tabButtons = document.querySelectorAll('.nav-tab-btn');
+  const tabButtons = document.querySelectorAll('.nav-item-btn');
   const tabViews = document.querySelectorAll('.tab-view');
+  const curvedNotch = document.getElementById('nav-curved-notch');
 
-  const switchTab = (tabId) => {
+  const switchTab = (tabId, index) => {
     tabButtons.forEach(btn => {
       btn.classList.toggle('active', btn.dataset.tab === tabId);
     });
@@ -29,7 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
       view.classList.toggle('active', view.id === tabId);
     });
 
-    // Scroll mobile shell smoothly to top when switching
+    if (curvedNotch) {
+      curvedNotch.setAttribute('data-active', String(index));
+    }
+
+    // Scroll smoothly to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
     triggerHaptic('light');
   };
@@ -37,20 +42,21 @@ document.addEventListener('DOMContentLoaded', () => {
   tabButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       const targetTab = btn.dataset.tab;
-      if (targetTab) switchTab(targetTab);
+      const index = parseInt(btn.dataset.index, 10);
+      if (targetTab) switchTab(targetTab, index);
     });
   });
 
-  // Quick link from Home mini vault card to Vaults tab
+  // Quick link from Home mini vault card to Vaults tab (index 1)
   const quickLinkVaults = document.getElementById('quick-link-vaults');
   if (quickLinkVaults) {
     quickLinkVaults.addEventListener('click', () => {
-      switchTab('tab-vaults');
+      switchTab('tab-vaults', 1);
     });
   }
 
   // --------------------------------------------------------------------------
-  // 3. On-Screen Preset Scenario Chips (Instant Income Simulation)
+  // 3. Quick Scenario Presets (Hick's Law: 3 Meaningful Income Presets)
   // --------------------------------------------------------------------------
   const presetChips = document.querySelectorAll('.preset-chip');
   presetChips.forEach(chip => {
@@ -160,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // 6. Tactile Quick Expense Chips (Instant Click)
+  // 6. Tactile Quick Expense Chips (Micro-Haptic Push Buttons)
   // --------------------------------------------------------------------------
   const quickChips = document.querySelectorAll('.neu-expense-btn:not(#btn-custom-exp-chip)');
   quickChips.forEach(chip => {
@@ -176,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --------------------------------------------------------------------------
-  // 7. Reset Demo Actions (Header + Strategy Tab)
+  // 7. Reset Demo Actions (Header + Profile Tab)
   // --------------------------------------------------------------------------
   const handleReset = () => {
     resetDemo();
@@ -215,6 +221,112 @@ document.addEventListener('DOMContentLoaded', () => {
   if (personaBackdrop) {
     personaBackdrop.addEventListener('click', (e) => {
       if (e.target === personaBackdrop) closePersona();
+    });
+  }
+
+  // --------------------------------------------------------------------------
+  // 9. Multi-UI Style Theme System (Neumorphic / Modern Minimal / Glassmorphism)
+  // --------------------------------------------------------------------------
+  const themeOrder = ['neumorphic', 'minimal', 'glassmorphism'];
+  const themeLabels = {
+    neumorphic: 'Neo-Tactile Hybrid',
+    minimal: 'Modern Minimal',
+    glassmorphism: 'Glassmorphism'
+  };
+
+  const headerThemeBtn = document.getElementById('btn-header-theme');
+  const headerThemeTag = document.getElementById('header-theme-tag');
+  const profileThemeLabel = document.getElementById('profile-theme-label');
+  const themeCards = document.querySelectorAll('.theme-card');
+
+  let currentTheme = localStorage.getItem('paysplit_theme') || 'neumorphic';
+
+  const applyTheme = (themeName, notifyUser = false) => {
+    currentTheme = themeName;
+    document.documentElement.setAttribute('data-theme', themeName);
+    localStorage.setItem('paysplit_theme', themeName);
+
+    if (headerThemeTag) {
+      headerThemeTag.textContent = themeName === 'glassmorphism' ? 'Glass' : (themeName === 'minimal' ? 'Minimal' : 'Hybrid');
+    }
+    if (profileThemeLabel) {
+      profileThemeLabel.textContent = themeLabels[themeName] || themeName;
+    }
+
+    themeCards.forEach(card => {
+      card.classList.toggle('active', card.dataset.themeChoice === themeName);
+    });
+
+    if (notifyUser) {
+      triggerHaptic('light');
+      showToast(`สลับสไตล์ UI: ${themeLabels[themeName] || themeName}`);
+    }
+  };
+
+  // Initialize theme on load
+  applyTheme(currentTheme, false);
+
+  if (headerThemeBtn) {
+    headerThemeBtn.addEventListener('click', () => {
+      const nextIndex = (themeOrder.indexOf(currentTheme) + 1) % themeOrder.length;
+      applyTheme(themeOrder[nextIndex], true);
+    });
+  }
+
+  themeCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const chosen = card.dataset.themeChoice;
+      if (chosen && chosen !== currentTheme) {
+        applyTheme(chosen, true);
+      }
+    });
+  });
+
+  // --------------------------------------------------------------------------
+  // 10. Profile Settings & Realistic User Account Handlers
+  // --------------------------------------------------------------------------
+  const btnProfileOpenPersona = document.getElementById('btn-profile-open-persona');
+  if (btnProfileOpenPersona) {
+    btnProfileOpenPersona.addEventListener('click', openPersona);
+  }
+
+  const btnEditRules = document.getElementById('btn-edit-rules');
+  if (btnEditRules) {
+    btnEditRules.addEventListener('click', () => {
+      triggerHaptic('light');
+      showToast('ระบบปรับสูตรแบบกำหนดเอง (Custom Rules) พร้อมใช้ใน v1.2');
+    });
+  }
+
+  const btnEditAvatar = document.getElementById('btn-edit-avatar');
+  if (btnEditAvatar) {
+    btnEditAvatar.addEventListener('click', () => {
+      triggerHaptic('light');
+      showToast('อัปเดตรูปโปรไฟล์สำเร็จ');
+    });
+  }
+
+  const toggleBiometrics = document.getElementById('toggle-biometrics');
+  if (toggleBiometrics) {
+    toggleBiometrics.addEventListener('change', () => {
+      triggerHaptic('light');
+      showToast(toggleBiometrics.checked ? 'เปิดใช้งาน Face ID ยืนยันรายการ' : 'ปิดการยืนยันด้วย Face ID');
+    });
+  }
+
+  const toggleDailyAlert = document.getElementById('toggle-daily-alert');
+  if (toggleDailyAlert) {
+    toggleDailyAlert.addEventListener('change', () => {
+      triggerHaptic('light');
+      showToast(toggleDailyAlert.checked ? 'เปิดแจ้งเตือนสรุปงบ Safe-to-Spend รายวัน' : 'ปิดการแจ้งเตือนรายวัน');
+    });
+  }
+
+  const toggleHaptic = document.getElementById('toggle-haptic');
+  if (toggleHaptic) {
+    toggleHaptic.addEventListener('change', () => {
+      triggerHaptic('light');
+      showToast(toggleHaptic.checked ? 'เปิดระบบสั่นจำลองปุ่มกดจริง' : 'ปิดระบบสั่น');
     });
   }
 });

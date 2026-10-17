@@ -4,45 +4,46 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>PaySplit — บริหารเงินทันทีที่เข้าบัญชี</title>
-  <meta name="description" content="PaySplit: บอกว่าเงินควรไปอยู่ที่ไหนตั้งแต่วินาทีที่เงินเข้ากระเป๋า สำหรับฟรีแลนซ์และคนรายได้ไม่แน่นอน">
+  <meta name="description" content="PaySplit: บอกว่าเงินควรไปอยู่ที่ไหนตั้งแต่วินาทีที่เงินเข้าบัญชี สำหรับคนรายได้ไม่แน่นอน">
 
-  <!-- Typography: Plus Jakarta Sans & Prompt -->
+  <!-- Master Font: IBM Plex Sans Thai (Universal Thai & Latin Fintech Masterfont) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <script type="module" crossorigin src="/assets/index-6d7I7bl9.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-BECidz8G.css">
+  <script type="module" crossorigin src="/assets/index-DF8Te_vD.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DkrnHFWi.css">
 </head>
 <body>
-  <!-- Ambient Background Glow -->
   <div class="ambient-glow" aria-hidden="true"></div>
 
-  <!-- Main Mobile App Shell -->
-  <div class="app-shell" id="app-root">
-    
-    <!-- Top App Navigation -->
-    <header class="app-header">
-      <div class="brand-group">
-        <div class="brand-logo">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <rect width="24" height="24" rx="6" fill="#10B981" fill-opacity="0.15"/>
-            <path d="M12 4V20M4 12H20M17 7L7 17" stroke="#10B981" stroke-width="2.2" stroke-linecap="round"/>
+  <!-- Mobile-First App Shell (Thumb Zone & Human Behavioral Psychology) -->
+  <main class="mobile-shell">
+
+    <!-- Top App Navigation (Viewing Zone) -->
+    <header class="mobile-header">
+      <div class="brand-badge">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
           </svg>
-          <span class="brand-name">PaySplit</span>
         </div>
-        <div class="persona-chip" id="persona-pill" title="คลิกดูข้อมูล Persona">
-          <span class="persona-indicator"></span>
-          <span class="persona-text">มินท์ (26) • หาดใหญ่</span>
-        </div>
+        <span class="brand-title">PaySplit</span>
       </div>
 
-      <div class="header-actions">
-        <button id="btn-quick-split-12k" class="header-action-btn highlight" title="คลิกเพื่อจำลองเงินเข้า 12,000฿ ทันที">
-          <span>⚡ 12k</span>
+      <div class="header-right-cluster">
+        <button class="theme-quick-btn" id="btn-header-theme" title="สลับสไตล์ UI (Hybrid / Minimal / Glass)">
+          <span class="theme-quick-icon">🎨</span>
+          <span class="theme-quick-text" id="header-theme-tag">Hybrid</span>
         </button>
-        <button id="btn-reset-demo" class="header-action-btn" title="รีเซ็ตเดโมทั้งหมด">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+        <button class="persona-pill" id="btn-open-persona" title="ดูข้อมูล Persona คุณมินท์">
+          <span class="persona-dot"></span>
+          <span>มินท์ (26)</span>
+        </button>
+
+        <button class="btn-header-reset" id="btn-reset-demo" title="รีเซ็ตเดโม">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
             <path d="M3 3v5h5"/>
           </svg>
@@ -51,340 +52,678 @@
       </div>
     </header>
 
-    <!-- Scrollable Screen Content -->
-    <main class="content-scroll">
+    <!-- ======================================================================
+         TAB 1: หน้าหลัก (Home) — Unboxed Neo-Tactile Hybrid Layout
+         ====================================================================== -->
+    <section class="tab-view active" id="tab-home">
+      
+      <!-- 1. The Safe-to-Spend Hero Stage (Open Canvas, Ambient Aura, Display Number) -->
+      <article class="hero-stage" id="hero-card">
+        <div class="hero-aura-glow" aria-hidden="true"></div>
 
-      <!-- Hero Section: Safe-to-Spend (The Heart of the Product) -->
-      <section class="safe-hero-card" id="hero-card">
-        <div class="hero-top-row">
-          <span class="hero-eyebrow">เงินที่ใช้ได้อย่างปลอดภัย (Safe-to-Spend)</span>
-          <button class="hero-info-btn" id="btn-info-safe" aria-label="Safe-to-Spend คืออะไร?">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <div class="hero-eyebrow-row">
+          <div class="hero-status-live" id="safe-status-banner">
+            <span class="hero-pulse-dot"></span>
+            <span id="safe-status-msg">หักค่าห้อง 4k · เน็ต 500 · ส่งแม่ 2k แล้ว ปลอดภัย 100%</span>
+          </div>
+
+          <button class="hero-info-btn" id="btn-info-safe" aria-label="ดูสูตรการคำนวณ Safe-to-Spend">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>
             </svg>
+            <span>สูตรแยกเงิน</span>
           </button>
         </div>
 
-        <div class="hero-amount-display">
-          <span class="hero-curr">฿</span>
-          <span class="hero-num" id="safe-spend-amount">0</span>
-        </div>
-
-        <div class="hero-reassurance" id="safe-status-banner">
-          <span class="reassurance-icon">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-              <polyline points="20 6 9 17 4 12"/>
-            </svg>
-          </span>
-          <span class="reassurance-text" id="safe-status-msg">รอกดรับเงินเพื่อคำนวณเงินใช้จ่ายปลอดภัย</span>
-        </div>
-
-        <!-- Burn Rate Mini-Guide -->
-        <div class="hero-burn-rate">
-          <div class="burn-col">
-            <span class="burn-sub">เฉลี่ยวันละ</span>
-            <span class="burn-main" id="val-per-day">฿0</span>
+        <div class="hero-amount-center">
+          <div class="hero-amount-box">
+            <span class="hero-symbol">฿</span>
+            <span class="hero-num" id="safe-spend-amount">3,000</span>
           </div>
-          <div class="burn-sep"></div>
-          <div class="burn-col">
-            <span class="burn-sub">เฉลี่ยสัปดาห์ละ</span>
-            <span class="burn-main" id="val-per-week">฿0</span>
-          </div>
-          <div class="burn-sep"></div>
-          <div class="burn-col">
-            <span class="burn-sub">Runway</span>
-            <span class="burn-main" id="val-runway">30 วัน</span>
+          <div class="hero-label-sub">
+            <span class="hero-label-main">Safe-to-Spend · เงินที่ใช้ได้จริง</span>
+            <span class="hero-label-desc">ผ่านการหักล็อก 3 ซองอัตโนมัติแล้ว ไม่มีภาระซ่อนเร้น</span>
           </div>
         </div>
-      </section>
 
-      <!-- Primary Action Buttons -->
-      <section class="action-grid">
-        <button id="btn-open-income" class="action-btn primary">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+        <!-- Clean Editorial Burn Pacing Metrics (Swiss Minimal Layout, No heavy box) -->
+        <div class="hero-pacing-grid">
+          <div class="pacing-col">
+            <span class="pacing-lbl">เฉลี่ยต่อวัน</span>
+            <span class="pacing-val highlight" id="val-per-day">฿100</span>
+          </div>
+          <div class="pacing-divider"></div>
+          <div class="pacing-col">
+            <span class="pacing-lbl">เฉลี่ยสัปดาห์</span>
+            <span class="pacing-val" id="val-per-week">฿750</span>
+          </div>
+          <div class="pacing-divider"></div>
+          <div class="pacing-col">
+            <span class="pacing-lbl">Runway เงินกิน</span>
+            <span class="pacing-val" id="val-runway">30 วัน</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2. THE HIGHLIGHT ACTION BAR (Prime Natural Thumb Reach) -->
+      <section class="action-cluster">
+        <button class="btn-highlight-receive" id="btn-open-income" title="แตะเพื่อรับเงินและจัดสรรทันที">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
             <path d="M12 5v14M5 12l7 7 7-7"/>
           </svg>
           <span>ฉันได้รับเงิน</span>
         </button>
-        <button id="btn-open-expense" class="action-btn secondary">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+
+        <button class="btn-frosted-expense" id="btn-open-expense" title="บันทึกค่าใช้จ่าย">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
             <path d="M5 12h14"/>
           </svg>
-          <span>หักค่าใช้จ่าย</span>
+          <span>หักรายจ่าย</span>
         </button>
       </section>
 
-      <!-- Visual Allocation Progress Bar -->
-      <section class="allocation-track-card">
-        <div class="track-header">
-          <span class="track-title">การจัดสรรเงินก้อนนี้</span>
-          <span class="track-total" id="display-income-total">เงินเข้าทั้งหมด ฿0</span>
-        </div>
-        <div class="track-bar">
-          <div class="track-fill fill-essentials" id="bar-essentials" style="width: 0%"></div>
-          <div class="track-fill fill-buffer" id="bar-buffer" style="width: 0%"></div>
-          <div class="track-fill fill-savings" id="bar-savings" style="width: 0%"></div>
-          <div class="track-fill fill-safe" id="bar-safe" style="width: 0%"></div>
-        </div>
-      </section>
-
-      <!-- 4 Dedicated Envelopes (Clean Modern Cards) -->
-      <section class="envelopes-wrapper">
-        <div class="section-label-row">
-          <h2 class="section-title">กระเป๋าเงินที่จัดสรรแล้ว (4 Envelopes)</h2>
-          <span class="section-badge">อัปเดตเรียลไทม์</span>
+      <!-- 3. Quick Scenario Presets (Unboxed Tactical Flow) -->
+      <section class="stream-section">
+        <div class="section-title-row">
+          <span class="stream-label">จำลองยอดเงินเข้าบัญชี:</span>
+          <span class="stream-tag" id="display-income-total">ยอดรับเข้า ฿12,000</span>
         </div>
 
-        <div class="envelope-list">
-          <!-- 1. Essentials -->
-          <article class="envelope-tile tile-essentials">
-            <div class="tile-icon-box">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-              </svg>
-            </div>
-            <div class="tile-info">
-              <div class="tile-title-row">
-                <span class="tile-name">ค่าใช้จ่ายจำเป็น (Essentials)</span>
-                <span class="tile-tag">เป้าหมาย 6,500฿</span>
-              </div>
-              <p class="tile-desc">ค่าห้อง 4,000 • เน็ต 500 • ส่งที่บ้าน 2,000</p>
-            </div>
-            <div class="tile-amount">
-              ฿<span id="amount-essentials">0</span>
-            </div>
-          </article>
-
-          <!-- 2. Buffer -->
-          <article class="envelope-tile tile-buffer">
-            <div class="tile-icon-box">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              </svg>
-            </div>
-            <div class="tile-info">
-              <div class="tile-title-row">
-                <span class="tile-name">เงินสำรองรายได้ (Income Buffer)</span>
-                <span class="tile-tag">กันไว้ 12.5%</span>
-              </div>
-              <p class="tile-desc">กักตุนสำหรับสัปดาห์ที่ไม่มีงานหรือเงินเข้าช้า</p>
-            </div>
-            <div class="tile-amount">
-              ฿<span id="amount-buffer">0</span>
-            </div>
-          </article>
-
-          <!-- 3. Savings -->
-          <article class="envelope-tile tile-savings">
-            <div class="tile-icon-box">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/>
-                <polygon points="12 6 12 12 16 14"/>
-              </svg>
-            </div>
-            <div class="tile-info">
-              <div class="tile-title-row">
-                <span class="tile-name">เงินออมเป้าหมาย (Savings)</span>
-                <span class="tile-tag">เป้าหมายสะสม</span>
-              </div>
-              <p class="tile-desc">กองทุนคอมใหม่ & เงินสำรองฉุกเฉิน 3 เดือน</p>
-            </div>
-            <div class="tile-amount">
-              ฿<span id="amount-savings">0</span>
-            </div>
-          </article>
-
-          <!-- 4. Safe-to-Spend Envelope -->
-          <article class="envelope-tile tile-safe highlight-card">
-            <div class="tile-icon-box">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
-              </svg>
-            </div>
-            <div class="tile-info">
-              <div class="tile-title-row">
-                <span class="tile-name">เงินที่ใช้ได้สบายใจ (Safe-to-Spend)</span>
-                <span class="tile-tag ready">พร้อมใช้</span>
-              </div>
-              <p class="tile-desc">กิน ช้อป สังสรรค์ ไม่ต้องกังวลเรื่องค่าใช้จ่าย</p>
-            </div>
-            <div class="tile-amount text-mint">
-              ฿<span id="amount-safe-env">0</span>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <!-- Quick Expense Logger -->
-      <section class="quick-log-wrapper">
-        <div class="section-label-row">
-          <h2 class="section-title">บันทึกรายจ่ายเร็ว (Quick Expense)</h2>
-          <span class="section-sub">หักจาก Safe-to-Spend ทันที</span>
-        </div>
-
-        <div class="expense-chip-row">
-          <button class="log-chip" data-name="กาแฟสด" data-amount="65" data-category="safe">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>
-            <span class="chip-text">กาแฟสด</span>
-            <span class="chip-val">-65฿</span>
+        <div class="preset-row">
+          <button class="preset-chip" data-amount="8500" data-note="จ็อบด่วน: ออกแบบโปสเตอร์">
+            <span class="preset-val">฿8,500</span>
+            <span class="preset-sub">โปสเตอร์ด่วน</span>
           </button>
-          <button class="log-chip" data-name="มื้ออาหาร" data-amount="80" data-category="safe">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 2v20M2 15h10a4 4 0 0 0 4-4V2"/></svg>
-            <span class="chip-text">ก๋วยเตี๋ยว</span>
-            <span class="chip-val">-80฿</span>
+          <button class="preset-chip active" data-amount="12000" data-note="งานรีแบรนด์ SME (มาตรฐานมินท์)">
+            <span class="preset-val">฿12,000</span>
+            <span class="preset-sub">รีแบรนด์ SME</span>
           </button>
-          <button class="log-chip" data-name="ของใช้ห้อง" data-amount="250" data-category="safe">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-            <span class="chip-text">ของใช้</span>
-            <span class="chip-val">-250฿</span>
-          </button>
-          <button class="log-chip custom-chip" id="btn-custom-expense">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-            <span class="chip-text">ระบุเอง</span>
+          <button class="preset-chip" data-amount="25000" data-note="ปิดโปรเจกต์ 2 แคมเปญ">
+            <span class="preset-val">฿25,000</span>
+            <span class="preset-sub">แคมเปญใหญ่</span>
           </button>
         </div>
 
-        <!-- Recent Activity Feed -->
-        <div class="activity-box">
-          <div class="activity-header">
-            <span class="activity-title">ประวัติการใช้จ่ายรอบนี้</span>
-            <span class="activity-count" id="tx-count">0 รายการ</span>
+        <!-- Allocation Progress Bar -->
+        <div class="stream-track-wrap">
+          <div class="stream-track">
+            <div class="track-seg seg-essentials" id="bar-essentials" style="width: 54.1%" title="จำเป็น 6,500฿"></div>
+            <div class="track-seg seg-buffer" id="bar-buffer" style="width: 12.5%" title="เงินสำรอง"></div>
+            <div class="track-seg seg-savings" id="bar-savings" style="width: 8.3%" title="เงินออมเป้าหมาย"></div>
+            <div class="track-seg seg-safe" id="bar-safe" style="width: 25.1%" title="Safe-to-Spend"></div>
           </div>
-          <ul class="activity-list" id="tx-list">
-            <li class="empty-activity-row" id="empty-tx-msg">
-              <span>ยังไม่มีรายการใช้จ่าย กดจำลองเพื่อทดสอบการหักเงิน</span>
-            </li>
-          </ul>
+
+          <div class="track-legend-row">
+            <span class="legend-dot-item"><span class="legend-dot" style="background: #3B82F6;"></span>จำเป็น</span>
+            <span class="legend-dot-item"><span class="legend-dot" style="background: #F59E0B;"></span>สำรอง</span>
+            <span class="legend-dot-item"><span class="legend-dot" style="background: #8B5CF6;"></span>ออม</span>
+            <span class="legend-dot-item"><span class="legend-dot" style="background: #10B981;"></span>ใช้ได้จริง</span>
+          </div>
         </div>
       </section>
 
-    </main>
-  </div>
+      <!-- 4. Tactile Quick Expense Chips (Micro-Haptic Push Buttons) -->
+      <section class="quick-expense-section">
+        <div class="section-title-row">
+          <h2 class="stream-label">แตะทดลองใช้จ่ายจริง:</h2>
+          <span class="sub-caption-muted">หักจาก Safe-to-Spend</span>
+        </div>
 
-  <!-- Bottom Sheet Drawer: Receive Money & Split Engine -->
-  <div class="sheet-scrim" id="income-sheet-backdrop">
-    <div class="sheet-modal" id="income-bottom-sheet" role="dialog" aria-modal="true">
-      <div class="sheet-handle"></div>
-      
-      <div class="sheet-top">
+        <div class="expense-chips-row">
+          <button class="neu-expense-btn" data-name="กาแฟสดคาเฟ่" data-amount="65" data-category="safe">
+            <span class="neu-btn-title">กาแฟสด</span>
+            <span class="neu-btn-cost">-65 ฿</span>
+          </button>
+          <button class="neu-expense-btn" data-name="ข้าวกะเพราหมูกรอบ" data-amount="75" data-category="safe">
+            <span class="neu-btn-title">กะเพรา</span>
+            <span class="neu-btn-cost">-75 ฿</span>
+          </button>
+          <button class="neu-expense-btn" data-name="ของใช้ห้องพัก" data-amount="250" data-category="safe">
+            <span class="neu-btn-title">ของใช้</span>
+            <span class="neu-btn-cost">-250 ฿</span>
+          </button>
+          <button class="neu-expense-btn btn-custom-add" id="btn-custom-exp-chip" title="ระบุยอดเงินเอง">
+            <span class="plus-icon">+</span>
+            <span class="neu-btn-title">ระบุเอง</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- 5. Mini Vaults Link Capsule (Frosted Single Surface) -->
+      <div class="mini-vault-link-card" id="quick-link-vaults">
+        <div class="mini-vault-left">
+          <div class="mini-vault-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+          <div>
+            <div class="mini-vault-title">ล็อกไว้ 3 ซองเงิน (฿9,000)</div>
+            <div class="mini-vault-desc">ค่าห้อง 4k · เน็ต 500 · ส่งแม่ 2k · สำรอง 1.5k · ออม 1k</div>
+          </div>
+        </div>
+        <div class="mini-vault-arrow">ดูซองเงิน →</div>
+      </div>
+
+    </section>
+
+    <!-- ======================================================================
+         TAB 2: กระปุกเงิน & ประวัติ (Vaults & Activity) — 3 Protected Envelopes + Ledger
+         ====================================================================== -->
+    <section class="tab-view" id="tab-vaults">
+      <div class="section-heading-row" style="margin-top: 4px;">
         <div>
-          <span class="sheet-subtitle">PROACTIVE ALLOCATION</span>
-          <h2 class="sheet-heading">ฉันได้รับเงิน (Receive Income)</h2>
+          <h2 class="section-h2">3 กระเป๋าที่ได้รับการปกป้อง</h2>
+          <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 2px;">ล็อกไว้ทันทีที่เงินเข้า ไม่ปนกับเงินกินใช้เด็ดขาด</p>
         </div>
-        <button class="sheet-close" id="btn-close-income-sheet" aria-label="ปิด">✕</button>
+        <span style="font-size: 0.74rem; color: #059669; font-weight: 700; background: var(--pastel-safe-bg); padding: 5px 10px; border-radius: var(--radius-pill); box-shadow: 2px 2px 5px rgba(166, 180, 200, 0.2);">● ล็อก 100%</span>
       </div>
 
-      <!-- Quick Preset Chips for Pitching -->
-      <div class="preset-section">
-        <span class="preset-label">ตัวเลือกจำลองเร็วสำหรับกรรมการ:</span>
-        <div class="preset-grid">
-          <button class="preset-card active" data-amount="12000" data-note="จ็อบออกแบบ Branding (มาตรฐานมินท์)">
-            <span class="preset-num">12,000 ฿</span>
-            <span class="preset-sub">งานออกแบบ Branding</span>
+      <div class="vault-stack">
+        <!-- Vault 1: Essentials -->
+        <article class="vault-card vault-essentials">
+          <div class="vault-top">
+            <div class="vault-identity">
+              <div class="vault-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="vault-name">ค่าใช้จ่ายจำเป็น (Locked)</h3>
+                <p class="vault-subtext">กักไว้จ่ายค่าห้อง เน็ต และให้แม่</p>
+              </div>
+            </div>
+            <div class="vault-num">฿<span id="amount-essentials">6,500</span></div>
+          </div>
+
+          <div class="sub-checklist">
+            <div class="sub-item">
+              <span>ค่าเช่าห้องพัก (โอนทุกวันที่ 1)</span>
+              <span class="sub-item-val">฿4,000</span>
+            </div>
+            <div class="sub-item">
+              <span>เน็ตไฟเบอร์ทำงาน</span>
+              <span class="sub-item-val">฿500</span>
+            </div>
+            <div class="sub-item">
+              <span>เงินโอนให้แม่ที่บ้าน</span>
+              <span class="sub-item-val">฿2,000</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Vault 2: Buffer -->
+        <article class="vault-card vault-buffer">
+          <div class="vault-top">
+            <div class="vault-identity">
+              <div class="vault-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="vault-name">เงินสำรองกันเหนียว (Buffer)</h3>
+                <p class="vault-subtext">กักตุนสำหรับสัปดาห์ที่ไม่มีงาน</p>
+              </div>
+            </div>
+            <div class="vault-num">฿<span id="amount-buffer">1,500</span></div>
+          </div>
+
+          <div class="buffer-callout">
+            <span style="color: var(--text-mid);">กันไว้ 12.5% อัตโนมัติทุกจ็อบ</span>
+            <span style="color: var(--pastel-buffer-text); font-weight: 700;">รองรับ ~1.5 สัปดาห์</span>
+          </div>
+        </article>
+
+        <!-- Vault 3: Savings -->
+        <article class="vault-card vault-savings">
+          <div class="vault-top">
+            <div class="vault-identity">
+              <div class="vault-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polygon points="12 6 12 12 16 14"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="vault-name">เงินออมเป้าหมาย (Savings)</h3>
+                <p class="vault-subtext">กองทุนเครื่องมือทำกิน & เงินฉุกเฉิน</p>
+              </div>
+            </div>
+            <div class="vault-num">฿<span id="amount-savings">1,000</span></div>
+          </div>
+
+          <div class="savings-goal-row">
+            <div class="goal-desc-row">
+              <span style="font-weight: 600;">MacBook Pro M3 Max</span>
+              <span style="color: var(--pastel-savings-text); font-weight: 700;">เป้าหมาย ฿45,000</span>
+            </div>
+            <div class="goal-bar-track">
+              <div class="goal-bar-fill" style="width: 22%"></div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Integrated Activity Feed in Tab 2 -->
+      <section class="ledger-panel">
+        <div class="ledger-top">
+          <span>ประวัติการจัดสรรและใช้จ่าย</span>
+          <span id="tx-count" style="font-size: 0.74rem; font-weight: 600; color: var(--text-muted); background: var(--bg-sunken); padding: 4px 8px; border-radius: var(--radius-pill);">0 รายการ</span>
+        </div>
+        <ul class="ledger-items" id="tx-list">
+          <li style="padding: 16px; text-align: center; color: var(--text-muted); font-size: 0.8rem;">
+            ยังไม่มีรายการในรอบนี้
+          </li>
+        </ul>
+      </section>
+
+    </section>
+
+    <!-- ======================================================================
+         TAB 3: โปรไฟล์ & สูตร (Profile & Formula)
+         ====================================================================== -->
+    <!-- ======================================================================
+         TAB 3: โปรไฟล์ & การตั้งค่า (Realistic User Profile & UI Style Gallery)
+         ====================================================================== -->
+    <section class="tab-view" id="tab-profile">
+      <div class="section-heading-row" style="margin-top: 4px;">
+        <div>
+          <h2 class="section-h2">โปรไฟล์ผู้ใช้ & การตั้งค่า</h2>
+          <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 2px;">จัดการบัญชี, สูตรจัดสรรเงิน และสไตล์ UI</p>
+        </div>
+      </div>
+
+      <!-- 1. Realistic User Profile Hero Card -->
+      <div class="profile-hero-card">
+        <div class="profile-avatar-wrap">
+          <div class="profile-avatar">MR</div>
+          <div class="avatar-status-dot" title="สถานะ: พร้อมรับงาน"></div>
+          <button class="avatar-edit-btn" id="btn-edit-avatar" title="เปลี่ยนรูปโปรไฟล์">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
           </button>
-          <button class="preset-card" data-amount="4500" data-note="จ็อบด่วน ออกแบบโปสเตอร์">
-            <span class="preset-num">4,500 ฿</span>
-            <span class="preset-sub">จ็อบเร่งด่วน</span>
+        </div>
+        <div class="profile-hero-info">
+          <div class="profile-name-row">
+            <h3 class="profile-user-name">มินท์ รัตนสุวรรณ</h3>
+            <span class="badge-kyc-verified" title="ยืนยันตัวตนระดับ NDID เรียบร้อยแล้ว">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>ยืนยันแล้ว</span>
+            </span>
+          </div>
+          <div class="profile-user-role">Freelance Brand & UI Designer · หาดใหญ่</div>
+          <div class="profile-contact-meta">
+            <span>mint.design@email.com</span>
+            <span class="meta-separator">•</span>
+            <span>พร้อมเพย์ 081-923-8921</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Active Smart Allocation Blueprint Card -->
+      <div class="profile-block">
+        <div class="block-header-row">
+          <div class="block-title-group">
+            <span class="block-icon">⚙️</span>
+            <span class="block-title">สูตรแยกเงินเมื่อเงินเข้า (Smart Split Rules)</span>
+          </div>
+          <span class="status-tag-active">อัตโนมัติ</span>
+        </div>
+        <p class="block-desc">เมื่อเงินโอนเข้าบัญชี ระบบจะทำการแยกเข้า 3 ซองเงินอัตโนมัติทันที</p>
+        
+        <div class="split-rule-items">
+          <div class="split-rule-row">
+            <div class="rule-left">
+              <span class="rule-bullet essentials"></span>
+              <div>
+                <div class="rule-label">ค่าใช้จ่ายจำเป็นคงที่ (Fixed Essentials)</div>
+                <div class="rule-sub">ค่าห้อง 4k · เน็ต 500 · ส่งที่บ้าน 2k</div>
+              </div>
+            </div>
+            <div class="rule-value">฿6,500 <span class="rule-unit">/เดือน</span></div>
+          </div>
+
+          <div class="split-rule-row">
+            <div class="rule-left">
+              <span class="rule-bullet buffer"></span>
+              <div>
+                <div class="rule-label">เงินกันสะดุดรายได้ (Income Buffer)</div>
+                <div class="rule-sub">สำรองฉุกเฉินยามงานดีเลย์หรือเว้นช่วง</div>
+              </div>
+            </div>
+            <div class="rule-value">12.5% <span class="rule-unit">ของยอด</span></div>
+          </div>
+
+          <div class="split-rule-row">
+            <div class="rule-left">
+              <span class="rule-bullet savings"></span>
+              <div>
+                <div class="rule-label">เงินออมเป้าหมาย (Savings Goal)</div>
+                <div class="rule-sub">กองทุน MacBook Pro M3 Max</div>
+              </div>
+            </div>
+            <div class="rule-value">8.3% <span class="rule-unit">ของยอด</span></div>
+          </div>
+
+          <div class="split-rule-row highlight">
+            <div class="rule-left">
+              <span class="rule-bullet safe"></span>
+              <div>
+                <div class="rule-label">Safe-to-Spend (เงินกินใช้สบายใจ)</div>
+                <div class="rule-sub">ปลอดความกังวล ใช้ได้ 100% เต็มที่</div>
+              </div>
+            </div>
+            <div class="rule-value safe-text">ยอดคงเหลือทั้งหมด</div>
+          </div>
+        </div>
+
+        <button class="btn-rule-edit" id="btn-edit-rules">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          <span>ปรับแต่งสัดส่วนสูตรการแยกเงิน</span>
+        </button>
+      </div>
+
+      <!-- 3. UI Style Gallery (Testing Multiple UI Styles) -->
+      <div class="profile-block">
+        <div class="block-header-row">
+          <div class="block-title-group">
+            <span class="block-icon">🎨</span>
+            <span class="block-title">สไตล์การแสดงผล (UI Style System)</span>
+          </div>
+          <span class="status-tag-active" id="profile-theme-label">Neo-Tactile Hybrid</span>
+        </div>
+        <p class="block-desc">สลับทดสอบดีไซน์เพื่อประเมินความรู้สึกและการใช้งานจริง (A/B Test UI)</p>
+        
+        <div class="theme-picker-grid">
+          <!-- Style 1: Neo-Tactile Hybrid -->
+          <button class="theme-card active" data-theme-choice="neumorphic" type="button">
+            <div class="theme-card-preview preview-neu">
+              <div class="neu-sample-circle"></div>
+            </div>
+            <div class="theme-card-info">
+              <div class="theme-card-title">Neo-Tactile Hybrid <span style="font-size: 0.68rem; color: #065F46; background: #D1FAE5; padding: 2px 8px; border-radius: var(--radius-pill); font-weight: 700; margin-left: 4px;">แนะนำ</span></div>
+              <div class="theme-card-sub">ผสานจุดเด่น 3 สไตล์: ปุ่มกดสัมผัสนูน + สเปซคลีนโปร่งตา ไม่รกกล่อง + ฟรอสต์ลอยตัว</div>
+            </div>
+            <span class="theme-radio-dot"></span>
           </button>
-          <button class="preset-card" data-amount="18000" data-note="ปิดโปรเจกต์ 2 สัญญา">
-            <span class="preset-num">18,000 ฿</span>
-            <span class="preset-sub">ปิดโปรเจกต์ใหญ่</span>
+
+          <!-- Style 2: Minimal -->
+          <button class="theme-card" data-theme-choice="minimal" type="button">
+            <div class="theme-card-preview preview-min">
+              <div class="min-sample-box"></div>
+            </div>
+            <div class="theme-card-info">
+              <div class="theme-card-title">Modern Minimal</div>
+              <div class="theme-card-sub">โมเดิร์นคลีน ไฮคอนทราสต์ สบายตา อ่านง่ายรวดเร็ว</div>
+            </div>
+            <span class="theme-radio-dot"></span>
+          </button>
+
+          <!-- Style 3: Glassmorphism -->
+          <button class="theme-card" data-theme-choice="glassmorphism" type="button">
+            <div class="theme-card-preview preview-glass">
+              <div class="glass-sample-box"></div>
+            </div>
+            <div class="theme-card-info">
+              <div class="theme-card-title">Glassmorphism</div>
+              <div class="theme-card-sub">กระจกใส Frosted Glass โปร่งแสง ล้ำสมัย</div>
+            </div>
+            <span class="theme-radio-dot"></span>
           </button>
         </div>
       </div>
 
-      <!-- Custom Amount Input -->
-      <div class="input-container">
-        <span class="curr-sign">฿</span>
-        <input type="number" id="income-amount-input" class="numeric-input" value="12000" min="500" step="100" placeholder="0">
-        <button class="clear-input-btn" id="btn-clear-income" title="ล้างจำนวน">✕</button>
-      </div>
-
-      <!-- Live Split Waterfall Preview -->
-      <div class="waterfall-preview">
-        <div class="waterfall-header">
-          <span>การแบ่งเงินอัตโนมัติทันที:</span>
-          <span class="badge-mint">ตามแผนของคุณมินท์</span>
+      <!-- 4. Linked Accounts & Inbound -->
+      <div class="profile-block">
+        <div class="block-header-row">
+          <div class="block-title-group">
+            <span class="block-icon">💳</span>
+            <span class="block-title">ช่องทางรับเงินและบัญชีที่ผูกไว้</span>
+          </div>
+          <span class="status-tag-pill">2 บัญชี</span>
         </div>
-        <div class="waterfall-rows">
-          <div class="waterfall-row">
-            <span class="dot dot-essentials"></span>
-            <span class="w-label">ค่าใช้จ่ายจำเป็น (ห้อง 4k + เน็ต + ส่งบ้าน):</span>
-            <span class="w-num" id="prev-essentials">6,500 ฿</span>
+
+        <div class="bank-account-list">
+          <div class="bank-item">
+            <div class="bank-icon-box kbank">KB</div>
+            <div class="bank-details">
+              <div class="bank-name">ธนาคารกสิกรไทย (K-Bank)</div>
+              <div class="bank-acc-num">xxx-2-4921x-x · บัญชีรับเงินโอนหลัก</div>
+            </div>
+            <span class="badge-account-type">เงินเข้าหลัก</span>
           </div>
-          <div class="waterfall-row">
-            <span class="dot dot-buffer"></span>
-            <span class="w-label">เงินสำรองรายได้ (12.5% สำหรับเดือนงานเงียบ):</span>
-            <span class="w-num" id="prev-buffer">1,500 ฿</span>
-          </div>
-          <div class="waterfall-row">
-            <span class="dot dot-savings"></span>
-            <span class="w-label">เงินออมเป้าหมาย (คอมใหม่ + ฉุกเฉิน):</span>
-            <span class="w-num" id="prev-savings">1,000 ฿</span>
-          </div>
-          <div class="waterfall-row highlight">
-            <span class="dot dot-safe"></span>
-            <span class="w-label">Safe-to-Spend (เงินที่ใช้ได้สบายใจ):</span>
-            <span class="w-num text-mint" id="prev-safe">3,000 ฿</span>
+
+          <div class="bank-item">
+            <div class="bank-icon-box scb">SCB</div>
+            <div class="bank-details">
+              <div class="bank-name">ธนาคารไทยพาณิชย์ (SCB)</div>
+              <div class="bank-acc-num">xxx-0-1082x-x · บัญชีล็อกเก็บเงินออม</div>
+            </div>
+            <span class="badge-account-type">กระปุกเงินออม</span>
           </div>
         </div>
       </div>
 
-      <button id="btn-confirm-split" class="submit-action-btn">
+      <!-- 5. Security & App Preferences -->
+      <div class="profile-block">
+        <div class="block-header-row">
+          <div class="block-title-group">
+            <span class="block-icon">🔒</span>
+            <span class="block-title">ความปลอดภัย & การแจ้งเตือน</span>
+          </div>
+        </div>
+
+        <div class="settings-toggle-list">
+          <div class="setting-toggle-row">
+            <div>
+              <div class="setting-name">สแกนใบหน้า / Touch ID</div>
+              <div class="setting-hint">ยืนยันความปลอดภัยก่อนโอนออกจาก Safe-to-Spend</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked id="toggle-biometrics">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-toggle-row">
+            <div>
+              <div class="setting-name">แจ้งเตือน Safe-to-Spend รายวัน</div>
+              <div class="setting-hint">สรุปยอดที่กินได้สบายใจทุก 08:30 น.</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked id="toggle-daily-alert">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-toggle-row">
+            <div>
+              <div class="setting-name">ระบบสั่นสัมผัส (Haptic Feedback)</div>
+              <div class="setting-hint">จำลองแรงสั่นเสมือนกดปุ่มจริงบนมือถือ</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked id="toggle-haptic">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Demo Persona Context Card (For Judges / Game Jam Story) -->
+      <div class="profile-block persona-card-highlight">
+        <div class="persona-highlight-top">
+          <span class="gamejam-badge">Game Jam 2026 Context</span>
+          <div class="persona-title-strong">เบื้องหลังโจทย์: คุณมินท์ (Persona)</div>
+          <div class="persona-brief-txt">
+            กรณีศึกษาฟรีแลนซ์ 26 ปี รายได้ผันผวน 8,000–25,000 ฿ ไม่กล้ากินของอร่อยเพราะกังวลค่าห้องสิ้นเดือน
+          </div>
+        </div>
+        <button class="btn-open-persona-full" id="btn-profile-open-persona" type="button">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <span>เปิดอ่านข้อมูล Persona & ปัญหาเชิงลึก</span>
+        </button>
+      </div>
+
+      <!-- 7. Demo Reset Button -->
+      <button class="btn-profile-reset" id="btn-strategy-reset" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+          <path d="M3 3v5h5"/>
+        </svg>
+        <span>รีเซ็ตข้อมูลการจำลองทั้งหมด (Reset Demo)</span>
+      </button>
+
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       CURVED FLOATING BOTTOM NAVIGATION BAR (Exact 3 Tabs: Home, Vaults, Profile)
+       Matching Reference Image: Liquid notch + popping bubble circle with smooth glide
+       ======================================================================== -->
+  <nav class="bottom-nav-bar" aria-label="แถบเมนูหลัก">
+    <div class="curved-nav-wrapper">
+      
+      <!-- The dynamic sliding notch cutout matching active index (0, 1, 2) -->
+      <div class="nav-curved-notch" id="nav-curved-notch" data-active="0">
+        <svg class="notch-cutout-svg" viewBox="0 0 100 24" preserveAspectRatio="none">
+          <path d="M 0 0 Q 20 0 32 18 Q 50 28 68 18 Q 80 0 100 0 Z" />
+        </svg>
+      </div>
+
+      <!-- Tab 1: Home -->
+      <button class="nav-item-btn active" data-tab="tab-home" data-index="0" aria-label="หน้าหลัก">
+        <div class="nav-bubble">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        <span class="nav-item-label">Home</span>
+      </button>
+
+      <!-- Tab 2: Vaults -->
+      <button class="nav-item-btn" data-tab="tab-vaults" data-index="1" aria-label="กระปุกเงิน">
+        <div class="nav-bubble">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+        <span class="nav-item-label">Vaults</span>
+      </button>
+
+      <!-- Tab 3: Profile -->
+      <button class="nav-item-btn" data-tab="tab-profile" data-index="2" aria-label="โปรไฟล์">
+        <div class="nav-bubble">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <span class="nav-item-label">Profile</span>
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- Bottom Drawer: Receive Income & Split Engine -->
+  <div class="sheet-backdrop" id="income-sheet-backdrop">
+    <div class="glass-bottom-drawer" role="dialog" aria-modal="true">
+      <div class="drawer-drag-pill"></div>
+      
+      <div class="drawer-title-row">
+        <h3 class="drawer-h3">ฉันได้รับเงิน (Receive Income)</h3>
+        <button class="drawer-close" id="btn-close-income-drawer" aria-label="ปิด">✕</button>
+      </div>
+
+      <div style="font-size: 0.84rem; color: var(--text-mid);">
+        ระบุยอดเงินที่ได้รับเข้ามา PaySplit จะทำการจัดสรรแยกเข้า 3 ซองเงินอัตโนมัติทันที
+      </div>
+
+      <!-- Debossed Drawer Input -->
+      <div class="drawer-input-box">
+        <span style="font-size: 1.6rem; font-weight: 700; color: var(--highlight-main);">฿</span>
+        <input type="number" id="drawer-income-input" class="num-tabular" value="12000" min="500" step="500" style="background: transparent; border: none; font-size: 2.2rem; font-weight: 700; color: var(--text-pure); width: 100%; outline: none; font-family: var(--font-master);">
+      </div>
+
+      <button class="btn-highlight-receive" id="btn-confirm-drawer-income" style="width: 100%; height: 56px; font-size: 1.05rem;">
         <span>แยกเงินเข้ากระเป๋าทันที</span>
       </button>
     </div>
   </div>
 
-  <!-- Bottom Sheet Drawer: Custom Expense Logger -->
-  <div class="sheet-scrim" id="expense-sheet-backdrop">
-    <div class="sheet-modal" id="expense-bottom-sheet" role="dialog" aria-modal="true">
-      <div class="sheet-handle"></div>
+  <!-- Bottom Drawer: Custom Expense Logger -->
+  <div class="sheet-backdrop" id="expense-sheet-backdrop">
+    <div class="glass-bottom-drawer" role="dialog" aria-modal="true">
+      <div class="drawer-drag-pill"></div>
       
-      <div class="sheet-top">
-        <div>
-          <span class="sheet-subtitle">RECORD EXPENSE</span>
-          <h2 class="sheet-heading">บันทึกรายจ่าย</h2>
-        </div>
-        <button class="sheet-close" id="btn-close-expense-sheet" aria-label="ปิด">✕</button>
+      <div class="drawer-title-row">
+        <h3 class="drawer-h3">บันทึกรายจ่าย (Expense)</h3>
+        <button class="drawer-close" id="btn-close-exp-drawer" aria-label="ปิด">✕</button>
       </div>
 
-      <div class="form-container">
-        <div class="form-item">
-          <label class="form-title" for="expense-name-input">ชื่อรายการ</label>
-          <input type="text" id="expense-name-input" class="text-field" placeholder="เช่น กาแฟ ชานม ค่าส่งของ" value="กาแฟสดพิเศษ">
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <div>
+          <label style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px;">ชื่อรายการ</label>
+          <input type="text" id="drawer-exp-name" value="ค่าฟอนต์ลิขสิทธิ์" style="width: 100%; background: var(--bg-sunken); box-shadow: inset 2px 2px 5px rgba(166, 180, 200, 0.35); border: none; border-radius: var(--radius-sm); padding: 12px 16px; color: var(--text-high); font-size: 0.95rem; outline: none; font-family: var(--font-master);">
         </div>
 
-        <div class="form-item">
-          <label class="form-title" for="expense-amount-input">จำนวนเงิน (บาท)</label>
-          <input type="number" id="expense-amount-input" class="text-field" placeholder="0" value="95">
+        <div>
+          <label style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px;">จำนวนเงิน (บาท)</label>
+          <input type="number" id="drawer-exp-amount" class="num-tabular" value="350" style="width: 100%; background: var(--bg-sunken); box-shadow: inset 2px 2px 5px rgba(166, 180, 200, 0.35); border: none; border-radius: var(--radius-sm); padding: 12px 16px; color: var(--text-high); font-size: 1.25rem; font-weight: 700; outline: none; font-family: var(--font-master);">
         </div>
 
-        <div class="form-item">
-          <label class="form-title">หักจากกระเป๋าไหน?</label>
-          <div class="category-toggle-group">
-            <label class="toggle-pill active">
-              <input type="radio" name="expense-cat" value="safe" checked>
-              <span>Safe-to-Spend (เงินกินเล่น)</span>
-            </label>
-            <label class="toggle-pill">
-              <input type="radio" name="expense-cat" value="essentials">
-              <span>ค่าใช้จ่ายจำเป็น</span>
-            </label>
-          </div>
-        </div>
-
-        <button id="btn-submit-custom-expense" class="submit-action-btn">
-          <span>หักยอดเงินทันที</span>
+        <button class="btn-highlight-receive" id="btn-confirm-drawer-exp" style="width: 100%; height: 54px; margin-top: 4px;">
+          <span>หักจาก Safe-to-Spend</span>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Toast Feed -->
+  <!-- Persona Context Modal for Judges -->
+  <div class="sheet-backdrop" id="persona-modal-backdrop">
+    <div class="glass-bottom-drawer" style="max-height: 85vh; overflow-y: auto;" role="dialog" aria-modal="true">
+      <div class="drawer-drag-pill"></div>
+      
+      <div class="drawer-title-row">
+        <h3 class="drawer-h3">ข้อมูล Persona & บริบท PaySplit</h3>
+        <button class="drawer-close" id="btn-close-persona-drawer" aria-label="ปิด">✕</button>
+      </div>
+
+      <div style="font-size: 0.86rem; color: var(--text-mid); line-height: 1.6; display: flex; flex-direction: column; gap: 12px;">
+        <p>
+          <strong style="color: var(--text-pure);">คุณมินท์ (26 ปี)</strong> ฟรีแลนซ์กราฟิกดีไซเนอร์ หาดใหญ่<br>
+          รายได้ไม่แน่นอน (8k–25k บาท/เดือน) เมื่อเงินเข้า เธอเห็นเพียงยอดรวมในแอปธนาคาร และกังวลจนไม่กล้าใช้จ่าย
+        </p>
+
+        <div style="background: var(--pastel-essentials-bg); border-radius: var(--radius-sm); padding: 14px 16px; box-shadow: inset 2px 2px 5px rgba(166, 180, 200, 0.25);">
+          <strong style="color: var(--pastel-essentials-text);">ค่าใช้จ่ายคงที่ที่ต้องหักทันที (฿6,500):</strong>
+          <ul style="margin-left: 20px; margin-top: 6px; color: var(--text-high);">
+            <li>ค่าเช่าห้อง: 4,000 บาท</li>
+            <li>ค่าเน็ตไฟเบอร์: 500 บาท</li>
+            <li>ส่งเงินให้แม่: 2,000 บาท</li>
+          </ul>
+        </div>
+
+        <p>
+          <strong style="color: #059669;">หัวใจของ PaySplit:</strong><br>
+          <em>"PaySplit ไม่ได้แค่บอกว่าเงินหายไปไหน — แต่มันบอกว่าเงินควรไปอยู่ที่ไหนตั้งแต่วินาทีที่เงินเข้าบัญชี"</em>
+        </p>
+      </div>
+
+      <button class="btn-frosted-expense" id="btn-close-persona-confirm" style="width: 100%; margin-top: 6px;">
+        <span>เข้าใจแล้ว ทดสอบต่อ</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
   <div class="toast-hub" id="toast-container" aria-live="polite"></div>
 
-  <!-- Script Entry -->
+  <!-- Entry Script -->
 </body>
 </html>
