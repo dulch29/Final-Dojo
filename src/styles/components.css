@@ -226,19 +226,46 @@
   color: #FFFFFF;
   border: none;
   border-radius: var(--radius-md);
-  padding: 15px 18px;
+  padding: 10px 18px 10px 12px;
   height: 54px;
-  font-size: 1rem;
+  font-size: 0.98rem;
   font-weight: 700;
   font-family: var(--font-master);
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
+  justify-content: flex-start;
+  gap: 10px;
   cursor: pointer;
   box-shadow: var(--highlight-neu-shadow);
   transition: all var(--duration-fast) var(--ease-spring);
   overflow: hidden;
+}
+
+.btn-icon-bubble {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform var(--duration-fast) var(--ease-spring);
+}
+
+.btn-icon-bubble.secondary {
+  background: rgba(15, 23, 42, 0.07);
+}
+
+[data-theme="glassmorphism"] .btn-icon-bubble.secondary {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.btn-cta-text {
+  font-family: var(--font-master);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 
 .btn-highlight-receive::before {
@@ -261,6 +288,10 @@
   box-shadow: 8px 12px 24px rgba(16, 185, 129, 0.48), -4px -4px 14px rgba(255, 255, 255, 0.95);
 }
 
+.btn-highlight-receive:hover .btn-icon-bubble {
+  transform: translateY(1px) scale(1.08);
+}
+
 .btn-highlight-receive:active {
   transform: translateY(2px) scale(0.98);
   box-shadow: var(--highlight-pressed);
@@ -275,12 +306,12 @@
   font-size: 0.92rem;
   font-weight: 600;
   font-family: var(--font-master);
-  padding: 14px 16px;
+  padding: 10px 14px 10px 10px;
   height: 54px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 6px;
+  justify-content: flex-start;
+  gap: 8px;
   cursor: pointer;
   box-shadow: 6px 6px 14px rgba(166, 180, 200, 0.35), -6px -6px 14px rgba(255, 255, 255, 0.95);
   transition: all var(--duration-fast);
@@ -297,6 +328,10 @@
 .btn-frosted-expense:hover {
   color: var(--text-pure);
   transform: translateY(-1px);
+}
+
+.btn-frosted-expense:hover .btn-icon-bubble {
+  transform: translateY(1px) scale(1.08);
 }
 
 .btn-frosted-expense:active {

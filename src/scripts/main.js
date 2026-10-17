@@ -334,4 +334,28 @@ document.addEventListener('DOMContentLoaded', () => {
       showToast(toggleHaptic.checked ? 'เปิดระบบสั่นจำลองปุ่มกดจริง' : 'ปิดระบบสั่น');
     });
   }
+
+  // --------------------------------------------------------------------------
+  // 11. Native Mobile Clock & Keyboard Accessibility
+  // --------------------------------------------------------------------------
+  const updateClock = () => {
+    const clockEl = document.getElementById('status-clock');
+    if (clockEl) {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      clockEl.textContent = `${hours}:${minutes}`;
+    }
+  };
+  updateClock();
+  setInterval(updateClock, 30000);
+
+  // Global Escape key to dismiss modals & drawers
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeIncomeDrawer();
+      closeExpDrawer();
+      closePersona();
+    }
+  });
 });

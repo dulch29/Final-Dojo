@@ -86,8 +86,9 @@ body {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  padding: 0 18px 130px;
+  padding: 0 0 120px 0;
   background: var(--bg-canvas);
+  overflow-x: hidden;
 }
 
 @media (min-width: 600px) {
@@ -99,24 +100,142 @@ body {
     min-height: calc(100vh - 48px);
     border-radius: var(--radius-xl);
     box-shadow: 16px 16px 36px rgba(166, 180, 200, 0.45), -16px -16px 36px rgba(255, 255, 255, 0.95);
-    padding: 0 22px 130px;
+    padding: 0 0 120px 0;
+    overflow: hidden; /* Seamlessly clips status bar and header to phone frame corners */
   }
 }
 
-/* Top App Header (Viewing Zone) */
-.mobile-header {
+/* ==========================================================================
+   Edge-to-Edge Sticky Top Bar (Status Bar + Header)
+   ========================================================================== */
+.mobile-top-bar-sticky {
   position: sticky;
   top: 0;
   z-index: 30;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 4px 14px;
+  width: 100%;
   background: var(--bg-surface);
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
   border-bottom: var(--neu-border-subtle);
-  margin-bottom: 16px;
+  transition: background var(--duration-normal) ease, border-color var(--duration-normal) ease;
+}
+
+[data-theme="glassmorphism"] .mobile-top-bar-sticky {
+  background: rgba(255, 255, 255, 0.52);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.65);
+}
+
+[data-theme="minimal"] .mobile-top-bar-sticky {
+  background: #FFFFFF;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 1px solid #E4E4E7;
+}
+
+/* Simulated Mobile Status Bar */
+.mobile-status-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px 4px 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-pure);
+  user-select: none;
+}
+
+.status-time {
+  font-family: var(--font-master);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: 0.82rem;
+}
+
+.status-notch {
+  width: 84px;
+  height: 18px;
+  background: #0F172A;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 8px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.status-notch .notch-sensor {
+  position: absolute;
+  left: 20px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.status-notch .notch-camera {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #2563EB 0%, #0F172A 70%);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="glassmorphism"] .status-notch {
+  background: rgba(15, 23, 42, 0.75);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.status-system-icons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-pure);
+}
+
+.status-battery-pill {
+  width: 22px;
+  height: 11px;
+  border: 1.5px solid currentColor;
+  border-radius: 3px;
+  padding: 1px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.status-battery-pill::after {
+  content: '';
+  position: absolute;
+  right: -3px;
+  top: 2.5px;
+  width: 1.5px;
+  height: 4px;
+  background: currentColor;
+  border-radius: 0 1px 1px 0;
+}
+
+.status-battery-pill .battery-fill {
+  width: 100%;
+  height: 100%;
+  background: currentColor;
+  border-radius: 1px;
+}
+
+/* Header Content Row */
+.mobile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 18px 12px 18px;
+  width: 100%;
+  background: transparent;
+  border: none;
+  margin-bottom: 0;
   transition: all var(--duration-normal) ease;
 }
 
@@ -233,7 +352,14 @@ body {
    ========================================================================== */
 .tab-view {
   display: none;
+  padding: 14px 18px 24px;
   animation: fadeInTab 220ms var(--ease-spring);
+}
+
+@media (min-width: 600px) {
+  .tab-view {
+    padding: 16px 22px 28px;
+  }
 }
 
 .tab-view.active {
