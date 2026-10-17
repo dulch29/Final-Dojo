@@ -1,18 +1,238 @@
-/**
- * PaySplit Mobile-First Application Controller
- * Neumorphic Soft UI + Master Font + 3-Tab Curved Liquid Navigation
- */
-
-import { subscribe, receiveIncome, logExpense, resetDemo } from './state.js';
+import { subscribe, getState, receiveIncome, logExpense, updateUserCommitments, resetDemo } from './state.js';
 import { renderApp, showToast } from './ui.js';
 import { fireSplitConfetti, triggerHaptic } from './animations.js';
+import { 
+  initAuth, 
+  subscribeAuth, 
+  loginAsDemoMint, 
+  loginWithEmail, 
+  registerWithEmail, 
+  logoutUser, 
+  getCurrentUser 
+} from './auth.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Subscribe UI renderer to Reactive State
   subscribe(renderApp);
 
-  // Initialize with Mint's standard scenario: 12,000 THB Branding Job
-  receiveIncome(12000, 'งานรีแบรนด์ SME (มาตรฐานมินท์)');
+  // --------------------------------------------------------------------------
+  // 0. Interactive Money Split Simulator (Onboarding Landing Page)
+  // --------------------------------------------------------------------------
+  const simSlider = document.getElementById('sim-income-slider');
+  const simSliderVal = document.getElementById('sim-slider-val');
+  const simSafeNum = document.getElementById('sim-safe-num');
+  const simValEssentials = document.getElementById('sim-val-essentials');
+  const simValBuffer = document.getElementById('sim-val-buffer');
+  const simValSavings = document.getElementById('sim-val-savings');
+
+  const updateSimulator = (income) => {
+    if (simSliderVal) simSliderVal.textContent = `฿${income.toLocaleString('th-TH')}`;
+    const essentials = 6500;
+    const buffer = Math.round(income * 0.125);
+    const savings = Math.round(income * 0.0833);
+    const safeSpend = Math.max(0, income - essentials - buffer - savings);
+
+    if (simSafeNum) simSafeNum.textContent = safeSpend.toLocaleString('th-TH');
+    if (simValEssentials) simValEssentials.textContent = `฿${essentials.toLocaleString('th-TH')}`;
+    if (simValBuffer) simValBuffer.textContent = `฿${buffer.toLocaleString('th-TH')}`;
+    if (simValSavings) simValSavings.textContent = `฿${savings.toLocaleString('th-TH')}`;
+  };
+
+  if (simSlider) {
+    simSlider.addEventListener('input', (e) => {
+      const val = parseInt(e.target.value, 10);
+      updateSimulator(val);
+    });
+  }
+
+  // --------------------------------------------------------------------------
+  // 0.1 View Management: Onboarding vs Main App Shell
+  // --------------------------------------------------------------------------
+  const viewOnboarding = document.getElementById('view-onboarding');
+  const viewAppMain = document.getElementById('view-app-main');
+  const bottomNavBar = document.querySelector('.bottom-nav-bar');
+  const btnLoginDemo = document.getElementById('btn-login-demo');
+  const btnOpenEmailLogin = document.getElementById('btn-open-email-login');
+  const btnOpenRegister = document.getElementById('btn-open-register');
+  const authModalBackdrop = document.getElementById('auth-modal-backdrop');
+  const btnCloseAuthModal = document.getElementById('btn-close-auth-modal');
+  const tabAuthLogin = document.getElementById('tab-auth-login');
+  const tabAuthRegister = document.getElementById('tab-auth-register');
+  const formSignIn = document.getElementById('form-sign-in');
+  const formRegister = document.getElementById('form-register');
+  const authModalTitle = document.getElementById('auth-modal-title');
+  const btnUserLogout = document.getElementById('btn-user-logout');
+  const btnOpenPersona = document.getElementById('btn-open-persona');
+
+  const showAppView = (user) => {
+    if (viewOnboarding) viewOnboarding.style.display = 'none';
+    if (viewAppMain) viewAppMain.style.display = 'flex';
+    if (bottomNavBar) bottomNavBar.style.display = 'flex';
+
+    if (btnOpenPersona && user) {
+      const nameSpan = btnOpenPersona.querySelector('span:last-child');
+      if (nameSpan) {
+        nameSpan.textContent = user.isDemo ? 'มินท์ (26)' : (user.displayName || 'ผู้ใช้');
+      }
+    }
+
+    if (user && user.commitments) {
+      updateUserCommitments(user.commitments);
+    }
+
+    // Seed standard scenario on initial login if not yet seeded
+    if (!getState().hasReceivedIncome) {
+      receiveIncome(12000, user?.isDemo ? 'งานรีแบรนด์ SME (มาตรฐานมินท์)' : 'เงินโอนรับค่าจ้าง');
+    }
+  };
+
+  const showOnboardingView = () => {
+    if (viewOnboarding) viewOnboarding.style.display = 'flex';
+    if (viewAppMain) viewAppMain.style.display = 'none';
+    if (bottomNavBar) bottomNavBar.style.display = 'none';
+  };
+
+  // Open / Close Auth Modal
+  const openAuthModal = (mode = 'login') => {
+    if (!authModalBackdrop) return;
+    authModalBackdrop.classList.add('open');
+    if (mode === 'register') {
+      tabAuthRegister?.classList.add('active');
+      tabAuthLogin?.classList.remove('active');
+      if (formRegister) formRegister.style.display = 'flex';
+      if (formSignIn) formSignIn.style.display = 'none';
+      if (authModalTitle) authModalTitle.textContent = 'สร้างบัญชีใหม่ (Sign Up)';
+    } else {
+      tabAuthLogin?.classList.add('active');
+      tabAuthRegister?.classList.remove('active');
+      if (formSignIn) formSignIn.style.display = 'flex';
+      if (formRegister) formRegister.style.display = 'none';
+      if (authModalTitle) authModalTitle.textContent = 'เข้าสู่ระบบ (Sign In)';
+    }
+  };
+
+  const closeAuthModal = () => {
+    if (authModalBackdrop) authModalBackdrop.classList.remove('open');
+  };
+
+  if (btnLoginDemo) {
+    btnLoginDemo.addEventListener('click', async () => {
+      triggerHaptic('medium');
+      fireSplitConfetti();
+      showToast('เข้าสู่ระบบสำเร็จในฐานะ คุณมินท์ (Demo)');
+      await loginAsDemoMint();
+    });
+  }
+
+  if (btnOpenEmailLogin) {
+    btnOpenEmailLogin.addEventListener('click', () => openAuthModal('login'));
+  }
+
+  if (btnOpenRegister) {
+    btnOpenRegister.addEventListener('click', () => openAuthModal('register'));
+  }
+
+  if (btnCloseAuthModal) {
+    btnCloseAuthModal.addEventListener('click', closeAuthModal);
+  }
+
+  if (authModalBackdrop) {
+    authModalBackdrop.addEventListener('click', (e) => {
+      if (e.target === authModalBackdrop) closeAuthModal();
+    });
+  }
+
+  if (tabAuthLogin) {
+    tabAuthLogin.addEventListener('click', () => {
+      tabAuthLogin.classList.add('active');
+      tabAuthRegister?.classList.remove('active');
+      if (formSignIn) formSignIn.style.display = 'flex';
+      if (formRegister) formRegister.style.display = 'none';
+      if (authModalTitle) authModalTitle.textContent = 'เข้าสู่ระบบ (Sign In)';
+    });
+  }
+
+  if (tabAuthRegister) {
+    tabAuthRegister.addEventListener('click', () => {
+      tabAuthRegister.classList.add('active');
+      tabAuthLogin?.classList.remove('active');
+      if (formRegister) formRegister.style.display = 'flex';
+      if (formSignIn) formSignIn.style.display = 'none';
+      if (authModalTitle) authModalTitle.textContent = 'สร้างบัญชีใหม่ (Sign Up)';
+    });
+  }
+
+  // Handle Sign In Submit
+  if (formSignIn) {
+    formSignIn.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('login-email')?.value.trim();
+      const pass = document.getElementById('login-password')?.value;
+      if (!email || !pass) return;
+
+      showToast('กำลังตรวจสอบข้อมูลเข้าสู่ระบบ...');
+      const res = await loginWithEmail(email, pass);
+      if (res.success) {
+        closeAuthModal();
+        triggerHaptic('medium');
+        showToast(`ยินดีต้อนรับกลับ, ${res.user.displayName}!`);
+      } else {
+        showToast(`เข้าสู่ระบบไม่สำเร็จ: ${res.error}`);
+      }
+    });
+  }
+
+  // Handle Registration Submit
+  if (formRegister) {
+    formRegister.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('reg-name')?.value.trim();
+      const role = document.getElementById('reg-role')?.value.trim();
+      const rent = parseInt(document.getElementById('reg-commitments')?.value, 10) || 6500;
+      const email = document.getElementById('reg-email')?.value.trim();
+      const pass = document.getElementById('reg-password')?.value;
+
+      if (!email || !pass || !name) return;
+
+      showToast('กำลังสร้างบัญชีผู้ใช้ใหม่...');
+      const commitments = {
+        rent: rent,
+        internet: 0,
+        sentHome: 0,
+        total: rent
+      };
+
+      const res = await registerWithEmail(email, pass, name, role, commitments);
+      if (res.success) {
+        closeAuthModal();
+        triggerHaptic('medium');
+        fireSplitConfetti();
+        showToast(`สร้างบัญชีสำเร็จ! ยินดีต้อนรับคุณ ${name}`);
+      } else {
+        showToast(`สร้างบัญชีไม่สำเร็จ: ${res.error}`);
+      }
+    });
+  }
+
+  // Handle Logout
+  if (btnUserLogout) {
+    btnUserLogout.addEventListener('click', async () => {
+      triggerHaptic('light');
+      await logoutUser();
+      showToast('ออกจากระบบเรียบร้อย');
+    });
+  }
+
+  // Subscribe to Auth State
+  subscribeAuth((user) => {
+    if (user) {
+      showAppView(user);
+    } else {
+      showOnboardingView();
+    }
+  });
+
+  initAuth();
 
   // --------------------------------------------------------------------------
   // 2. Exact 3-Tab Liquid Curved Navigation (Home: 0, Vaults: 1, Profile: 2)
@@ -200,7 +420,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // --------------------------------------------------------------------------
   // 8. Persona Context Drawer
   // --------------------------------------------------------------------------
-  const btnOpenPersona = document.getElementById('btn-open-persona');
   const btnInfoSafe = document.getElementById('btn-info-safe');
   const personaBackdrop = document.getElementById('persona-modal-backdrop');
   const btnClosePersona = document.getElementById('btn-close-persona-drawer');

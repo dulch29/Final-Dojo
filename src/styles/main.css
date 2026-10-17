@@ -352,13 +352,13 @@ body {
    ========================================================================== */
 .tab-view {
   display: none;
-  padding: 14px 18px 24px;
+  padding: 14px 18px 96px;
   animation: fadeInTab 220ms var(--ease-spring);
 }
 
 @media (min-width: 600px) {
   .tab-view {
-    padding: 16px 22px 28px;
+    padding: 16px 22px 110px;
   }
 }
 

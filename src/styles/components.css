@@ -1724,3 +1724,523 @@
 .btn-profile-reset:active {
   box-shadow: var(--neu-pressed);
 }
+
+/* ==========================================================================
+   INTERACTIVE ONBOARDING & PRODUCT SHOWCASE VIEW
+   ========================================================================== */
+.onboarding-shell {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 40px 0;
+  background: var(--bg-canvas);
+  overflow-x: hidden;
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+@media (min-width: 600px) {
+  .onboarding-shell {
+    min-height: calc(100vh - 48px);
+    border-radius: var(--radius-xl);
+    box-shadow: 16px 16px 36px rgba(166, 180, 200, 0.45), -16px -16px 36px rgba(255, 255, 255, 0.95);
+    overflow: hidden;
+  }
+}
+
+.onboarding-content {
+  padding: 16px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 1. Hero Brand & Emotional Hook */
+.onboarding-hero {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.onboarding-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(167, 243, 208, 0.7);
+  border-radius: var(--radius-pill);
+  padding: 5px 14px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--pastel-safe-text);
+  margin-bottom: 4px;
+}
+
+.onboarding-brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.onboarding-brand-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-pure);
+}
+
+.onboarding-tagline {
+  font-size: 1.32rem;
+  font-weight: 700;
+  color: var(--text-pure);
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  margin: 4px 0 2px;
+}
+
+.onboarding-subtext {
+  font-size: 0.84rem;
+  color: var(--text-mid);
+  line-height: 1.5;
+  max-width: 360px;
+}
+
+/* 2. Interactive Money Simulator Card */
+.onboarding-simulator-card {
+  background: var(--bg-card);
+  border: var(--neu-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  box-shadow: var(--neu-card);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sim-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sim-header-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-high);
+}
+
+.sim-dot-live {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--highlight-main);
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+
+.sim-amount-val {
+  font-family: var(--font-master);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--highlight-dark);
+  font-variant-numeric: tabular-nums;
+}
+
+.sim-slider-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sim-range-input {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--bg-sunken);
+  outline: none;
+  box-shadow: inset 1px 1px 3px rgba(15, 23, 42, 0.15);
+  cursor: pointer;
+}
+
+.sim-range-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--highlight-gradient);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.5);
+  transition: transform var(--duration-fast);
+}
+
+.sim-range-input::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.sim-slider-ticks {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.sim-result-box {
+  background: var(--bg-sunken);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sim-safe-result {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sim-safe-title {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--pastel-safe-text);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.sim-safe-num-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin: 2px 0;
+}
+
+.sim-safe-symbol {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--highlight-main);
+}
+
+.sim-safe-num {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--text-pure);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.sim-safe-desc {
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+
+.sim-vaults-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.sim-vault-chip {
+  background: #FFFFFF;
+  border-radius: var(--radius-sm);
+  padding: 8px 6px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  box-shadow: var(--neu-chip);
+}
+
+.sim-vault-chip .chip-name {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.sim-vault-chip .chip-val {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--text-pure);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 3. Story Value Props Grid */
+.onboarding-story-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.story-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: var(--bg-card);
+  border: var(--neu-border-subtle);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  box-shadow: var(--neu-card-sm);
+}
+
+.story-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+.story-icon-box.danger {
+  background: #FEF2F2;
+}
+
+.story-icon-box.shield {
+  background: #EFF6FF;
+}
+
+.story-icon-box.success {
+  background: #F0FDF4;
+}
+
+.story-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.story-title {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--text-pure);
+}
+
+.story-desc {
+  font-size: 0.76rem;
+  color: var(--text-mid);
+  line-height: 1.45;
+}
+
+/* 4. Action Card & Buttons */
+.onboarding-action-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-onboarding-demo {
+  background: var(--highlight-gradient);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #FFFFFF;
+  cursor: pointer;
+  box-shadow: var(--highlight-neu-shadow);
+  transition: all var(--duration-fast) var(--ease-spring);
+  text-align: left;
+}
+
+.btn-onboarding-demo:hover {
+  transform: translateY(-2px);
+  box-shadow: 8px 12px 24px rgba(16, 185, 129, 0.45);
+}
+
+.btn-onboarding-demo:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.demo-btn-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.demo-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #FFFFFF;
+  flex-shrink: 0;
+}
+
+.demo-text-col {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.demo-btn-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.demo-btn-sub {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.demo-arrow {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  transition: transform var(--duration-fast);
+}
+
+.btn-onboarding-demo:hover .demo-arrow {
+  transform: translateX(4px);
+}
+
+.onboarding-divider-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  margin: 2px 0;
+}
+
+.auth-buttons-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.btn-auth-open {
+  background: var(--bg-card);
+  border: var(--neu-border-subtle);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--text-pure);
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: var(--font-master);
+  cursor: pointer;
+  box-shadow: var(--neu-card-sm);
+  transition: all var(--duration-fast);
+}
+
+.btn-auth-open:hover {
+  transform: translateY(-1px);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.btn-auth-open:active {
+  box-shadow: var(--neu-pressed);
+}
+
+/* Auth Modal Tabs & Forms */
+.auth-mode-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--bg-sunken);
+  border-radius: var(--radius-sm);
+  padding: 4px;
+  gap: 4px;
+  margin: 12px 0 16px;
+}
+
+.auth-mode-tab {
+  background: transparent;
+  border: none;
+  padding: 8px;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: var(--font-master);
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+
+.auth-mode-tab.active {
+  background: #FFFFFF;
+  color: var(--text-pure);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+}
+
+.auth-form-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-high);
+}
+
+.form-input {
+  width: 100%;
+  background: var(--bg-sunken);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  font-family: var(--font-master);
+  color: var(--text-pure);
+  outline: none;
+  box-shadow: inset 1px 1px 3px rgba(15, 23, 42, 0.1);
+  transition: border-color var(--duration-fast);
+}
+
+.form-input:focus {
+  border-color: var(--highlight-main);
+  background: #FFFFFF;
+}
+
+.btn-profile-logout {
+  background: var(--bg-card);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--pastel-expense-text);
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--neu-card-sm);
+  transition: all var(--duration-fast);
+}
+
+.btn-profile-logout:hover {
+  background: var(--pastel-expense-bg);
+}
+
+.btn-profile-logout:active {
+  box-shadow: var(--neu-pressed);
+}

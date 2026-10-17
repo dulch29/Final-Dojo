@@ -173,6 +173,18 @@ export function logExpense(name, amount, category = 'safe', emoji = '💸') {
 }
 
 /**
+ * Update User Commitments (from profile or registration)
+ */
+export function updateUserCommitments(commitments) {
+  if (!commitments) return;
+  state.commitments = {
+    ...state.commitments,
+    ...commitments
+  };
+  notify();
+}
+
+/**
  * Reset Demo to clean initial state
  */
 export function resetDemo() {

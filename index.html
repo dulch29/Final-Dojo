@@ -18,8 +18,160 @@
 <body>
   <div class="ambient-glow" aria-hidden="true"></div>
 
-  <!-- Mobile-First App Shell (Thumb Zone & Human Behavioral Psychology) -->
-  <main class="mobile-shell">
+  <!-- ======================================================================
+       VIEW 0: Interactive Product Showcase & Onboarding Login Experience
+       ====================================================================== -->
+  <div class="onboarding-shell" id="view-onboarding">
+    <!-- Top Status Bar Simulation -->
+    <div class="mobile-status-bar" aria-hidden="true">
+      <span class="status-time" id="onboarding-clock">09:41</span>
+      <div class="status-notch">
+        <span class="notch-sensor"></span>
+        <span class="notch-camera"></span>
+      </div>
+      <div class="status-system-icons">
+        <svg class="status-signal-icon" width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><rect x="0" y="8" width="2.6" height="3" rx="0.8"/><rect x="4" y="5.5" width="2.6" height="5.5" rx="0.8"/><rect x="8" y="3" width="2.6" height="8" rx="0.8"/><rect x="12" y="0.5" width="2.6" height="10.5" rx="0.8"/></svg>
+        <svg class="status-wifi-icon" width="14" height="11" viewBox="0 0 15 11" fill="currentColor"><path d="M7.5 3.5C9.6 3.5 11.5 4.3 12.9 5.7L14.3 4.3C12.5 2.5 10.1 1.5 7.5 1.5C4.9 1.5 2.5 2.5 0.7 4.3L2.1 5.7C3.5 4.3 5.4 3.5 7.5 3.5ZM7.5 7C8.8 7 10 7.5 10.9 8.4L12.3 7C11.1 5.8 9.4 5 7.5 5C5.6 5 3.9 5.8 2.7 7L4.1 8.4C5 7.5 6.2 7 7.5 7ZM7.5 10.5C8.3 10.5 9 9.8 9 9C9 8.2 8.3 7.5 7.5 7.5C6.7 7.5 6 8.2 6 9C6 9.8 6.7 10.5 7.5 10.5Z"/></svg>
+        <div class="status-battery-pill"><div class="battery-fill"></div></div>
+      </div>
+    </div>
+
+    <!-- Onboarding Scrollable Canvas -->
+    <div class="onboarding-content">
+      
+      <!-- 1. Emotional Hook & Product Identity -->
+      <div class="onboarding-hero">
+        <div class="onboarding-badge-pill">
+          <span class="sparkle-icon">✨</span>
+          <span>นวัตกรรมบริหารเงินทันทีที่เข้าบัญชี</span>
+        </div>
+
+        <div class="onboarding-brand-row">
+          <div class="brand-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+          </div>
+          <span class="onboarding-brand-name">PaySplit</span>
+        </div>
+
+        <h1 class="onboarding-tagline">เงินเข้าปุ๊บ รู้ทันทีว่ากินใช้ได้จริงเท่าไหร่</h1>
+        <p class="onboarding-subtext">ระบบล็อก 3 ซองเงินอัตโนมัติ หมดกังวลเรื่องค่าห้องสิ้นเดือน สำหรับฟรีแลนซ์และคนรายได้ไม่แน่นอน</p>
+      </div>
+
+      <!-- 2. "Try Before Login" Interactive Split Simulator -->
+      <div class="onboarding-simulator-card">
+        <div class="sim-header">
+          <div class="sim-header-title">
+            <span class="sim-dot-live"></span>
+            <span>ลองเลื่อนจำลองยอดเงินเข้า:</span>
+          </div>
+          <span class="sim-amount-val" id="sim-slider-val">฿12,000</span>
+        </div>
+
+        <div class="sim-slider-wrap">
+          <input type="range" id="sim-income-slider" min="6500" max="35000" step="500" value="12000" class="sim-range-input" aria-label="จำลองยอดเงินเข้า">
+          <div class="sim-slider-ticks">
+            <span>฿6.5k</span>
+            <span>฿15k</span>
+            <span>฿25k</span>
+            <span>฿35k</span>
+          </div>
+        </div>
+
+        <!-- Resulting Live Split Preview -->
+        <div class="sim-result-box">
+          <div class="sim-safe-result">
+            <span class="sim-safe-title">Safe-to-Spend (เงินกินใช้วันนี้)</span>
+            <div class="sim-safe-num-row">
+              <span class="sim-safe-symbol">฿</span>
+              <span class="sim-safe-num" id="sim-safe-num">3,000</span>
+            </div>
+            <span class="sim-safe-desc">ปลอดภาระ ล็อกค่าห้องเรียบร้อย 100%</span>
+          </div>
+
+          <div class="sim-vaults-row">
+            <div class="sim-vault-chip essentials">
+              <span class="chip-name">🔒 จำเป็น</span>
+              <span class="chip-val" id="sim-val-essentials">฿6,500</span>
+            </div>
+            <div class="sim-vault-chip buffer">
+              <span class="chip-name">🛡️ สำรอง</span>
+              <span class="chip-val" id="sim-val-buffer">฿1,500</span>
+            </div>
+            <div class="sim-vault-chip savings">
+              <span class="chip-name">💜 ออม</span>
+              <span class="chip-val" id="sim-val-savings">฿1,000</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Story Value Props (Why PaySplit?) -->
+      <div class="onboarding-story-grid">
+        <div class="story-item">
+          <div class="story-icon-box danger">😰</div>
+          <div class="story-content">
+            <div class="story-title">ความกังวลของฟรีแลนซ์</div>
+            <div class="story-desc">เงินเข้าก้อนใหญ่ แต่ไม่กล้ากินกาแฟเพราะกลัวสิ้นเดือนไม่มีเงินจ่ายค่าเช่าห้อง</div>
+          </div>
+        </div>
+
+        <div class="story-item">
+          <div class="story-icon-box shield">🛡️</div>
+          <div class="story-content">
+            <div class="story-title">ล็อก 3 ซองเงินทันที</div>
+            <div class="story-desc">ค่าห้อง ค่าเน็ต เงินสำรอง และเงินออม ถูกกักไว้ตั้งแต่วินาทีแรก ไม่ปนกับเงินกินใช้</div>
+          </div>
+        </div>
+
+        <div class="story-item">
+          <div class="story-icon-box success">☕</div>
+          <div class="story-content">
+            <div class="story-title">กินใช้อย่างสบายใจ 100%</div>
+            <div class="story-desc">เห็นยอด Safe-to-Spend ชัดเจน กินใช้ได้เต็มที่โดยไม่ต้องมานั่งจดบันทึกทุกบาท</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Fast Authentication Actions -->
+      <div class="onboarding-action-card">
+        <!-- 1-Click Demo -->
+        <button class="btn-onboarding-demo" id="btn-login-demo">
+          <div class="demo-btn-left">
+            <div class="demo-avatar">MR</div>
+            <div class="demo-text-col">
+              <span class="demo-btn-title">ทดลองใช้งานด้วยโปรไฟล์คุณมินท์ (26 ปี)</span>
+              <span class="demo-btn-sub">1-Click Demo · ฟรีแลนซ์ออกแบบแบรนด์ · ข้อมูลสมบูรณ์</span>
+            </div>
+          </div>
+          <span class="demo-arrow">→</span>
+        </button>
+
+        <div class="onboarding-divider-row">
+          <span>หรือเข้าใช้งานด้วยบัญชีของคุณ</span>
+        </div>
+
+        <div class="auth-buttons-row">
+          <button class="btn-auth-open" id="btn-open-email-login">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span>เข้าสู่ระบบด้วยอีเมล</span>
+          </button>
+          
+          <button class="btn-auth-open secondary" id="btn-open-register">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+            <span>สร้างบัญชีใหม่</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       VIEW 1: Mobile-First App Shell (Active after Login/Demo)
+       ====================================================================== -->
+  <main class="mobile-shell" id="view-app-main" style="display: none;">
 
     <!-- Native Mobile Top Bar (Edge-to-Edge Status Bar + Brand Header) -->
     <div class="mobile-top-bar-sticky">
@@ -572,6 +724,15 @@
 
       <!-- 5. System Reset & About -->
       <div class="profile-block" style="text-align: center; gap: 10px;">
+        <button class="btn-profile-logout" id="btn-user-logout" type="button" style="width: 100%; margin-bottom: 4px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          <span>ออกจากระบบ / สลับบัญชี</span>
+        </button>
+
         <button class="btn-profile-reset" id="btn-strategy-reset" type="button" style="width: 100%;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
@@ -752,6 +913,67 @@
       <button class="btn-highlight-receive" id="btn-close-persona-confirm" style="width: 100%; height: 50px; margin-top: 6px; font-size: 0.96rem;">
         <span>เข้าใจภาพรวมแล้ว กลับสู่แอป</span>
       </button>
+    </div>
+  </div>
+
+  <!-- Auth Modal: Email Login & Register Drawer -->
+  <div class="sheet-backdrop" id="auth-modal-backdrop">
+    <div class="glass-bottom-drawer" role="dialog" aria-modal="true" style="max-height: 85vh; overflow-y: auto;">
+      <div class="drawer-drag-pill"></div>
+      
+      <div class="drawer-title-row">
+        <h3 class="drawer-h3" id="auth-modal-title">เข้าสู่ระบบ (Sign In)</h3>
+        <button class="drawer-close" id="btn-close-auth-modal" aria-label="ปิด">✕</button>
+      </div>
+
+      <!-- Segmented Tab Switch between Login and Register -->
+      <div class="auth-mode-switch">
+        <button class="auth-mode-tab active" id="tab-auth-login" type="button">เข้าสู่ระบบ</button>
+        <button class="auth-mode-tab" id="tab-auth-register" type="button">สร้างบัญชีใหม่</button>
+      </div>
+
+      <!-- Sign In Form -->
+      <form id="form-sign-in" class="auth-form-body">
+        <div class="form-group">
+          <label class="form-label" for="login-email">อีเมล (Email)</label>
+          <input type="email" id="login-email" class="form-input" required placeholder="mint.design@email.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="login-password">รหัสผ่าน (Password)</label>
+          <input type="password" id="login-password" class="form-input" required placeholder="••••••••" autocomplete="current-password">
+        </div>
+        <button type="submit" class="btn-highlight-receive" style="width: 100%; height: 50px; justify-content: center;">
+          <span>เข้าสู่ระบบ</span>
+        </button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="form-register" class="auth-form-body" style="display: none;">
+        <div class="form-group">
+          <label class="form-label" for="reg-name">ชื่อของคุณ</label>
+          <input type="text" id="reg-name" class="form-input" required placeholder="เช่น ธนา รัตนโชติ">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reg-role">สายอาชีพ / ลักษณะงาน</label>
+          <input type="text" id="reg-role" class="form-input" placeholder="เช่น ฟรีแลนซ์ 3D Artist, นักเขียน, สตรีมเมอร์">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reg-commitments">ค่าใช้จ่ายจำเป็นคงที่ต่อเดือน (ค่าห้อง/เน็ต/ผ่อนของ)</label>
+          <input type="number" id="reg-commitments" class="form-input" value="6500" required inputmode="numeric">
+          <span class="form-hint" style="font-size: 0.74rem; color: var(--text-muted); display: block; margin-top: 4px;">PaySplit จะล็อกก้อนนี้ไว้เป็นอันดับแรกทันทีที่เงินเข้า</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reg-email">อีเมล</label>
+          <input type="email" id="reg-email" class="form-input" required placeholder="name@example.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reg-password">รหัสผ่าน (อย่างน้อย 6 ตัวอักษร)</label>
+          <input type="password" id="reg-password" class="form-input" required minlength="6" placeholder="••••••••" autocomplete="new-password">
+        </div>
+        <button type="submit" class="btn-highlight-receive" style="width: 100%; height: 50px; justify-content: center;">
+          <span>สร้างบัญชีและเริ่มแยกเงิน</span>
+        </button>
+      </form>
     </div>
   </div>
 
