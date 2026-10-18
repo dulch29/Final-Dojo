@@ -575,6 +575,16 @@ document.addEventListener('DOMContentLoaded', () => {
       closeIncomeDrawer();
       closeExpDrawer();
       closePersona();
+      closeAuthModal();
     }
   });
+
+  // PWA Service Worker Registration
+  if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').catch((err) => {
+        console.log('SW registration skipped:', err);
+      });
+    });
+  }
 });
