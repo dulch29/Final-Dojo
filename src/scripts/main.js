@@ -10,6 +10,7 @@ import {
   logoutUser, 
   getCurrentUser 
 } from './auth.js';
+import { initMotionIntro, replayMotionIntro } from './motion-intro.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Subscribe UI renderer to Reactive State
@@ -46,14 +47,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // 0.1 View Management: Onboarding vs Main App Shell
+  // 0.1 View Management: Motion Intro -> Onboarding / Sign-in -> App Shell
   // --------------------------------------------------------------------------
+  const viewIntroMotion = document.getElementById('view-intro-motion');
   const viewOnboarding = document.getElementById('view-onboarding');
   const viewAppMain = document.getElementById('view-app-main');
   const bottomNavBar = document.querySelector('.bottom-nav-bar');
   const btnLoginDemo = document.getElementById('btn-login-demo');
   const btnOpenEmailLogin = document.getElementById('btn-open-email-login');
   const btnOpenRegister = document.getElementById('btn-open-register');
+  const btnReplayIntro = document.getElementById('btn-replay-intro');
   const authModalBackdrop = document.getElementById('auth-modal-backdrop');
   const btnCloseAuthModal = document.getElementById('btn-close-auth-modal');
   const tabAuthLogin = document.getElementById('tab-auth-login');
@@ -65,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnOpenPersona = document.getElementById('btn-open-persona');
 
   const showAppView = (user) => {
+    if (viewIntroMotion) viewIntroMotion.style.display = 'none';
     if (viewOnboarding) viewOnboarding.style.display = 'none';
     if (viewAppMain) viewAppMain.style.display = 'flex';
     if (bottomNavBar) bottomNavBar.style.display = 'flex';
@@ -87,10 +91,37 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const showOnboardingView = () => {
-    if (viewOnboarding) viewOnboarding.style.display = 'flex';
     if (viewAppMain) viewAppMain.style.display = 'none';
     if (bottomNavBar) bottomNavBar.style.display = 'none';
+
+    // Check if user already skipped or watched intro in this session
+    const hasSeenIntro = sessionStorage.getItem('paysplit_intro_seen');
+    if (hasSeenIntro) {
+      if (viewIntroMotion) viewIntroMotion.style.display = 'none';
+      if (viewOnboarding) viewOnboarding.style.display = 'flex';
+    } else {
+      if (viewIntroMotion) {
+        viewIntroMotion.style.display = 'flex';
+        if (viewOnboarding) viewOnboarding.style.display = 'none';
+      } else {
+        if (viewOnboarding) viewOnboarding.style.display = 'flex';
+      }
+    }
   };
+
+  // Initialize Graphic Motion Storytelling Intro
+  initMotionIntro({
+    onComplete: () => {
+      sessionStorage.setItem('paysplit_intro_seen', 'true');
+    }
+  });
+
+  if (btnReplayIntro) {
+    btnReplayIntro.addEventListener('click', () => {
+      triggerHaptic('medium');
+      replayMotionIntro();
+    });
+  }
 
   // Open / Close Auth Modal
   const openAuthModal = (mode = 'login') => {
@@ -558,13 +589,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // 11. Native Mobile Clock & Keyboard Accessibility
   // --------------------------------------------------------------------------
   const updateClock = () => {
-    const clockEl = document.getElementById('status-clock');
-    if (clockEl) {
-      const now = new Date();
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      clockEl.textContent = `${hours}:${minutes}`;
-    }
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const timeStr = `${hours}:${minutes}`;
+
+    ['status-clock', 'intro-clock', 'onboarding-clock'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = timeStr;
+    });
   };
   updateClock();
   setInterval(updateClock, 30000);

@@ -1,0 +1,690 @@
+/* ==========================================================================
+   PaySplit Graphic Motion Intro & Storytelling Experience
+   Awwwards-tier kinetic storytelling: The Freelancer's Dilemma -> PaySplit Shield
+   ========================================================================== */
+
+.motion-intro-shell {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 440px;
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-canvas);
+  overflow: hidden;
+  transition: opacity 350ms cubic-bezier(0.32, 0.72, 0, 1), transform 350ms cubic-bezier(0.32, 0.72, 0, 1);
+  user-select: none;
+}
+
+@media (min-width: 600px) {
+  .motion-intro-shell {
+    min-height: calc(100vh - 48px);
+    border-radius: var(--radius-xl);
+    box-shadow: 16px 16px 36px rgba(166, 180, 200, 0.45), -16px -16px 36px rgba(255, 255, 255, 0.95);
+  }
+}
+
+/* 1. Segmented Story Progress Bars */
+.story-progress-row {
+  display: flex;
+  gap: 6px;
+  padding: 12px 18px 6px;
+  width: 100%;
+}
+
+.story-progress-track {
+  flex: 1;
+  height: 3.5px;
+  background: rgba(148, 163, 184, 0.28);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+.story-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--highlight-main);
+  border-radius: var(--radius-pill);
+  transition: width 100ms linear;
+}
+
+.story-progress-track.completed .story-progress-fill {
+  width: 100% !important;
+}
+
+/* 2. Top Navigation Bar inside Motion Intro */
+.intro-top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 18px 12px;
+}
+
+.intro-brand-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-surface);
+  border: var(--neu-border-subtle);
+  border-radius: var(--radius-pill);
+  padding: 4px 12px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-pure);
+  box-shadow: var(--neu-card-sm);
+}
+
+.intro-brand-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--highlight-main);
+  box-shadow: 0 0 8px var(--highlight-main);
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+}
+
+.btn-intro-skip {
+  background: transparent;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: var(--font-master);
+  color: var(--text-mid);
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  transition: all var(--duration-fast);
+}
+
+.btn-intro-skip:hover {
+  color: var(--highlight-dark);
+  background: rgba(16, 185, 129, 0.08);
+}
+
+/* 3. Motion Scenes Container */
+.motion-stage-wrapper {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.motion-scene {
+  position: absolute;
+  inset: 0;
+  padding: 8px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  opacity: 0;
+  transform: translateY(16px) scale(0.97);
+  pointer-events: none;
+  transition: opacity 450ms cubic-bezier(0.32, 0.72, 0, 1), transform 450ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.motion-scene.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Scene Typography */
+.scene-text-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.scene-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.scene-eyebrow.green {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--pastel-safe-text);
+  border: 1px solid rgba(167, 243, 208, 0.8);
+}
+
+.scene-eyebrow.amber {
+  background: rgba(245, 158, 11, 0.12);
+  color: #B45309;
+  border: 1px solid rgba(253, 230, 138, 0.9);
+}
+
+.scene-eyebrow.purple {
+  background: rgba(139, 92, 246, 0.1);
+  color: #6D28D9;
+  border: 1px solid rgba(221, 214, 254, 0.8);
+}
+
+.scene-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-pure);
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+
+.scene-sub {
+  font-size: 0.8rem;
+  color: var(--text-mid);
+  line-height: 1.45;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+/* 4. Double-Bezel Visual Stage Canvas */
+.motion-stage-bezel {
+  background: var(--bg-sunken);
+  border-radius: calc(var(--radius-xl) - 4px);
+  padding: 10px;
+  border: var(--neu-border-subtle);
+  box-shadow: inset 1px 1px 3px rgba(15, 23, 42, 0.08);
+  flex: 1;
+  max-height: 380px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.motion-stage-core {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 18px 16px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: var(--neu-card);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+/* --- SCENE 1 SPECIFICS: THE EUPHORIA --- */
+.bank-notif-pill {
+  background: #FFFFFF;
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  width: 100%;
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.15), 0 2px 6px rgba(15, 23, 42, 0.05);
+  border: 1px solid rgba(167, 243, 208, 0.7);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: dropInBounce 700ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  margin-bottom: 14px;
+}
+
+@keyframes dropInBounce {
+  0% { transform: translateY(-40px) scale(0.9); opacity: 0; }
+  70% { transform: translateY(4px) scale(1.02); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.bank-logo-bubble {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #10B981, #059669);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.35);
+  flex-shrink: 0;
+}
+
+.bank-notif-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.bank-notif-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.bank-notif-amount {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--pastel-safe-text);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.scene1-balance-card {
+  background: var(--bg-sunken);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  width: 100%;
+  text-align: center;
+  border: 1px dashed rgba(16, 185, 129, 0.4);
+  position: relative;
+}
+
+.scene1-balance-label {
+  font-size: 0.74rem;
+  color: var(--text-mid);
+  margin-bottom: 2px;
+}
+
+.scene1-balance-num {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-pure);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+}
+
+.scene1-floating-tags {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.scene1-tag {
+  background: rgba(255, 255, 255, 0.85);
+  border: var(--neu-border-subtle);
+  border-radius: var(--radius-pill);
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-high);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+  animation: floatGentle 3s infinite ease-in-out alternate;
+}
+
+.scene1-tag:nth-child(2) {
+  animation-delay: 1.5s;
+}
+
+@keyframes floatGentle {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-4px); }
+}
+
+/* --- SCENE 2 SPECIFICS: THE ANXIETY & PHANTOM LIABILITIES --- */
+.scene2-stage-glow {
+  background: radial-gradient(circle at center, rgba(254, 215, 170, 0.35) 0%, transparent 65%);
+}
+
+.scene2-stressed-bank {
+  background: #FFFBEB;
+  border: 1px solid rgba(245, 158, 11, 0.5);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.12);
+  animation: subtleShake 3s infinite ease-in-out;
+}
+
+@keyframes subtleShake {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-0.5deg); }
+  75% { transform: rotate(0.5deg); }
+}
+
+.scene2-bills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.phantom-bill-item {
+  background: #FFFFFF;
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transform: translateY(10px);
+  opacity: 0;
+  animation: popIn 500ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.phantom-bill-item:nth-child(1) { animation-delay: 200ms; }
+.phantom-bill-item:nth-child(2) { animation-delay: 400ms; }
+.phantom-bill-item:nth-child(3) { animation-delay: 600ms; }
+.phantom-bill-item:nth-child(4) { animation-delay: 800ms; }
+
+@keyframes popIn {
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.bill-icon {
+  font-size: 1.1rem;
+}
+
+.bill-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.bill-name {
+  font-size: 0.68rem;
+  color: var(--text-mid);
+}
+
+.bill-cost {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #DC2626;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Coffee Cup Dilemma */
+.coffee-dilemma-card {
+  background: #FEF2F2;
+  border: 1px dashed rgba(239, 68, 68, 0.4);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.coffee-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.coffee-emoji {
+  font-size: 1.3rem;
+}
+
+.coffee-text {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #991B1B;
+}
+
+.coffee-warning-badge {
+  background: #FEE2E2;
+  color: #DC2626;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  font-size: 0.66rem;
+  font-weight: 700;
+}
+
+/* --- SCENE 3 SPECIFICS: THE PAYSLIT INSTANT SHIELD --- */
+.scene3-shield-badge {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(167, 243, 208, 0.9);
+  border-radius: var(--radius-pill);
+  padding: 4px 12px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--pastel-safe-text);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.scene3-vaults-locked-row {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.scene3-vault-pill {
+  flex: 1;
+  background: #FFFFFF;
+  border-radius: var(--radius-sm);
+  padding: 8px 6px;
+  text-align: center;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04);
+}
+
+.scene3-vault-pill.essentials { border-color: rgba(59, 130, 246, 0.4); background: #EFF6FF; }
+.scene3-vault-pill.buffer { border-color: rgba(245, 158, 11, 0.4); background: #FFFBEB; }
+.scene3-vault-pill.savings { border-color: rgba(139, 92, 246, 0.4); background: #F5F3FF; }
+
+.scene3-pill-label {
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+.scene3-pill-val {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--text-pure);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Big Safe-to-Spend Revelation Ring */
+.scene3-safe-box {
+  background: linear-gradient(135deg, rgba(236, 253, 245, 0.95), rgba(209, 250, 229, 0.85));
+  border: 2px solid #10B981;
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 10px 24px rgba(16, 185, 129, 0.2);
+  position: relative;
+  overflow: hidden;
+  animation: scaleGlow 2s infinite ease-in-out alternate;
+}
+
+@keyframes scaleGlow {
+  0% { box-shadow: 0 8px 20px rgba(16, 185, 129, 0.15); }
+  100% { box-shadow: 0 12px 30px rgba(16, 185, 129, 0.32); }
+}
+
+.scene3-safe-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--pastel-safe-text);
+  letter-spacing: 0.02em;
+}
+
+.scene3-safe-num {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--pastel-safe-text);
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  margin: 2px 0;
+}
+
+.scene3-safe-quote {
+  font-size: 0.72rem;
+  color: #047857;
+  font-weight: 500;
+}
+
+.coffee-happy-pill {
+  background: #ECFDF5;
+  border: 1px solid rgba(167, 243, 208, 0.8);
+  border-radius: var(--radius-pill);
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #065F46;
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 5. Bottom Interactive Dock & Magnetic CTA */
+.intro-bottom-dock {
+  padding: 12px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.intro-controls-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.btn-intro-back {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-card);
+  border: var(--neu-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-pure);
+  box-shadow: var(--neu-card-sm);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all var(--duration-fast);
+}
+
+.btn-intro-back:hover {
+  background: var(--bg-surface);
+  transform: translateY(-1px);
+}
+
+.btn-intro-back:active {
+  box-shadow: var(--neu-pressed);
+}
+
+.btn-intro-next {
+  flex: 1;
+  background: var(--highlight-gradient);
+  border: none;
+  border-radius: var(--radius-pill);
+  height: 50px;
+  padding: 0 10px 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #FFFFFF;
+  font-size: 0.92rem;
+  font-weight: 700;
+  font-family: var(--font-master);
+  cursor: pointer;
+  box-shadow: var(--highlight-neu-shadow);
+  transition: all var(--duration-fast) var(--ease-spring);
+}
+
+.btn-intro-next:hover {
+  transform: translateY(-2px);
+  box-shadow: 8px 12px 24px rgba(16, 185, 129, 0.45);
+}
+
+.btn-intro-next:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+.btn-intro-next .btn-icon-bubble {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+  transition: transform var(--duration-fast);
+}
+
+.btn-intro-next:hover .btn-icon-bubble {
+  transform: translateX(3px);
+}
+
+.intro-tap-hint {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* Touch area overlay for tapping left / right */
+.intro-tap-detector {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  z-index: 5;
+  pointer-events: auto;
+}
+
+.tap-zone-left {
+  width: 35%;
+  height: 100%;
+}
+
+.tap-zone-right {
+  width: 65%;
+  height: 100%;
+}
+
+/* Replay Button in Onboarding View */
+.btn-replay-intro {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-surface);
+  border: var(--neu-border-subtle);
+  border-radius: var(--radius-pill);
+  padding: 6px 14px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  font-family: var(--font-master);
+  color: var(--text-mid);
+  cursor: pointer;
+  box-shadow: var(--neu-card-sm);
+  transition: all var(--duration-fast);
+  margin-top: 6px;
+}
+
+.btn-replay-intro:hover {
+  color: var(--highlight-dark);
+  border-color: rgba(16, 185, 129, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-replay-intro:active {
+  box-shadow: var(--neu-pressed);
+}
