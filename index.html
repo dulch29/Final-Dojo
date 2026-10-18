@@ -24,218 +24,156 @@
   <link rel="stylesheet" href="/src/styles/tokens.css">
   <link rel="stylesheet" href="/src/styles/main.css">
   <link rel="stylesheet" href="/src/styles/components.css">
-  <link rel="stylesheet" href="/src/styles/motion-intro.css">
+  <link rel="stylesheet" href="/src/styles/motion-cinematic.css">
 </head>
 <body>
   <div class="ambient-glow" aria-hidden="true"></div>
 
   <!-- ======================================================================
-       VIEW -1: Kinetic Graphic Motion Intro (Problem Storytelling -> Sign-in)
+       VIEW -1: Kinetic Video Animation Intro (Problem Web -> Blackout -> PaySplit Slice)
        ====================================================================== -->
-  <div class="motion-intro-shell" id="view-intro-motion">
-    <!-- Top Status Bar Simulation -->
-    <div class="mobile-status-bar" aria-hidden="true">
-      <span class="status-time" id="intro-clock">09:41</span>
-      <div class="status-notch">
-        <span class="notch-sensor"></span>
-        <span class="notch-camera"></span>
-      </div>
-      <div class="status-system-icons">
-        <svg class="status-signal-icon" width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><rect x="0" y="8" width="2.6" height="3" rx="0.8"/><rect x="4" y="5.5" width="2.6" height="5.5" rx="0.8"/><rect x="8" y="3" width="2.6" height="8" rx="0.8"/><rect x="12" y="0.5" width="2.6" height="10.5" rx="0.8"/></svg>
-        <svg class="status-wifi-icon" width="14" height="11" viewBox="0 0 15 11" fill="currentColor"><path d="M7.5 3.5C9.6 3.5 11.5 4.3 12.9 5.7L14.3 4.3C12.5 2.5 10.1 1.5 7.5 1.5C4.9 1.5 2.5 2.5 0.7 4.3L2.1 5.7C3.5 4.3 5.4 3.5 7.5 3.5ZM7.5 7C8.8 7 10 7.5 10.9 8.4L12.3 7C11.1 5.8 9.4 5 7.5 5C5.6 5 3.9 5.8 2.7 7L4.1 8.4C5 7.5 6.2 7 7.5 7ZM7.5 10.5C8.3 10.5 9 9.8 9 9C9 8.2 8.3 7.5 7.5 7.5C6.7 7.5 6 8.2 6 9C6 9.8 6.7 10.5 7.5 10.5Z"/></svg>
-        <div class="status-battery-pill"><div class="battery-fill"></div></div>
-      </div>
-    </div>
+  <div class="cinema-shell" id="view-motion-cinema">
+    <div class="cinema-ambient-glow" id="cinema-ambient-glow" aria-hidden="true"></div>
 
-    <!-- Story Progress Segmented Bars -->
-    <div class="story-progress-row">
-      <div class="story-progress-track" data-scene="0"><div class="story-progress-fill"></div></div>
-      <div class="story-progress-track" data-scene="1"><div class="story-progress-fill"></div></div>
-      <div class="story-progress-track" data-scene="2"><div class="story-progress-fill"></div></div>
-    </div>
-
-    <!-- Top Action Bar (Brand + Skip Button) -->
-    <div class="intro-top-nav">
-      <div class="intro-brand-pill">
-        <span class="intro-brand-dot"></span>
+    <!-- Top Cinematic Control Header -->
+    <div class="cinema-top-header">
+      <div class="cinema-brand-badge">
+        <span class="cinema-rec-dot"></span>
         <span>PaySplit Story</span>
       </div>
-      <button class="btn-intro-skip" id="btn-skip-intro" type="button" aria-label="ข้ามไปหน้าเข้าสู่ระบบ">
-        <span>ข้าม (Skip)</span>
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </button>
+
+      <div class="cinema-header-actions">
+        <button class="cinema-btn-tool" id="btn-cinema-sound" type="button" aria-label="เปิด/ปิดเสียง">
+          <span class="sound-icon">🔊</span>
+          <span>เสียง: เปิด</span>
+        </button>
+        <button class="cinema-btn-tool" id="btn-cinema-skip" type="button" aria-label="ข้ามวิดีโอ">
+          <span>ข้าม (Skip)</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
     </div>
 
-    <!-- Motion Stage Wrapper with tap zones -->
-    <div class="motion-stage-wrapper">
-      <div class="intro-tap-detector" aria-hidden="true">
-        <div class="tap-zone-left" id="tap-zone-left" title="ย้อนกลับ"></div>
-        <div class="tap-zone-right" id="tap-zone-right" title="ถัดไป"></div>
+    <!-- Central Stage Area -->
+    <div class="cinema-stage">
+      <!-- Dynamic SVG Laser Canvas for tangled lines ("โยงเยงไปมา") -->
+      <svg class="cinema-laser-canvas" id="cinema-laser-svg" aria-hidden="true"></svg>
+
+      <!-- Complete Blackout Curtain ("จนจอมืด!") -->
+      <div class="cinema-blackout-curtain" id="cinema-blackout" aria-hidden="true">
+        <div class="blackout-question-mark">?</div>
       </div>
 
-      <!-- SCENE 1: The Illusion of Wealth -->
-      <section class="motion-scene active" id="motion-scene-0" data-scene-index="0">
-        <div class="scene-text-header">
-          <div class="scene-eyebrow green">
-            <span>✨ SCENE 01 · เงินก้อนแรก</span>
-          </div>
-          <h2 class="scene-title">เงินเข้าบัญชีหมื่นห้า...<br>วินาทีแรกใครก็รู้สึกรวย</h2>
-          <p class="scene-sub">ฟรีแลนซ์ทุกคนเคยเจอฟีลนี้ เห็นตัวเลขในแอปธนาคารแล้วใจฟู รู้สึกว่าเดือนนี้มีเงินเหลือเฟือ...</p>
+      <!-- PaySplit Laser Blade Slice ("ฉึบ!") -->
+      <div class="cinema-laser-blade" id="cinema-laser-blade" aria-hidden="true"></div>
+
+      <!-- Floating Chaos Boxes Orbiting the Phone -->
+      <div class="chaos-boxes-container" aria-hidden="true">
+        <div class="chaos-bubble chaos-node-rent">
+          <span>🏠 ค่าห้อง ฿4,000</span>
+        </div>
+        <div class="chaos-bubble chaos-node-net">
+          <span>📶 ค่าเน็ต ฿500</span>
+        </div>
+        <div class="chaos-bubble chaos-node-mom">
+          <span>👵 ส่งให้แม่ ฿2,000</span>
+        </div>
+        <div class="chaos-bubble chaos-node-tax">
+          <span>🧾 ภาษีหัก 3%</span>
+        </div>
+        <div class="chaos-bubble chaos-node-coffee">
+          <span>☕ กาแฟ 65฿ กินได้ไหม?</span>
+        </div>
+        <div class="chaos-bubble chaos-node-runway">
+          <span>📉 ถ้างานดีเลย์ล่ะ?!</span>
+        </div>
+      </div>
+
+      <!-- Center Smartphone Mockup -->
+      <div class="cinema-center-phone" id="cinema-phone">
+        <!-- Top Island -->
+        <div class="phone-island-bar">
+          <span>09:41</span>
+          <div class="phone-notch-pill"></div>
+          <span>5G 100%</span>
         </div>
 
-        <div class="motion-stage-bezel">
-          <div class="motion-stage-core">
-            <!-- Simulated Bank Inbound Notification -->
-            <div class="bank-notif-pill">
-              <div class="bank-logo-bubble">KB</div>
-              <div class="bank-notif-info">
-                <span class="bank-notif-label">แจ้งเตือนเงินโอนเข้า · พร้อมเพย์</span>
-                <span class="bank-notif-amount">+฿15,000.00</span>
-              </div>
-              <div style="font-size: 1.2rem;">🔔</div>
+        <!-- Screen Content -->
+        <div class="phone-screen-content">
+          <!-- Inbound Pop-up Notification -->
+          <div class="cinema-inbound-notif" id="cinema-inbound-notif">
+            <div class="notif-badge-icon">KB</div>
+            <div class="notif-details">
+              <span class="notif-title">เงินโอนเข้าบัญชี (Transfer)</span>
+              <span class="notif-sum">+฿15,000.00</span>
             </div>
-
-            <!-- Simulated Total Bank Balance -->
-            <div class="scene1-balance-card">
-              <div class="scene1-balance-label">ยอดเงินที่ใช้ได้ในบัญชีธนาคาร</div>
-              <div class="scene1-balance-num">฿ 15,000</div>
-              <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">กองอยู่ก้อนเดียว ยังไม่ได้จัดสรร</div>
-            </div>
-
-            <div class="scene1-floating-tags">
-              <span class="scene1-tag">💰 ได้ค่าจ้างออกแบบ</span>
-              <span class="scene1-tag">🥳 อยากไปฉลอง</span>
-            </div>
+            <div style="font-size: 1.1rem;">🔔</div>
           </div>
-        </div>
-      </section>
 
-      <!-- SCENE 2: The Phantom Bills & Dread -->
-      <section class="motion-scene" id="motion-scene-1" data-scene-index="1">
-        <div class="scene-text-header">
-          <div class="scene-eyebrow amber">
-            <span>😰 SCENE 02 · ความกังวลที่ตามมา</span>
+          <!-- Total Bank Balance Display -->
+          <div class="cinema-phone-balance">
+            <div class="phone-balance-tag">ยอดเงินในบัญชีธนาคาร</div>
+            <div class="phone-balance-amount" id="phone-balance-num">฿ 0</div>
+            <div class="phone-balance-status" id="phone-balance-status">กองอยู่ก้อนเดียว ยังไม่แบ่ง</div>
           </div>
-          <h2 class="scene-title">แต่ทำไม... ไม่กล้าแม้แต่จะซื้อกาแฟแก้วละ 65 บาท?</h2>
-          <p class="scene-sub">เพราะในหัวเริ่มผุดภาระสารพัด เงินก้อนเดียวในบัญชีทำให้ไม่รู้ว่า "เงินกินใช้จริง" เหลือเท่าไหร่กันแน่</p>
-        </div>
 
-        <div class="motion-stage-bezel scene2-stage-glow">
-          <div class="motion-stage-core">
-            <!-- Stressed Bank Card -->
-            <div class="scene2-stressed-bank">
-              <div style="font-size: 0.72rem; color: #92400E; font-weight: 600;">ยอดในบัญชี ฿15,000 (แต่ภาระซ่อนอยู่เพียบ)</div>
+          <!-- PaySplit Resolved 3-Vault Card (Reveals after Laser Slice) -->
+          <div class="cinema-resolved-card" id="cinema-resolved-card">
+            <div class="resolved-brand-pill">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              <span>PaySplit Auto-Split</span>
             </div>
 
-            <!-- Floating Phantom Bills -->
-            <div class="scene2-bills-grid">
-              <div class="phantom-bill-item">
-                <span class="bill-icon">🏠</span>
-                <div class="bill-details">
-                  <span class="bill-name">ค่าเช่าห้องพัก</span>
-                  <span class="bill-cost">฿4,000</span>
-                </div>
+            <!-- 3 Locked Vaults -->
+            <div class="resolved-vaults-grid">
+              <div class="resolved-vault-row">
+                <span class="vault-row-name">🔒 ล็อกจำเป็น (ห้อง+เน็ต+แม่)</span>
+                <span class="vault-row-val">฿6,500</span>
+                <span class="vault-lock-tag">LOCKED</span>
               </div>
-
-              <div class="phantom-bill-item">
-                <span class="bill-icon">📶</span>
-                <div class="bill-details">
-                  <span class="bill-name">ค่าเน็ต/โทรศัพท์</span>
-                  <span class="bill-cost">฿500</span>
-                </div>
+              <div class="resolved-vault-row">
+                <span class="vault-row-name">🛡️ กันสะดุดงานดีเลย์</span>
+                <span class="vault-row-val">฿1,875</span>
+                <span class="vault-lock-tag">SAFE</span>
               </div>
-
-              <div class="phantom-bill-item">
-                <span class="bill-icon">👵</span>
-                <div class="bill-details">
-                  <span class="bill-name">ส่งให้ที่บ้าน</span>
-                  <span class="bill-cost">฿2,000</span>
-                </div>
-              </div>
-
-              <div class="phantom-bill-item">
-                <span class="bill-icon">🛡️</span>
-                <div class="bill-details">
-                  <span class="bill-name">เงินกันงานดีเลย์</span>
-                  <span class="bill-cost">???</span>
-                </div>
+              <div class="resolved-vault-row">
+                <span class="vault-row-name">💜 เงินออมเป้าหมาย</span>
+                <span class="vault-row-val">฿1,250</span>
+                <span class="vault-lock-tag">SAVED</span>
               </div>
             </div>
 
-            <!-- The Coffee Dilemma Card -->
-            <div class="coffee-dilemma-card">
-              <div class="coffee-left">
-                <span class="coffee-emoji">☕</span>
-                <span class="coffee-text">กาแฟสดแก้วละ 65฿</span>
-              </div>
-              <span class="coffee-warning-badge">ไม่กล้าซื้อ · กลัวเงินไม่พอ</span>
+            <!-- Glowing Safe-to-Spend Finale Circle -->
+            <div class="resolved-safe-circle">
+              <span class="resolved-safe-label">SAFE-TO-SPEND (กินใช้วันนี้)</span>
+              <div class="resolved-safe-amount">฿ 5,375</div>
+              <span class="resolved-safe-sub">✨ กินใช้ได้ 100% สบายใจ ไม่รู้สึกผิด</span>
             </div>
           </div>
         </div>
-      </section>
-
-      <!-- SCENE 3: The PaySplit Instant 3-Vault Shield -->
-      <section class="motion-scene" id="motion-scene-2" data-scene-index="2">
-        <div class="scene-text-header">
-          <div class="scene-eyebrow purple">
-            <span>🛡️ SCENE 03 · THE 3-VAULT SHIELD</span>
-          </div>
-          <h2 class="scene-title">PaySplit ล็อก 3 ซองทันที<br>ปลดล็อกความสุข 100%</h2>
-          <p class="scene-sub">กักค่าห้อง เงินสำรอง และเงินออมตั้งแต่วินาทีแรก ส่วนที่เหลือคือกินใช้ได้อย่างสบายใจ ไม่ต้องรู้สึกผิด!</p>
-        </div>
-
-        <div class="motion-stage-bezel">
-          <div class="motion-stage-core">
-            <div class="scene3-shield-badge">
-              <span>🛡️ ล็อก 3 ซองอัตโนมัติแล้ว</span>
-            </div>
-
-            <!-- 3 Locked Vaults Capsules -->
-            <div class="scene3-vaults-locked-row">
-              <div class="scene3-vault-pill essentials">
-                <span class="scene3-pill-label">🔒 จำเป็น</span>
-                <span class="scene3-pill-val">฿6,500</span>
-              </div>
-              <div class="scene3-vault-pill buffer">
-                <span class="scene3-pill-label">🛡️ กันสะดุด</span>
-                <span class="scene3-pill-val">฿1,875</span>
-              </div>
-              <div class="scene3-vault-pill savings">
-                <span class="scene3-pill-label">💜 ออม</span>
-                <span class="scene3-pill-val">฿1,250</span>
-              </div>
-            </div>
-
-            <!-- Glowing Safe-to-Spend Box -->
-            <div class="scene3-safe-box">
-              <span class="scene3-safe-label">SAFE-TO-SPEND (เงินกินใช้วันนี้)</span>
-              <div class="scene3-safe-num">฿ 5,375</div>
-              <span class="scene3-safe-quote">ปลอดภาระ 100% สิ้นเดือนรอดแน่นอน</span>
-            </div>
-
-            <div class="coffee-happy-pill">
-              <span>☕ ดื่มกาแฟ 65฿ ได้สบายใจ ไม่ต้องรู้สึกผิดอีกต่อไป!</span>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
     </div>
 
-    <!-- Bottom Interactive Action Dock -->
-    <div class="intro-bottom-dock">
-      <div class="intro-controls-row">
-        <button class="btn-intro-back" id="btn-intro-prev" type="button" aria-label="ย้อนกลับ" style="visibility: hidden;">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    <!-- Bottom Cinema Dock -->
+    <div class="cinema-bottom-dock">
+      <!-- Live Kinetic Caption -->
+      <div class="cinema-caption-box">
+        <p class="cinema-caption-text" id="cinema-caption">เงินค่าจ้าง ฿15,000 เพิ่งเข้าบัญชี... 🔔</p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="cinema-action-buttons">
+        <button class="btn-cinema-replay" id="btn-cinema-replay" type="button" aria-label="ดูอนิเมชันอีกรอบ" title="ดูอีกรอบ">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
         </button>
 
-        <button class="btn-intro-next" id="btn-intro-action" type="button">
-          <span class="intro-btn-label" id="intro-action-label">ดูสิ่งที่เกิดขึ้นต่อ</span>
+        <button class="btn-cinema-cta" id="btn-cinema-cta" type="button">
+          <span id="cinema-cta-label">ข้ามไป Sign In</span>
           <div class="btn-icon-bubble">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </div>
         </button>
       </div>
-      <div class="intro-tap-hint">แตะฝั่งซ้าย/ขวา หรือแตะค้างเพื่อหยุดชั่วคราว</div>
     </div>
   </div>
 

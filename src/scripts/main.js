@@ -10,7 +10,7 @@ import {
   logoutUser, 
   getCurrentUser 
 } from './auth.js';
-import { initMotionIntro, replayMotionIntro } from './motion-intro.js';
+import { initCinematicMotion, replayCinematic } from './motion-cinematic.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Subscribe UI renderer to Reactive State
@@ -47,9 +47,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // 0.1 View Management: Motion Intro -> Onboarding / Sign-in -> App Shell
+  // 0.1 View Management: Cinematic Motion Video -> Onboarding / Sign-in -> App Shell
   // --------------------------------------------------------------------------
-  const viewIntroMotion = document.getElementById('view-intro-motion');
+  const viewMotionCinema = document.getElementById('view-motion-cinema');
   const viewOnboarding = document.getElementById('view-onboarding');
   const viewAppMain = document.getElementById('view-app-main');
   const bottomNavBar = document.querySelector('.bottom-nav-bar');
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnOpenPersona = document.getElementById('btn-open-persona');
 
   const showAppView = (user) => {
-    if (viewIntroMotion) viewIntroMotion.style.display = 'none';
+    if (viewMotionCinema) viewMotionCinema.style.display = 'none';
     if (viewOnboarding) viewOnboarding.style.display = 'none';
     if (viewAppMain) viewAppMain.style.display = 'flex';
     if (bottomNavBar) bottomNavBar.style.display = 'flex';
@@ -94,14 +94,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (viewAppMain) viewAppMain.style.display = 'none';
     if (bottomNavBar) bottomNavBar.style.display = 'none';
 
-    // Check if user already skipped or watched intro in this session
-    const hasSeenIntro = sessionStorage.getItem('paysplit_intro_seen');
+    // Check if user already skipped or watched cinematic video in this session
+    const hasSeenIntro = sessionStorage.getItem('paysplit_cinema_seen');
     if (hasSeenIntro) {
-      if (viewIntroMotion) viewIntroMotion.style.display = 'none';
+      if (viewMotionCinema) viewMotionCinema.style.display = 'none';
       if (viewOnboarding) viewOnboarding.style.display = 'flex';
     } else {
-      if (viewIntroMotion) {
-        viewIntroMotion.style.display = 'flex';
+      if (viewMotionCinema) {
+        viewMotionCinema.style.display = 'flex';
         if (viewOnboarding) viewOnboarding.style.display = 'none';
       } else {
         if (viewOnboarding) viewOnboarding.style.display = 'flex';
@@ -109,17 +109,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // Initialize Graphic Motion Storytelling Intro
-  initMotionIntro({
+  // Initialize Cinematic Video Motion Graphic Storytelling
+  initCinematicMotion({
     onComplete: () => {
-      sessionStorage.setItem('paysplit_intro_seen', 'true');
+      sessionStorage.setItem('paysplit_cinema_seen', 'true');
     }
   });
 
   if (btnReplayIntro) {
     btnReplayIntro.addEventListener('click', () => {
       triggerHaptic('medium');
-      replayMotionIntro();
+      sessionStorage.removeItem('paysplit_cinema_seen');
+      replayCinematic();
     });
   }
 
