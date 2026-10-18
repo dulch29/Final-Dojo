@@ -5,14 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build",
+    "build": "node node_modules/vite/bin/vite.js build",
     "preview": "vite preview"
   },
-  "devDependencies": {
-    "canvas-confetti": "^1.9.4",
-    "vite": "^6.2.0"
-  },
   "dependencies": {
-    "firebase": "^13.0.0"
+    "canvas-confetti": "^1.9.4",
+    "firebase": "^13.0.0",
+    "vite": "^6.2.0"
   }
 }
