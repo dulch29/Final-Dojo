@@ -531,6 +531,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (amount <= 0) {
         showToast('กรุณาระบุจำนวนเงินที่ถูกต้อง');
         return;
+      }
+
       const split = receiveIncome(amount, `รับเงินโอน ${amount.toLocaleString('th-TH')} ฿`);
       closeIncomeDrawer();
       fireSplitConfetti();
