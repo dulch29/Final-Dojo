@@ -497,23 +497,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // --------------------------------------------------------------------------
-  // 3. Quick Scenario Presets (Hick's Law: 3 Meaningful Income Presets)
-  // --------------------------------------------------------------------------
-  const presetChips = document.querySelectorAll('.preset-chip');
-  presetChips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      presetChips.forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
 
-      const amount = parseFloat(chip.dataset.amount);
-      const note = chip.dataset.note || `ยอดเงินเข้า ${amount.toLocaleString('th-TH')} ฿`;
-
-      const split = receiveIncome(amount, note);
-      fireSplitConfetti();
-      triggerHaptic('medium');
-      showToast(`จัดสรรเงินเรียบร้อย! Safe-to-Spend: ${split.safeSpend.toLocaleString('th-TH')} ฿`);
-    });
-  });
 
   // --------------------------------------------------------------------------
   // 4. Highlight Action: "ฉันได้รับเงิน" (Opens Bottom Drawer)
@@ -547,12 +531,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (amount <= 0) {
         showToast('กรุณาระบุจำนวนเงินที่ถูกต้อง');
         return;
-      }
-
-      presetChips.forEach(c => {
-        c.classList.toggle('active', c.dataset.amount === String(amount));
-      });
-
       const split = receiveIncome(amount, `รับเงินโอน ${amount.toLocaleString('th-TH')} ฿`);
       closeIncomeDrawer();
       fireSplitConfetti();
@@ -562,10 +540,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // 5. Expense Actions: "หักรายจ่าย" & "+ ระบุเอง" (Opens Expense Drawer)
+  // 5. Expense Actions: "หักรายจ่าย" (Opens Expense Drawer)
   // --------------------------------------------------------------------------
   const btnOpenExpense = document.getElementById('btn-open-expense');
-  const btnCustomExpChip = document.getElementById('btn-custom-exp-chip');
   const expenseDrawerBackdrop = document.getElementById('expense-sheet-backdrop');
   const btnCloseExpDrawer = document.getElementById('btn-close-exp-drawer');
   const btnConfirmDrawerExp = document.getElementById('btn-confirm-drawer-exp');
@@ -581,7 +558,6 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   if (btnOpenExpense) btnOpenExpense.addEventListener('click', openExpenseDrawer);
-  if (btnCustomExpChip) btnCustomExpChip.addEventListener('click', openExpenseDrawer);
   if (btnCloseExpDrawer) btnCloseExpDrawer.addEventListener('click', closeExpenseDrawer);
   if (expenseDrawerBackdrop) {
     expenseDrawerBackdrop.addEventListener('click', (e) => {
@@ -606,28 +582,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --------------------------------------------------------------------------
-  // 6. Tactile Quick Expense Chips (Micro-Haptic Push Buttons)
-  // --------------------------------------------------------------------------
-  const quickChips = document.querySelectorAll('.neu-expense-btn:not(#btn-custom-exp-chip)');
-  quickChips.forEach(chip => {
-    chip.addEventListener('click', () => {
-      const currentState = getState();
-      const name = chip.dataset.name;
-      const amount = parseFloat(chip.dataset.amount);
-      const category = chip.dataset.category || 'safe';
 
-      if (category === 'safe' && (!currentState.hasReceivedIncome || currentState.safeSpendBalance < amount)) {
-        triggerHaptic('medium');
-        showToast(`ยอด Safe-to-Spend ไม่เพียงพอ (คงเหลือ ฿${currentState.safeSpendBalance.toLocaleString('th-TH')}) แตะ "ฉันได้รับเงิน" ด้านบนเพื่อแยกเงินก่อน`);
-        return;
-      }
-
-      logExpense(name, amount, category);
-      triggerHaptic('light');
-      showToast(`บันทึก ${name} -${amount} ฿ (ค่าห้องยังปลอดภัย 100%)`);
-    });
-  });
 
   // --------------------------------------------------------------------------
   // 7. Reset Demo / User Actions (Header + Profile Tab)
@@ -641,12 +596,8 @@ document.addEventListener('DOMContentLoaded', () => {
       resetToNewUser(user?.commitments, user?.activePlan, user?.savingsGoal);
       showToast('รีเซ็ตยอดเงินรอบนี้เป็น 0฿ เรียบร้อย');
     }
-    presetChips.forEach(c => c.classList.remove('active'));
     triggerHaptic('light');
   };
-
-  const btnReset = document.getElementById('btn-reset-demo');
-  if (btnReset) btnReset.addEventListener('click', handleReset);
 
   const btnStrategyReset = document.getElementById('btn-strategy-reset');
   if (btnStrategyReset) btnStrategyReset.addEventListener('click', handleReset);
@@ -847,60 +798,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // --------------------------------------------------------------------------
   // 9. Multi-UI Style Theme System (Neumorphic / Modern Minimal / Glassmorphism)
   // --------------------------------------------------------------------------
-  const themeOrder = ['neumorphic', 'minimal', 'glassmorphism'];
-  const themeLabels = {
-    neumorphic: 'Neo-Tactile Hybrid',
-    minimal: 'Modern Minimal',
-    glassmorphism: 'Glassmorphism'
-  };
-
-  const headerThemeBtn = document.getElementById('btn-header-theme');
-  const headerThemeTag = document.getElementById('header-theme-tag');
-  const profileThemeLabel = document.getElementById('profile-theme-label');
-  const themeCards = document.querySelectorAll('.theme-card');
-
-  let currentTheme = localStorage.getItem('paysplit_theme') || 'neumorphic';
-
-  const applyTheme = (themeName, notifyUser = false) => {
-    currentTheme = themeName;
-    document.documentElement.setAttribute('data-theme', themeName);
-    localStorage.setItem('paysplit_theme', themeName);
-
-    if (headerThemeTag) {
-      headerThemeTag.textContent = themeName === 'glassmorphism' ? 'Glass' : (themeName === 'minimal' ? 'Minimal' : 'Hybrid');
-    }
-    if (profileThemeLabel) {
-      profileThemeLabel.textContent = themeLabels[themeName] || themeName;
-    }
-
-    themeCards.forEach(card => {
-      card.classList.toggle('active', card.dataset.themeChoice === themeName);
-    });
-
-    if (notifyUser) {
-      triggerHaptic('light');
-      showToast(`สลับสไตล์ UI: ${themeLabels[themeName] || themeName}`);
-    }
-  };
-
-  // Initialize theme on load
-  applyTheme(currentTheme, false);
-
-  if (headerThemeBtn) {
-    headerThemeBtn.addEventListener('click', () => {
-      const nextIndex = (themeOrder.indexOf(currentTheme) + 1) % themeOrder.length;
-      applyTheme(themeOrder[nextIndex], true);
-    });
-  }
-
-  themeCards.forEach(card => {
-    card.addEventListener('click', () => {
-      const chosen = card.dataset.themeChoice;
-      if (chosen && chosen !== currentTheme) {
-        applyTheme(chosen, true);
-      }
-    });
-  });
+  // Initialize UI theme on load
+  const currentTheme = localStorage.getItem('paysplit_theme') || 'neumorphic';
+  document.documentElement.setAttribute('data-theme', currentTheme);
 
   // --------------------------------------------------------------------------
   // 10. Profile Settings & Realistic User Account Handlers
@@ -931,21 +831,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const toggleBiometrics = document.getElementById('toggle-biometrics');
-  if (toggleBiometrics) {
-    toggleBiometrics.addEventListener('change', () => {
-      triggerHaptic('light');
-      showToast(toggleBiometrics.checked ? 'เปิดใช้งาน Face ID ยืนยันรายการ' : 'ปิดการยืนยันด้วย Face ID');
-    });
-  }
 
-  const toggleDailyAlert = document.getElementById('toggle-daily-alert');
-  if (toggleDailyAlert) {
-    toggleDailyAlert.addEventListener('change', () => {
-      triggerHaptic('light');
-      showToast(toggleDailyAlert.checked ? 'เปิดแจ้งเตือนสรุปงบ Safe-to-Spend รายวัน' : 'ปิดการแจ้งเตือนรายวัน');
-    });
-  }
 
   const toggleHaptic = document.getElementById('toggle-haptic');
   if (toggleHaptic) {
