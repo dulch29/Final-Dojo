@@ -5,6 +5,8 @@ import {
   logExpense, 
   updateUserCommitments, 
   resetDemo,
+  resetToNewUser,
+  updateSavingsGoal,
   setAllocationPlan,
   ALLOCATION_PLANS
 } from './state.js';
@@ -85,14 +87,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (user) {
       syncUserProfileUI(user);
-      if (user.commitments) {
-        updateUserCommitments(user.commitments);
+      if (user.isDemo) {
+        if (user.commitments) {
+          updateUserCommitments(user.commitments);
+        }
+        // Seed standard scenario on initial login for demo persona
+        if (!getState().hasReceivedIncome) {
+          receiveIncome(12000, 'งานรีแบรนด์ SME (มาตรฐานมินท์)');
+        }
+      } else {
+        // Real authenticated user
+        if (user.commitments) {
+          updateUserCommitments(user.commitments);
+        }
+        if (user.activePlan) {
+          setAllocationPlan(user.activePlan);
+        }
+        if (user.savingsGoal) {
+          updateSavingsGoal(user.savingsGoal);
+        }
+        // If brand new user with no income, guarantee completely clean 0 balance state
+        if (user.isNewUser && !getState().hasReceivedIncome) {
+          resetToNewUser(user.commitments, user.activePlan || 'freelance_safety', user.savingsGoal);
+        }
       }
-    }
-
-    // Seed standard scenario on initial login if not yet seeded
-    if (!getState().hasReceivedIncome) {
-      receiveIncome(12000, user?.isDemo ? 'งานรีแบรนด์ SME (มาตรฐานมินท์)' : 'เงินโอนรับค่าจ้าง');
     }
   };
 
@@ -220,28 +238,199 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // --------------------------------------------------------------------------
+  // Register Form: Plan Selection & Block-based Commitments
+  // --------------------------------------------------------------------------
+  let registeredCommitmentItems = [];
+
+  const regPlanChips = document.querySelectorAll('.reg-plan-chip');
+  const regSelectedPlan = document.getElementById('reg-selected-plan');
+  if (regPlanChips.length > 0) {
+    regPlanChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        regPlanChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        if (regSelectedPlan) {
+          regSelectedPlan.value = chip.dataset.plan || 'freelance_safety';
+        }
+        triggerHaptic('light');
+      });
+    });
+  }
+
+  const commitmentPresetBlocks = document.querySelectorAll('.commit-block-btn:not(.btn-add-custom-block)');
+  const activeCommitmentsTray = document.getElementById('active-commitments-tray');
+  const trayEmptyHint = document.getElementById('tray-empty-hint');
+  const trayItemsList = document.getElementById('tray-items-list');
+  const regCommitmentsTotalBadge = document.getElementById('reg-commitments-total-badge');
+  const btnToggleCustomCommitment = document.getElementById('btn-toggle-custom-commitment');
+  const customCommitInlineBox = document.getElementById('custom-commit-inline-box');
+  const btnConfirmAddCustomCommit = document.getElementById('btn-confirm-add-custom-commit');
+  const customCommitName = document.getElementById('custom-commit-name');
+  const customCommitAmount = document.getElementById('custom-commit-amount');
+
+  function renderCommitmentTray() {
+    if (!trayItemsList) return;
+    if (registeredCommitmentItems.length === 0) {
+      if (trayEmptyHint) trayEmptyHint.style.display = 'block';
+      trayItemsList.innerHTML = '';
+      if (regCommitmentsTotalBadge) regCommitmentsTotalBadge.textContent = 'รวม: ฿0/เดือน';
+      return;
+    }
+
+    if (trayEmptyHint) trayEmptyHint.style.display = 'none';
+
+    let total = 0;
+    trayItemsList.innerHTML = registeredCommitmentItems.map((item, idx) => {
+      const amt = parseInt(item.amount, 10) || 0;
+      total += amt;
+      return `
+        <div class="tray-item-row" data-id="${item.id}">
+          <div class="tray-item-info">
+            <span>${item.emoji || '🔒'}</span>
+            <span>${item.name}</span>
+          </div>
+          <div class="tray-item-input-wrap">
+            <input type="number" class="tray-item-input" data-index="${idx}" value="${amt}" min="0" step="100" inputmode="numeric">
+            <span style="font-size: 0.74rem; color: var(--text-muted);">฿</span>
+            <button type="button" class="btn-tray-remove" data-index="${idx}" aria-label="ลบรายการ">✕</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    if (regCommitmentsTotalBadge) {
+      regCommitmentsTotalBadge.textContent = `รวม: ฿${total.toLocaleString('th-TH')}/เดือน`;
+    }
+
+    // Attach listeners to tray inputs & remove buttons
+    trayItemsList.querySelectorAll('.tray-item-input').forEach(input => {
+      input.addEventListener('input', (e) => {
+        const idx = parseInt(e.target.dataset.index, 10);
+        if (registeredCommitmentItems[idx]) {
+          registeredCommitmentItems[idx].amount = parseInt(e.target.value, 10) || 0;
+          let currentTotal = registeredCommitmentItems.reduce((sum, it) => sum + (parseInt(it.amount, 10) || 0), 0);
+          if (regCommitmentsTotalBadge) {
+            regCommitmentsTotalBadge.textContent = `รวม: ฿${currentTotal.toLocaleString('th-TH')}/เดือน`;
+          }
+        }
+      });
+    });
+
+    trayItemsList.querySelectorAll('.btn-tray-remove').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idx = parseInt(btn.dataset.index, 10);
+        const removed = registeredCommitmentItems.splice(idx, 1)[0];
+        if (removed && removed.key) {
+          const matchingPreset = document.querySelector(`.commit-block-btn[data-key="${removed.key}"]`);
+          if (matchingPreset) matchingPreset.classList.remove('active');
+        }
+        triggerHaptic('light');
+        renderCommitmentTray();
+      });
+    });
+  }
+
+  // Toggle preset blocks
+  commitmentPresetBlocks.forEach(block => {
+    block.addEventListener('click', () => {
+      const key = block.dataset.key;
+      const name = block.dataset.name;
+      const amount = parseInt(block.dataset.amount, 10) || 0;
+      const emoji = block.dataset.emoji || '🔒';
+
+      const existingIndex = registeredCommitmentItems.findIndex(i => i.key === key);
+      if (existingIndex >= 0) {
+        registeredCommitmentItems.splice(existingIndex, 1);
+        block.classList.remove('active');
+      } else {
+        registeredCommitmentItems.push({
+          id: 'c-' + key + '-' + Date.now(),
+          key,
+          name,
+          amount,
+          emoji
+        });
+        block.classList.add('active');
+      }
+      triggerHaptic('light');
+      renderCommitmentTray();
+    });
+  });
+
+  // Toggle custom commitment input box
+  if (btnToggleCustomCommitment && customCommitInlineBox) {
+    btnToggleCustomCommitment.addEventListener('click', () => {
+      const isVisible = customCommitInlineBox.style.display === 'block';
+      customCommitInlineBox.style.display = isVisible ? 'none' : 'block';
+      if (!isVisible && customCommitName) customCommitName.focus();
+    });
+  }
+
+  if (btnConfirmAddCustomCommit) {
+    btnConfirmAddCustomCommit.addEventListener('click', () => {
+      const name = customCommitName?.value.trim();
+      const amount = parseInt(customCommitAmount?.value, 10) || 0;
+      if (!name) {
+        showToast('กรุณาระบุชื่อรายการ');
+        return;
+      }
+      registeredCommitmentItems.push({
+        id: 'c-custom-' + Date.now(),
+        name,
+        amount,
+        emoji: '📌'
+      });
+      if (customCommitName) customCommitName.value = '';
+      if (customCommitAmount) customCommitAmount.value = '';
+      if (customCommitInlineBox) customCommitInlineBox.style.display = 'none';
+      triggerHaptic('medium');
+      renderCommitmentTray();
+    });
+  }
+
   // Handle Registration Submit
   if (formRegister) {
     formRegister.addEventListener('submit', async (e) => {
       e.preventDefault();
       const name = document.getElementById('reg-name')?.value.trim();
       const role = document.getElementById('reg-role')?.value.trim();
-      const rent = parseInt(document.getElementById('reg-commitments')?.value, 10) || 6500;
       const email = document.getElementById('reg-email')?.value.trim();
       const pass = document.getElementById('reg-password')?.value;
+      const activePlan = document.getElementById('reg-selected-plan')?.value || 'freelance_safety';
+      const savingsTitle = document.getElementById('reg-savings-title')?.value.trim() || 'เงินสำรองฉุกเฉิน';
+      const savingsTarget = parseInt(document.getElementById('reg-savings-target')?.value, 10) || 30000;
 
       if (!email || !pass || !name) return;
 
-      showToast('กำลังสร้างบัญชีผู้ใช้ใหม่...');
+      const totalCommitments = registeredCommitmentItems.reduce((sum, it) => sum + (parseInt(it.amount, 10) || 0), 0);
+      const rentItem = registeredCommitmentItems.find(i => i.key === 'rent');
+      const netItem = registeredCommitmentItems.find(i => i.key === 'internet' || i.key === 'utilities');
+      const homeItem = registeredCommitmentItems.find(i => i.key === 'home');
+
       const commitments = {
-        rent: rent,
-        internet: 0,
-        sentHome: 0,
-        total: rent
+        rent: rentItem ? parseInt(rentItem.amount, 10) : 0,
+        internet: netItem ? parseInt(netItem.amount, 10) : 0,
+        sentHome: homeItem ? parseInt(homeItem.amount, 10) : 0,
+        total: totalCommitments,
+        items: registeredCommitmentItems.map(i => ({
+          id: i.id,
+          name: i.name,
+          amount: parseInt(i.amount, 10) || 0,
+          emoji: i.emoji || '🔒'
+        }))
       };
 
-      const res = await registerWithEmail(email, pass, name, role, commitments);
+      const savingsGoal = {
+        title: savingsTitle,
+        targetAmount: savingsTarget
+      };
+
+      showToast('กำลังสร้างบัญชีผู้ใช้ใหม่...');
+      const res = await registerWithEmail(email, pass, name, role, commitments, activePlan, savingsGoal);
       if (res.success) {
+        // Guarantee clean reset state for new user
+        resetToNewUser(commitments, activePlan, savingsGoal);
         closeAuthModal();
         triggerHaptic('medium');
         fireSplitConfetti();
@@ -429,9 +618,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const quickChips = document.querySelectorAll('.neu-expense-btn:not(#btn-custom-exp-chip)');
   quickChips.forEach(chip => {
     chip.addEventListener('click', () => {
+      const currentState = getState();
       const name = chip.dataset.name;
       const amount = parseFloat(chip.dataset.amount);
       const category = chip.dataset.category || 'safe';
+
+      if (category === 'safe' && (!currentState.hasReceivedIncome || currentState.safeSpendBalance < amount)) {
+        triggerHaptic('medium');
+        showToast(`ยอด Safe-to-Spend ไม่เพียงพอ (คงเหลือ ฿${currentState.safeSpendBalance.toLocaleString('th-TH')}) แตะ "ฉันได้รับเงิน" ด้านบนเพื่อแยกเงินก่อน`);
+        return;
+      }
 
       logExpense(name, amount, category);
       triggerHaptic('light');
@@ -440,13 +636,19 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --------------------------------------------------------------------------
-  // 7. Reset Demo Actions (Header + Profile Tab)
+  // 7. Reset Demo / User Actions (Header + Profile Tab)
   // --------------------------------------------------------------------------
   const handleReset = () => {
-    resetDemo();
+    const user = getCurrentUser();
+    if (user?.isDemo) {
+      resetDemo();
+      showToast('รีเซ็ตข้อมูลเดโมคุณมินท์เรียบร้อย');
+    } else {
+      resetToNewUser(user?.commitments, user?.activePlan, user?.savingsGoal);
+      showToast('รีเซ็ตยอดเงินรอบนี้เป็น 0฿ เรียบร้อย');
+    }
     presetChips.forEach(c => c.classList.remove('active'));
     triggerHaptic('light');
-    showToast('รีเซ็ตเดโมเรียบร้อย');
   };
 
   const btnReset = document.getElementById('btn-reset-demo');
@@ -562,6 +764,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const selectedPlan = setAllocationPlan(planId, customRates);
+      updateCurrentUserProfile({ activePlan: planId });
       triggerHaptic('medium');
       showToast(`สลับใช้: ${selectedPlan.name}`);
     });
@@ -580,10 +783,72 @@ document.addEventListener('DOMContentLoaded', () => {
       bufferPercent: bufVal / 100,
       savingsPercent: savVal / 100
     });
+    updateCurrentUserProfile({
+      activePlan: 'custom',
+      splitRules: { bufferPercent: bufVal / 100, savingsPercent: savVal / 100 }
+    });
   };
 
   if (customSliderBuffer) customSliderBuffer.addEventListener('input', handleCustomSliderChange);
   if (customSliderSavings) customSliderSavings.addEventListener('input', handleCustomSliderChange);
+
+  // --------------------------------------------------------------------------
+  // 8.2 Tab 2: Savings Goal Drawer Handler
+  // --------------------------------------------------------------------------
+  const btnEditSavingsGoal = document.getElementById('btn-edit-savings-goal');
+  const savingsGoalModalBackdrop = document.getElementById('savings-goal-modal-backdrop');
+  const btnCloseSavingsDrawer = document.getElementById('btn-close-savings-drawer');
+  const formEditSavingsGoal = document.getElementById('form-edit-savings-goal');
+  const inputGoalTitle = document.getElementById('input-goal-title');
+  const inputGoalTarget = document.getElementById('input-goal-target');
+  const goalPresetChips = document.querySelectorAll('.goal-preset-chip');
+
+  const openSavingsGoalModal = () => {
+    if (!savingsGoalModalBackdrop) return;
+    const currentGoal = getState().savingsGoal || { title: 'เงินสำรองฉุกเฉิน', targetAmount: 30000 };
+    if (inputGoalTitle) inputGoalTitle.value = currentGoal.title || '';
+    if (inputGoalTarget) inputGoalTarget.value = currentGoal.targetAmount || 30000;
+    savingsGoalModalBackdrop.classList.add('open');
+  };
+
+  const closeSavingsGoalModal = () => {
+    if (savingsGoalModalBackdrop) savingsGoalModalBackdrop.classList.remove('open');
+  };
+
+  if (btnEditSavingsGoal) btnEditSavingsGoal.addEventListener('click', openSavingsGoalModal);
+  if (btnCloseSavingsDrawer) btnCloseSavingsDrawer.addEventListener('click', closeSavingsGoalModal);
+  if (savingsGoalModalBackdrop) {
+    savingsGoalModalBackdrop.addEventListener('click', (e) => {
+      if (e.target === savingsGoalModalBackdrop) closeSavingsGoalModal();
+    });
+  }
+
+  goalPresetChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const title = chip.dataset.title;
+      const target = parseInt(chip.dataset.target, 10);
+      if (inputGoalTitle && title) inputGoalTitle.value = title;
+      if (inputGoalTarget && target) inputGoalTarget.value = target;
+      triggerHaptic('light');
+    });
+  });
+
+  if (formEditSavingsGoal) {
+    formEditSavingsGoal.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const title = inputGoalTitle?.value.trim() || 'เงินสำรองฉุกเฉิน';
+      const targetAmount = parseInt(inputGoalTarget?.value, 10) || 30000;
+      const newGoal = { title, targetAmount };
+
+      updateSavingsGoal(newGoal);
+      await updateCurrentUserProfile({ savingsGoal: newGoal });
+
+      closeSavingsGoalModal();
+      triggerHaptic('medium');
+      fireSplitConfetti();
+      showToast(`อัปเดตเป้าหมาย: "${title}" (฿${targetAmount.toLocaleString('th-TH')}) สำเร็จ!`);
+    });
+  }
 
   // --------------------------------------------------------------------------
   // 9. Multi-UI Style Theme System (Neumorphic / Modern Minimal / Glassmorphism)
@@ -720,6 +985,7 @@ document.addEventListener('DOMContentLoaded', () => {
       closeExpDrawer();
       closePersona();
       closePlansModal();
+      closeSavingsGoalModal();
       closeAuthModal();
     }
   });

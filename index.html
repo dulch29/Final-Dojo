@@ -547,8 +547,8 @@
             </svg>
           </div>
           <div>
-            <div class="mini-vault-title">ล็อกไว้ 3 ซองเงิน (฿9,000)</div>
-            <div class="mini-vault-desc">ค่าห้อง 4k · เน็ต 500 · ส่งแม่ 2k · สำรอง 1.5k · ออม 1k</div>
+            <div class="mini-vault-title" id="quick-vaults-summary-title">ล็อกไว้ 3 ซองเงิน (฿9,000)</div>
+            <div class="mini-vault-desc" id="quick-vaults-summary-desc">ค่าห้อง 4k · เน็ต 500 · ส่งแม่ 2k · สำรอง 1.5k · ออม 1k</div>
           </div>
         </div>
         <div class="mini-vault-arrow">ดูซองเงิน →</div>
@@ -587,7 +587,7 @@
             <div class="vault-num">฿<span id="amount-essentials">6,500</span></div>
           </div>
 
-          <div class="sub-checklist">
+          <div class="sub-checklist" id="vault-essentials-checklist">
             <div class="sub-item">
               <span>ค่าเช่าห้องพัก (โอนทุกวันที่ 1)</span>
               <span class="sub-item-val">฿4,000</span>
@@ -620,7 +620,7 @@
             <div class="vault-num">฿<span id="amount-buffer">1,500</span></div>
           </div>
 
-          <div class="buffer-callout">
+          <div class="buffer-callout" id="vault-buffer-callout">
             <span style="color: var(--text-mid);">กันไว้ 12.5% อัตโนมัติทุกจ็อบ</span>
             <span style="color: var(--pastel-buffer-text); font-weight: 700;">รองรับ ~1.5 สัปดาห์</span>
           </div>
@@ -646,11 +646,17 @@
 
           <div class="savings-goal-row">
             <div class="goal-desc-row">
-              <span style="font-weight: 600;">MacBook Pro M3 Max</span>
-              <span style="color: var(--pastel-savings-text); font-weight: 700;">เป้าหมาย ฿45,000</span>
+              <span style="font-weight: 600;" id="vault-savings-goal-title">MacBook Pro M3 Max</span>
+              <span style="color: var(--pastel-savings-text); font-weight: 700;" id="vault-savings-goal-target">เป้าหมาย ฿45,000</span>
             </div>
             <div class="goal-bar-track">
-              <div class="goal-bar-fill" style="width: 22%"></div>
+              <div class="goal-bar-fill" id="vault-savings-goal-bar" style="width: 22%"></div>
+            </div>
+            <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
+              <button class="btn-vault-edit-goal" id="btn-edit-savings-goal" type="button" aria-label="แก้ไขเป้าหมายการออม">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                <span>กำหนดเป้าหมาย</span>
+              </button>
             </div>
           </div>
         </article>
@@ -689,21 +695,24 @@
       <div class="settings-profile-capsule" id="btn-settings-open-profile" title="เปิดดูโปรไฟล์และตั้งค่าภาระจำเป็น">
         <div class="capsule-avatar-mini" id="settings-user-avatar">MR</div>
         <div class="capsule-info">
-          <div style="display: flex; align-items: center; gap: 6px;">
-            <span class="capsule-name" id="settings-user-name">มินท์ รัตนสุวรรณ (26)</span>
-            <span class="status-tag-active" id="settings-user-tag" style="font-size: 0.68rem; padding: 2px 7px;">Demo</span>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span class="capsule-name" id="settings-user-name">มินท์ รัตนสุวรรณ</span>
+            <span class="status-tag-active" id="settings-user-tag">Demo</span>
           </div>
           <div class="capsule-meta" id="settings-user-role">Freelance Brand & UI Designer · mint.design@email.com</div>
         </div>
-        <div class="capsule-action">โปรไฟล์ / ภาระจำเป็น →</div>
+        <div class="capsule-action-badge">
+          <span>แก้ไข</span>
+          <span class="capsule-arrow">›</span>
+        </div>
       </div>
 
-      <!-- 1. UI Style Gallery (Testing Multiple UI Styles) -->
+      <!-- 1. UI Style Gallery (Testing Multiple UI Styles - Sleek Segmented) -->
       <div class="profile-block">
         <div class="block-header-row">
           <div class="block-title-group">
             <span class="block-icon">🎨</span>
-            <span class="block-title">สไตล์การแสดงผล (UI Style System)</span>
+            <span class="block-title">สไตล์การแสดงผล UI</span>
           </div>
           <span class="status-tag-active" id="profile-theme-label">Neo-Tactile Hybrid</span>
         </div>
@@ -716,8 +725,8 @@
               <div class="neu-sample-circle"></div>
             </div>
             <div class="theme-card-info">
-              <div class="theme-card-title">Neo-Tactile Hybrid <span style="font-size: 0.68rem; color: #065F46; background: #D1FAE5; padding: 2px 8px; border-radius: var(--radius-pill); font-weight: 700; margin-left: 4px;">แนะนำ</span></div>
-              <div class="theme-card-sub">ผสานจุดเด่น 3 สไตล์: ปุ่มกดสัมผัสนูน + สเปซคลีนโปร่งตา ไม่รกกล่อง + ฟรอสต์ลอยตัว</div>
+              <div class="theme-card-title">Neo-Tactile <span class="theme-rec-tag">แนะนำ</span></div>
+              <div class="theme-card-sub">ปุ่มนูนสัมผัสจริง สเปซคลีน</div>
             </div>
             <span class="theme-radio-dot"></span>
           </button>
@@ -729,7 +738,7 @@
             </div>
             <div class="theme-card-info">
               <div class="theme-card-title">Modern Minimal</div>
-              <div class="theme-card-sub">โมเดิร์นคลีน ไฮคอนทราสต์ สบายตา อ่านง่ายรวดเร็ว</div>
+              <div class="theme-card-sub">โมเดิร์นคลีน ไฮคอนทราสต์</div>
             </div>
             <span class="theme-radio-dot"></span>
           </button>
@@ -741,7 +750,7 @@
             </div>
             <div class="theme-card-info">
               <div class="theme-card-title">Glassmorphism</div>
-              <div class="theme-card-sub">กระจกใส Frosted Glass โปร่งแสง ล้ำสมัย</div>
+              <div class="theme-card-sub">กระจกใส Frosted ลอยตัว</div>
             </div>
             <span class="theme-radio-dot"></span>
           </button>
@@ -1235,9 +1244,50 @@
     </div>
   </div>
 
+  <!-- Savings Goal Customization Drawer (Tab 2 Edit Goal) -->
+  <div class="sheet-backdrop" id="savings-goal-modal-backdrop">
+    <div class="glass-bottom-drawer" role="dialog" aria-modal="true">
+      <div class="drawer-drag-pill"></div>
+      
+      <div class="drawer-title-row">
+        <div>
+          <h3 class="drawer-h3">เป้าหมายเงินออม (Savings Goal)</h3>
+          <p class="drawer-sub-hint">เงินออมที่ถูกล็อกทุกยอดรายได้ จะนำมาสะสมเข้าเป้าหมายนี้</p>
+        </div>
+        <button class="drawer-close" id="btn-close-savings-drawer" aria-label="ปิด">✕</button>
+      </div>
+
+      <form id="form-edit-savings-goal" style="display: flex; flex-direction: column; gap: 14px; margin-top: 6px;">
+        <div class="form-group">
+          <label class="form-label" for="input-goal-title">ชื่อเป้าหมายของคุณ</label>
+          <input type="text" id="input-goal-title" class="form-input" required placeholder="เช่น MacBook Pro, เงินสำรองฉุกเฉิน, ทริปญี่ปุ่น">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-goal-target">จำนวนเงินเป้าหมาย (บาท)</label>
+          <input type="number" id="input-goal-target" class="form-input num-tabular" required min="1000" step="500" placeholder="30000" inputmode="numeric">
+        </div>
+
+        <div class="goal-preset-quick-pills">
+          <span style="font-size: 0.74rem; color: var(--text-muted); display: block; margin-bottom: 6px;">เป้าหมายยอดฮิต:</span>
+          <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+            <button type="button" class="goal-preset-chip" data-title="เงินสำรองฉุกเฉิน 6 เดือน" data-target="50000">🛡️ สำรอง 6 เดือน (50k)</button>
+            <button type="button" class="goal-preset-chip" data-title="MacBook Pro M3 Max" data-target="45000">💻 MacBook (45k)</button>
+            <button type="button" class="goal-preset-chip" data-title="ทริปเที่ยวญี่ปุ่นปลายปี" data-target="35000">✈️ เที่ยวญี่ปุ่น (35k)</button>
+            <button type="button" class="goal-preset-chip" data-title="กองทุนลงทุนสร้างตัว" data-target="100000">📈 ลงทุน (100k)</button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-highlight-receive" style="width: 100%; height: 50px; justify-content: center; margin-top: 6px;">
+          <span>💾 บันทึกเป้าหมายการออม</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
   <!-- Auth Modal: Email Login & Register Drawer -->
   <div class="sheet-backdrop" id="auth-modal-backdrop">
-    <div class="glass-bottom-drawer" role="dialog" aria-modal="true" style="max-height: 85vh; overflow-y: auto;">
+    <div class="glass-bottom-drawer" role="dialog" aria-modal="true" style="max-height: 88vh; overflow-y: auto;">
       <div class="drawer-drag-pill"></div>
       
       <div class="drawer-title-row">
@@ -1266,30 +1316,139 @@
         </button>
       </form>
 
-      <!-- Register Form -->
+      <!-- Register Form with Block Commitment Selector, Plan Choice, and Savings Goal -->
       <form id="form-register" class="auth-form-body" style="display: none;">
         <div class="form-group">
           <label class="form-label" for="reg-name">ชื่อของคุณ</label>
           <input type="text" id="reg-name" class="form-input" required placeholder="เช่น ธนา รัตนโชติ">
         </div>
+
         <div class="form-group">
           <label class="form-label" for="reg-role">สายอาชีพ / ลักษณะงาน</label>
           <input type="text" id="reg-role" class="form-input" placeholder="เช่น ฟรีแลนซ์ 3D Artist, นักเขียน, สตรีมเมอร์">
         </div>
+
+        <!-- 1. Allocation Plan Selection for New User -->
         <div class="form-group">
-          <label class="form-label" for="reg-commitments">ค่าใช้จ่ายจำเป็นคงที่ต่อเดือน (ค่าห้อง/เน็ต/ผ่อนของ)</label>
-          <input type="number" id="reg-commitments" class="form-input" value="6500" required inputmode="numeric">
-          <span class="form-hint" style="font-size: 0.74rem; color: var(--text-muted); display: block; margin-top: 4px;">PaySplit จะล็อกก้อนนี้ไว้เป็นอันดับแรกทันทีที่เงินเข้า</span>
+          <label class="form-label">เลือกแบบแผนการแยกเงินที่อยากใช้</label>
+          <div class="reg-plan-selector-grid" id="reg-plan-selector">
+            <div class="reg-plan-chip active" data-plan="freelance_safety">
+              <span class="reg-plan-emoji">🛡️</span>
+              <div class="reg-plan-text">
+                <span class="reg-plan-title">ฟรีแลนซ์ ปลอดภัยสูง</span>
+                <span class="reg-plan-sub">ล็อกจำเป็น 100% · กันสำรอง 12.5%</span>
+              </div>
+            </div>
+            <div class="reg-plan-chip" data-plan="classic_50_30_20">
+              <span class="reg-plan-emoji">⚖️</span>
+              <div class="reg-plan-text">
+                <span class="reg-plan-title">สมดุลชีวิต 50/30/20</span>
+                <span class="reg-plan-sub">จำเป็น 50% · กินใช้ 30% · ออม 20%</span>
+              </div>
+            </div>
+            <div class="reg-plan-chip" data-plan="aggressive_wealth">
+              <span class="reg-plan-emoji">🚀</span>
+              <div class="reg-plan-text">
+                <span class="reg-plan-title">เร่งสร้างตัว (ออมหนัก)</span>
+                <span class="reg-plan-sub">ออมลงทุนเข้มข้น 25% · สำรอง 10%</span>
+              </div>
+            </div>
+          </div>
+          <input type="hidden" id="reg-selected-plan" value="freelance_safety">
         </div>
+
+        <!-- 2. Block-Based Commitments Selector -->
+        <div class="form-group">
+          <div class="commitments-header-row">
+            <label class="form-label" style="margin-bottom: 2px;">ค่าใช้จ่ายจำเป็นคงที่ (ล็อกไว้ก่อนกินใช้)</label>
+            <span class="commitments-live-total" id="reg-commitments-total-badge">รวม: ฿0/เดือน</span>
+          </div>
+          <p class="form-hint" style="font-size: 0.74rem; color: var(--text-muted); margin-bottom: 8px;">
+            แตะเลือกบล็อกเพื่อเพิ่มทันที หรือปรับราคาตามจริงทีหลังได้:
+          </p>
+
+          <!-- Preset Blocks Grid -->
+          <div class="commitment-preset-blocks" id="commitment-preset-blocks">
+            <button type="button" class="commit-block-btn" data-key="rent" data-name="ค่าห้องพัก/ผ่อนบ้าน" data-amount="4000" data-emoji="🏠">
+              <span class="block-icon">🏠</span>
+              <span class="block-title">ค่าห้องพัก</span>
+              <span class="block-price">4,000฿</span>
+            </button>
+            <button type="button" class="commit-block-btn" data-key="internet" data-name="เน็ต/ไฟเบอร์" data-amount="500" data-emoji="📶">
+              <span class="block-icon">📶</span>
+              <span class="block-title">ค่าเน็ต</span>
+              <span class="block-price">500฿</span>
+            </button>
+            <button type="button" class="commit-block-btn" data-key="home" data-name="ส่งให้ที่บ้าน" data-amount="2000" data-emoji="👵">
+              <span class="block-icon">👵</span>
+              <span class="block-title">ส่งที่บ้าน</span>
+              <span class="block-price">2,000฿</span>
+            </button>
+            <button type="button" class="commit-block-btn" data-key="utilities" data-name="ค่าน้ำค่าไฟ" data-amount="1200" data-emoji="⚡">
+              <span class="block-icon">⚡</span>
+              <span class="block-title">น้ำไฟ</span>
+              <span class="block-price">1,200฿</span>
+            </button>
+            <button type="button" class="commit-block-btn" data-key="travel" data-name="ค่าเดินทาง/รถ" data-amount="3000" data-emoji="🚗">
+              <span class="block-icon">🚗</span>
+              <span class="block-title">ค่าเดินทาง</span>
+              <span class="block-price">3,000฿</span>
+            </button>
+            <button type="button" class="commit-block-btn" data-key="debt" data-name="ผ่อนบัตร/หนี้สิน" data-amount="2500" data-emoji="💳">
+              <span class="block-icon">💳</span>
+              <span class="block-title">ผ่อนบัตร</span>
+              <span class="block-price">2,500฿</span>
+            </button>
+            <button type="button" class="commit-block-btn" data-key="pet" data-name="สัตว์เลี้ยง/อาหาร" data-amount="1000" data-emoji="🐱">
+              <span class="block-icon">🐱</span>
+              <span class="block-title">สัตว์เลี้ยง</span>
+              <span class="block-price">1,000฿</span>
+            </button>
+            <button type="button" class="commit-block-btn btn-add-custom-block" id="btn-toggle-custom-commitment">
+              <span class="block-icon">➕</span>
+              <span class="block-title">เพิ่มเอง</span>
+              <span class="block-price">กำหนดเอง</span>
+            </button>
+          </div>
+
+          <!-- Active Selected Commitments List with Editable Amounts -->
+          <div class="active-commitments-tray" id="active-commitments-tray">
+            <div class="tray-empty-hint" id="tray-empty-hint">ยังไม่ได้เลือกรายการ (แตะบล็อกด้านบนเพื่อเพิ่ม)</div>
+            <div class="tray-items-list" id="tray-items-list"></div>
+          </div>
+
+          <!-- Inline Custom Commitment Form (Collapsed by default) -->
+          <div class="custom-commit-inline-box" id="custom-commit-inline-box" style="display: none;">
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="custom-commit-name" class="form-input" placeholder="ชื่อรายการ เช่น ค่าประกัน, คอร์สเรียน" style="flex: 2;">
+              <input type="number" id="custom-commit-amount" class="form-input num-tabular" placeholder="บาท" min="0" step="100" style="flex: 1;" inputmode="numeric">
+              <button type="button" class="btn-highlight-receive" id="btn-confirm-add-custom-commit" style="height: 42px; padding: 0 14px; font-size: 0.82rem; white-space: nowrap;">
+                <span>เพิ่ม</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Savings Goal Customization for New User -->
+        <div class="form-group">
+          <label class="form-label">กำหนดเป้าหมายเงินออมของคุณ</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="reg-savings-title" class="form-input" placeholder="เป้าหมาย เช่น เงินสำรองฉุกเฉิน, ทริปเที่ยว" value="เงินสำรองฉุกเฉิน" style="flex: 2;">
+            <input type="number" id="reg-savings-target" class="form-input num-tabular" placeholder="เป้าหมาย (บาท)" value="30000" min="1000" step="1000" style="flex: 1.2;" inputmode="numeric">
+          </div>
+        </div>
+
         <div class="form-group">
           <label class="form-label" for="reg-email">อีเมล</label>
           <input type="email" id="reg-email" class="form-input" required placeholder="name@example.com" autocomplete="email">
         </div>
+
         <div class="form-group">
           <label class="form-label" for="reg-password">รหัสผ่าน (อย่างน้อย 6 ตัวอักษร)</label>
           <input type="password" id="reg-password" class="form-input" required minlength="6" placeholder="••••••••" autocomplete="new-password">
         </div>
-        <button type="submit" class="btn-highlight-receive" style="width: 100%; height: 50px; justify-content: center;">
+
+        <button type="submit" class="btn-highlight-receive" style="width: 100%; height: 50px; justify-content: center; margin-top: 4px;">
           <span>สร้างบัญชีและเริ่มแยกเงิน</span>
         </button>
       </form>

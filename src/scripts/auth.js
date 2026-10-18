@@ -84,7 +84,10 @@ export async function loginWithEmail(email, password) {
       displayName: cred.user.displayName || email.split('@')[0],
       role: cloudData?.role || 'ฟรีแลนซ์',
       commitments: cloudData?.commitments || { rent: 4000, internet: 500, sentHome: 2000, total: 6500 },
-      splitRules: cloudData?.splitRules || { bufferPercent: 0.125, savingsPercent: 0.0833 }
+      splitRules: cloudData?.splitRules || { bufferPercent: 0.125, savingsPercent: 0.0833 },
+      activePlan: cloudData?.activePlan || 'freelance_safety',
+      savingsGoal: cloudData?.savingsGoal || { title: 'เงินสำรองฉุกเฉิน', targetAmount: 30000 },
+      isDemo: false
     };
     localStorage.setItem('paysplit_active_user', JSON.stringify(userObj));
     notifyAuth(userObj);
@@ -96,7 +99,7 @@ export async function loginWithEmail(email, password) {
 }
 
 // 3. New User Registration
-export async function registerWithEmail(email, password, displayName, role, commitments) {
+export async function registerWithEmail(email, password, displayName, role, commitments, activePlan = 'freelance_safety', savingsGoal = null) {
   try {
     const cred = await createUserWithEmailAndPassword(auth, email, password);
     await updateProfile(cred.user, { displayName });
@@ -106,8 +109,12 @@ export async function registerWithEmail(email, password, displayName, role, comm
       email,
       displayName,
       role: role || 'ฟรีแลนซ์',
-      commitments: commitments || { rent: 4000, internet: 500, sentHome: 2000, total: 6500 },
+      commitments: commitments || { rent: 0, internet: 0, sentHome: 0, total: 0, items: [] },
       splitRules: { bufferPercent: 0.125, savingsPercent: 0.0833 },
+      activePlan: activePlan || 'freelance_safety',
+      savingsGoal: savingsGoal || { title: 'เงินสำรองฉุกเฉิน', targetAmount: 30000 },
+      isDemo: false,
+      isNewUser: true,
       createdAt: new Date().toISOString()
     };
 

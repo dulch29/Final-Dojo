@@ -40,15 +40,15 @@ export function renderApp(state) {
     animateCounter(safeEl, prevValues.safe, state.safeSpendBalance, 500);
   }
 
-  // Status Message
+  // Status Message (Single line, crisp)
   const statusMsg = document.getElementById('safe-status-msg');
   if (statusMsg) {
     if (!state.hasReceivedIncome || state.incomeTotal === 0) {
-      statusMsg.textContent = 'แตะรับเงินเพื่อเริ่มจัดสรร';
+      statusMsg.textContent = 'ยังไม่มีรายรับรอบนี้ · พร้อมแยกเงินทันที';
     } else if (state.safeSpendBalance > 0) {
-      statusMsg.textContent = 'ล็อก 3 ซองแล้ว · ปลอดภัย 100%';
+      statusMsg.textContent = '● ซองเงินล็อกแล้ว 100%';
     } else {
-      statusMsg.textContent = 'ใช้ครบแล้ว · ค่าห้องยังปลอดภัย 100%';
+      statusMsg.textContent = 'ใช้ครบแล้ว · ซองจำเป็นปลอดภัย';
     }
   }
 
@@ -72,6 +72,77 @@ export function renderApp(state) {
   if (essentialsEl) animateCounter(essentialsEl, prevValues.essentials, state.essentialsBalance, 400);
   if (bufferEl) animateCounter(bufferEl, prevValues.buffer, state.bufferBalance, 400);
   if (savingsEl) animateCounter(savingsEl, prevValues.savings, state.savingsBalance, 400);
+
+  // Dynamic Vault 1 Checklist (Commitments Breakdown)
+  const essentialsChecklist = document.getElementById('vault-essentials-checklist');
+  if (essentialsChecklist) {
+    const items = state.commitments?.items || [];
+    if (items.length === 0) {
+      const rent = state.commitments?.rent || 0;
+      const net = state.commitments?.internet || 0;
+      const home = state.commitments?.sentHome || 0;
+      if (rent + net + home === 0) {
+        essentialsChecklist.innerHTML = `
+          <div class="sub-item empty" style="justify-content: center; color: var(--text-muted); font-size: 0.78rem;">
+            <span>ยังไม่ได้เพิ่มรายการภาระจำเป็น</span>
+          </div>
+        `;
+      } else {
+        essentialsChecklist.innerHTML = `
+          <div class="sub-item"><span>🏠 ค่าเช่าห้องพัก / ที่อยู่</span><span class="sub-item-val">฿${rent.toLocaleString('th-TH')}</span></div>
+          ${net > 0 ? `<div class="sub-item"><span>📶 อินเทอร์เน็ต / ค่าน้ำไฟ</span><span class="sub-item-val">฿${net.toLocaleString('th-TH')}</span></div>` : ''}
+          ${home > 0 ? `<div class="sub-item"><span>👵 ส่งให้ทางบ้าน</span><span class="sub-item-val">฿${home.toLocaleString('th-TH')}</span></div>` : ''}
+        `;
+      }
+    } else {
+      essentialsChecklist.innerHTML = items.map(item => `
+        <div class="sub-item">
+          <span>${item.emoji || '🔒'} ${item.name}</span>
+          <span class="sub-item-val">฿${item.amount.toLocaleString('th-TH')}</span>
+        </div>
+      `).join('');
+    }
+  }
+
+  // Dynamic Vault 2 Buffer Callout
+  const plan = ALLOCATION_PLANS[state.activePlan] || ALLOCATION_PLANS.freelance_safety;
+  const bufferCallout = document.getElementById('vault-buffer-callout');
+  if (bufferCallout) {
+    const bufRate = plan.id === 'custom'
+      ? Math.round((state.customPlanRates?.bufferPercent || 0.12) * 100)
+      : Math.round((plan.bufferPercent || 0.125) * 100);
+    bufferCallout.innerHTML = `
+      <span style="color: var(--text-mid);">กันไว้ ${bufRate}% อัตโนมัติทุกจ็อบ</span>
+      <span style="color: var(--pastel-buffer-text); font-weight: 700;">รองรับ ~${Math.max(1, Math.round(bufRate / 8))} สัปดาห์</span>
+    `;
+  }
+
+  // Dynamic Vault 3 Savings Goal
+  const goalTitleEl = document.getElementById('vault-savings-goal-title');
+  const goalTargetEl = document.getElementById('vault-savings-goal-target');
+  const goalBarFill = document.getElementById('vault-savings-goal-bar');
+
+  const goal = state.savingsGoal || { title: 'เงินสำรองฉุกเฉิน', targetAmount: 30000 };
+  const target = goal.targetAmount || 1;
+  const goalProgress = Math.min(100, Math.round((state.savingsBalance / target) * 100));
+
+  if (goalTitleEl) goalTitleEl.textContent = goal.title;
+  if (goalTargetEl) goalTargetEl.textContent = `เป้าหมาย ฿${target.toLocaleString('th-TH')} (${goalProgress}%)`;
+  if (goalBarFill) goalBarFill.style.width = `${goalProgress}%`;
+
+  // Dynamic Mini Vaults Capsule on Home Screen
+  const quickVaultsTitle = document.getElementById('quick-vaults-summary-title');
+  const quickVaultsDesc = document.getElementById('quick-vaults-summary-desc');
+  if (quickVaultsTitle && quickVaultsDesc) {
+    const lockedTotal = state.essentialsBalance + state.bufferBalance + state.savingsBalance;
+    if (state.incomeTotal > 0) {
+      quickVaultsTitle.textContent = `ล็อกไว้ 3 ซองเงิน (฿${lockedTotal.toLocaleString('th-TH')})`;
+      quickVaultsDesc.textContent = `จำเป็น ฿${state.essentialsBalance.toLocaleString('th-TH')} · สำรอง ฿${state.bufferBalance.toLocaleString('th-TH')} · ออม ฿${state.savingsBalance.toLocaleString('th-TH')}`;
+    } else {
+      quickVaultsTitle.textContent = 'ล็อกไว้ 3 ซองเงิน (พร้อมจัดสรร)';
+      quickVaultsDesc.textContent = `ภาระจำเป็น ฿${(state.commitments?.total || 0).toLocaleString('th-TH')} · เงินสำรอง · ${goal.title}`;
+    }
+  }
 
   // 3. Liquid Split Progress Bar
   const totalIncome = state.incomeTotal || 1;
@@ -100,16 +171,42 @@ export function renderApp(state) {
   }
 
   // 4. Update Active Plan UI Badges
-  const plan = ALLOCATION_PLANS[state.activePlan] || ALLOCATION_PLANS.freelance_safety;
   const homePlanBadge = document.getElementById('home-active-plan-badge');
   if (homePlanBadge) {
-    homePlanBadge.innerHTML = `<span class="plan-pill-icon">${plan.emoji}</span> <span>${plan.shortName}</span>`;
+    homePlanBadge.innerHTML = `<span class="plan-pill-icon">${plan.emoji}</span> <span>${plan.shortName}</span> <span class="plan-pill-arrow">▾</span>`;
   }
 
   const settingsPlanName = document.getElementById('settings-active-plan-name');
   const settingsPlanDesc = document.getElementById('settings-active-plan-desc');
-  if (settingsPlanName) settingsPlanName.textContent = `${plan.emoji} ${plan.name}`;
+  if (settingsPlanName) settingsPlanName.textContent = `${plan.emoji} ${plan.shortName}`;
   if (settingsPlanDesc) settingsPlanDesc.textContent = plan.description;
+
+  // Settings Rules Blueprint Values (Single line, aligned)
+  const ruleEssentials = document.getElementById('settings-essentials-rule-val');
+  const ruleBuffer = document.getElementById('settings-buffer-rule-val');
+  const ruleSavings = document.getElementById('settings-savings-rule-val');
+
+  if (ruleEssentials) {
+    if (plan.id === 'classic_50_30_20') {
+      ruleEssentials.innerHTML = `50% <span class="rule-unit">ของยอด</span>`;
+    } else {
+      ruleEssentials.innerHTML = `฿${(state.commitments.total || 0).toLocaleString('th-TH')} <span class="rule-unit">/เดือน</span>`;
+    }
+  }
+
+  if (ruleBuffer) {
+    const bufPct = plan.id === 'custom'
+      ? Math.round((state.customPlanRates?.bufferPercent || 0.12) * 100)
+      : Math.round((plan.bufferPercent || 0.125) * 100);
+    ruleBuffer.innerHTML = `${bufPct}% <span class="rule-unit">ของยอด</span>`;
+  }
+
+  if (ruleSavings) {
+    const savPct = plan.id === 'custom'
+      ? Math.round((state.customPlanRates?.savingsPercent || 0.10) * 100)
+      : Math.round((plan.savingsPercent || 0.0833) * 100);
+    ruleSavings.innerHTML = `${savPct}% <span class="rule-unit">ของยอด</span>`;
+  }
 
   // Highlight active plan card in drawer if open
   document.querySelectorAll('.plan-option-card').forEach(card => {

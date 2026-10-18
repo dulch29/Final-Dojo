@@ -82,13 +82,57 @@ export const INITIAL_STATE = {
     rent: 4000,
     internet: 500,
     sentHome: 2000,
-    total: 6500
+    total: 6500,
+    items: [
+      { id: 'c-rent', name: 'ค่าเช่าห้องพัก (โอนทุกสิ้นเดือน)', amount: 4000, emoji: '🏠' },
+      { id: 'c-net', name: 'เน็ตไฟเบอร์ทำงาน', amount: 500, emoji: '📶' },
+      { id: 'c-home', name: 'เงินโอนให้แม่ที่บ้าน', amount: 2000, emoji: '👵' }
+    ]
+  },
+
+  // Savings Goal
+  savingsGoal: {
+    title: 'MacBook Pro M3 Max',
+    targetAmount: 45000
   },
 
   // Transactions list
   transactions: [],
 
   // Status state
+  hasReceivedIncome: false
+};
+
+// Completely Clean State for Fresh New User Signups
+export const CLEAN_USER_STATE = {
+  incomeTotal: 0,
+  essentialsBalance: 0,
+  bufferBalance: 0,
+  savingsBalance: 0,
+  safeSpendBalance: 0,
+  initialAllocations: {
+    essentials: 0,
+    buffer: 0,
+    savings: 0,
+    safeSpend: 0
+  },
+  activePlan: 'freelance_safety',
+  customPlanRates: {
+    bufferPercent: 0.12,
+    savingsPercent: 0.10
+  },
+  commitments: {
+    rent: 0,
+    internet: 0,
+    sentHome: 0,
+    total: 0,
+    items: []
+  },
+  savingsGoal: {
+    title: 'เงินสำรองฉุกเฉิน',
+    targetAmount: 30000
+  },
+  transactions: [],
   hasReceivedIncome: false
 };
 
@@ -239,6 +283,7 @@ export function logExpense(name, amount, category = 'safe', emoji = '💸') {
 
 /**
  * Set and Apply Allocation Plan
+ * Accurately syncs with current money accounting for existing expenses
  * @param {string} planId 
  * @param {object} customRates 
  */
@@ -253,19 +298,30 @@ export function setAllocationPlan(planId, customRates = null) {
     };
   }
 
-  // If income was already received, re-split dynamically
+  // If income was already received, re-split dynamically based on current total income
+  // and accurately subtract expenses that have already been paid
   if (state.incomeTotal > 0) {
     const split = calculateSplit(state.incomeTotal, state.activePlan, state.customPlanRates);
-    state.essentialsBalance = split.essentials;
-    state.bufferBalance = split.buffer;
-    state.savingsBalance = split.savings;
-    state.safeSpendBalance = split.safeSpend;
+    
+    // Calculate total spent so far per category
+    const safeSpent = state.transactions
+      .filter(t => t.type === 'expense' && t.category === 'safe')
+      .reduce((sum, t) => sum + t.amount, 0);
+    const essentialsSpent = state.transactions
+      .filter(t => t.type === 'expense' && t.category === 'essentials')
+      .reduce((sum, t) => sum + t.amount, 0);
+
     state.initialAllocations = {
       essentials: split.essentials,
       buffer: split.buffer,
       savings: split.savings,
       safeSpend: split.safeSpend
     };
+
+    state.essentialsBalance = Math.max(0, split.essentials - essentialsSpent);
+    state.bufferBalance = split.buffer;
+    state.savingsBalance = split.savings;
+    state.safeSpendBalance = Math.max(0, split.safeSpend - safeSpent);
   }
 
   notify();
@@ -281,20 +337,35 @@ export function updateUserCommitments(commitments) {
   const internet = typeof commitments.internet === 'number' ? commitments.internet : (state.commitments.internet || 0);
   const sentHome = typeof commitments.sentHome === 'number' ? commitments.sentHome : (state.commitments.sentHome || 0);
   const total = typeof commitments.total === 'number' ? commitments.total : (rent + internet + sentHome);
+  const items = Array.isArray(commitments.items) && commitments.items.length > 0
+    ? commitments.items
+    : [
+        { id: 'c-rent', name: 'ค่าเช่าห้องพัก / ที่อยู่อาศัย', amount: rent, emoji: '🏠' },
+        ...(internet > 0 ? [{ id: 'c-net', name: 'อินเทอร์เน็ต / ค่าน้ำไฟ', amount: internet, emoji: '📶' }] : []),
+        ...(sentHome > 0 ? [{ id: 'c-home', name: 'ส่งให้ทางบ้าน / ครอบครัว', amount: sentHome, emoji: '👵' }] : [])
+      ];
 
   state.commitments = {
     rent,
     internet,
     sentHome,
-    total
+    total,
+    items
   };
 
   if (state.incomeTotal > 0) {
     const split = calculateSplit(state.incomeTotal, state.activePlan, state.customPlanRates);
-    state.essentialsBalance = split.essentials;
+    const safeSpent = state.transactions
+      .filter(t => t.type === 'expense' && t.category === 'safe')
+      .reduce((sum, t) => sum + t.amount, 0);
+    const essentialsSpent = state.transactions
+      .filter(t => t.type === 'expense' && t.category === 'essentials')
+      .reduce((sum, t) => sum + t.amount, 0);
+
+    state.essentialsBalance = Math.max(0, split.essentials - essentialsSpent);
     state.bufferBalance = split.buffer;
     state.savingsBalance = split.savings;
-    state.safeSpendBalance = split.safeSpend;
+    state.safeSpendBalance = Math.max(0, split.safeSpend - safeSpent);
     state.initialAllocations = {
       essentials: split.essentials,
       buffer: split.buffer,
@@ -307,9 +378,40 @@ export function updateUserCommitments(commitments) {
 }
 
 /**
- * Reset Demo to clean initial state
+ * Update Savings Goal
+ * @param {object} goal { title, targetAmount }
+ */
+export function updateSavingsGoal(goal) {
+  if (!goal) return;
+  state.savingsGoal = {
+    ...state.savingsGoal,
+    ...goal
+  };
+  notify();
+}
+
+/**
+ * Reset Demo to clean initial state (Mint demo)
  */
 export function resetDemo() {
   state = JSON.parse(JSON.stringify(INITIAL_STATE));
   notify();
+}
+
+/**
+ * Reset to completely clean new user state (for real new account registration)
+ */
+export function resetToNewUser(userCommitments = null, activePlan = 'freelance_safety', savingsGoal = null) {
+  state = JSON.parse(JSON.stringify(CLEAN_USER_STATE));
+  if (userCommitments) {
+    updateUserCommitments(userCommitments);
+  }
+  if (activePlan && ALLOCATION_PLANS[activePlan]) {
+    state.activePlan = activePlan;
+  }
+  if (savingsGoal) {
+    state.savingsGoal = { ...state.savingsGoal, ...savingsGoal };
+  }
+  notify();
+  return state;
 }

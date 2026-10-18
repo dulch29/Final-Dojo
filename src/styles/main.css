@@ -285,6 +285,8 @@ body {
   align-items: center;
   gap: 5px;
   transition: all var(--duration-fast);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .theme-quick-btn:hover {
@@ -299,16 +301,27 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 14px;
+  padding: 6px 12px;
   border-radius: var(--radius-pill);
   background: var(--bg-surface);
   box-shadow: 3px 3px 8px rgba(166, 180, 200, 0.35), -3px -3px 8px rgba(255, 255, 255, 0.95);
   border: var(--neu-border-subtle);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 600;
   color: var(--text-mid);
   cursor: pointer;
   transition: all var(--duration-fast);
+  white-space: nowrap;
+  flex-shrink: 1;
+  min-width: 0;
+}
+
+#header-user-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90px;
+  display: inline-block;
 }
 
 .persona-pill:hover {
@@ -333,14 +346,16 @@ body {
   border-radius: var(--radius-pill);
   box-shadow: 3px 3px 8px rgba(166, 180, 200, 0.35), -3px -3px 8px rgba(255, 255, 255, 0.95);
   color: var(--text-mid);
-  padding: 6px 12px;
-  font-size: 0.76rem;
+  padding: 6px 11px;
+  font-size: 0.74rem;
   font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 5px;
   transition: all var(--duration-fast);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .btn-header-reset:active {
