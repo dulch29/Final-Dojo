@@ -81,7 +81,7 @@ body {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 440px;
+  max-width: 480px;
   min-height: 100vh;
   margin: 0 auto;
   display: flex;
@@ -89,20 +89,55 @@ body {
   padding: 0 0 120px 0;
   background: var(--bg-canvas);
   overflow-x: hidden;
+  transition: max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@media (min-width: 600px) {
+@media (min-width: 600px) and (max-width: 899px) {
   body {
-    padding: 24px 0 36px;
+    padding: 20px 0 32px;
     background: #F1F5F9;
   }
 
   .mobile-shell {
-    min-height: calc(100vh - 48px);
+    min-height: calc(100vh - 40px);
     border-radius: var(--radius-xl);
-    box-shadow: 0 24px 64px -12px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(15, 23, 42, 0.05);
+    box-shadow: 0 20px 54px -12px rgba(15, 23, 42, 0.1), 0 0 0 1px rgba(15, 23, 42, 0.05);
     padding: 0 0 120px 0;
     overflow: hidden;
+  }
+}
+
+@media (min-width: 900px) {
+  body {
+    padding: 32px 24px 48px;
+    background: #F1F5F9;
+  }
+
+  .mobile-shell {
+    max-width: 1060px;
+    min-height: calc(100vh - 64px);
+    border-radius: 32px;
+    box-shadow: 0 24px 72px -16px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(15, 23, 42, 0.05);
+    padding: 0 0 70px 0;
+    overflow: hidden;
+  }
+
+  .mobile-header {
+    padding: 16px 28px;
+  }
+
+  .tab-view {
+    padding: 24px 28px 40px;
+  }
+
+  /* Desktop Floating Bottom Dock */
+  .bottom-nav-bar {
+    max-width: 520px;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 24px;
+    border-radius: 9999px;
+    box-shadow: 0 16px 40px -8px rgba(15, 23, 42, 0.16), 0 0 0 1px rgba(226, 232, 240, 0.9);
   }
 }
 

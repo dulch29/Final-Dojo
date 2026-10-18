@@ -348,248 +348,337 @@
     </div>
 
     <!-- ======================================================================
-         TAB 1: หน้าหลัก (Home) — Unboxed Neo-Tactile Hybrid Layout
+         TAB 1: หน้าหลัก (Home) — Cash App Bold & Fluid Layout
          ====================================================================== -->
     <section class="tab-view active" id="tab-home">
       
-      <!-- 1. The Apple Card / Revolut Luxury Virtual Card (Hero Stage) -->
-      <article class="apple-card-stage" id="hero-card">
-        <div class="apple-card-container">
-          <!-- Ambient Card Luminescence -->
-          <div class="card-ambient-mesh" aria-hidden="true"></div>
+      <!-- DESKTOP DUAL-PANE GRID (Expands on >= 900px, Fluid single column on mobile) -->
+      <div class="cash-layout-grid">
+        
+        <!-- LEFT COLUMN: Bold Balance Display, Tactile Fluid Dial, Action Dock & 1-Tap Presets -->
+        <div class="cash-primary-col">
           
-          <!-- Card Header: EMV Chip & Brand Badge + Plan Pill -->
-          <div class="card-header-bar">
-            <div class="card-chip-brand">
-              <div class="apple-emv-chip" aria-hidden="true">
-                <span class="chip-segment"></span>
-                <span class="chip-segment"></span>
-                <span class="chip-segment"></span>
+          <!-- 1. CASH APP BOLD DISPLAY STAGE -->
+          <div class="cash-display-stage">
+            <div class="cash-stage-meta">
+              <!-- Plan Switch Trigger Pill -->
+              <button class="card-plan-trigger plan-switch-trigger" id="btn-info-safe" aria-label="เลือกสูตรและแบบแผนแยกเงิน" title="แตะเพื่อเปลี่ยนแบบแผน">
+                <span id="home-active-plan-badge" class="plan-pill-tag">
+                  <span class="plan-pill-icon">🛡️</span> <span>ฟรีแลนซ์ ปลอดภัย</span>
+                </span>
+                <span class="plan-change-hint">เปลี่ยนแผน →</span>
+              </button>
+
+              <!-- Live Safe Status Badge -->
+              <div class="card-safe-tag">
+                <span class="pulse-live-dot" aria-hidden="true"></span>
+                <span>SAFE-TO-SPEND · เงินกินใช้ 100%</span>
               </div>
-              <div class="card-brand-meta">
-                <span class="card-brand-title">PaySplit</span>
-                <span class="card-brand-edition">TITANIUM</span>
-              </div>
             </div>
 
-            <button class="card-plan-trigger plan-switch-trigger" id="btn-info-safe" aria-label="เลือกสูตรและแบบแผนแยกเงิน" title="แตะเพื่อเปลี่ยนแบบแผน">
-              <span id="home-active-plan-badge" class="plan-pill-tag">
-                <span class="plan-pill-icon">🛡️</span> <span>ฟรีแลนซ์ ปลอดภัย</span>
-              </span>
-              <span class="plan-change-hint">เปลี่ยนแผน →</span>
-            </button>
-          </div>
-
-          <!-- Card Center: Display Balance & Status -->
-          <div class="card-body-balance">
-            <div class="card-safe-tag">
-              <span class="pulse-live-dot" aria-hidden="true"></span>
-              <span>SAFE-TO-SPEND · เงินที่ใช้ได้จริง 100%</span>
+            <!-- Sculptural Giant Balance Display -->
+            <div class="cash-amount-hero interactive-tap" id="hero-amount-box" role="button" tabindex="0" title="แตะเพื่อเช็คความสบายใจ" aria-label="Safe-to-Spend แตะเพื่อเช็คความสบายใจ">
+              <span class="cash-cur">฿</span>
+              <span class="cash-num" id="safe-spend-amount">3,000</span>
+              <span class="cash-sparkle" aria-hidden="true">✨</span>
             </div>
 
-            <div class="card-amount-cluster interactive-tap" id="hero-amount-box" role="button" tabindex="0" title="แตะเพื่อเช็คความสบายใจ" aria-label="Safe-to-Spend แตะเพื่อเช็คความสบายใจ">
-              <span class="card-cur">฿</span>
-              <span class="card-num" id="safe-spend-amount">3,000</span>
-              <span class="card-sparkle-pill" aria-hidden="true">✨</span>
-            </div>
-
-            <div class="card-guarantee-note">
-              <span>ล็อกค่าใช้จ่ายจำเป็น & กันเงินสำรองครบถ้วนแล้ว</span>
+            <div class="cash-guarantee-sub">
+              <span>🔒 ล็อกค่าห้อง ค่าเน็ต & เงินสำรองครบถ้วนแล้ว · กินใช้สบายใจ ไม่รู้สึกผิด</span>
             </div>
 
             <div class="hero-safe-toast" id="hero-safe-toast" aria-live="polite"></div>
           </div>
 
-          <!-- Card Footer: Integrated Pacing Dock -->
-          <div class="card-pacing-dock">
-            <div class="pacing-item interactive-col" id="col-pacing-day" title="แตะเพื่อดูรายละเอียดรายวัน">
-              <span class="p-item-lbl">☀️ เฉลี่ยต่อวัน</span>
-              <span class="p-item-val highlight" id="val-per-day">฿100</span>
+          <!-- 2. TACTILE FLUID INCOME DIAL / SLIDER -->
+          <div class="cash-fluid-dial-card">
+            <div class="dial-header">
+              <div class="dial-title-group">
+                <span class="dial-dot"></span>
+                <span class="dial-label">หมุนเลื่อนจำลองยอดเงินเข้า:</span>
+              </div>
+              <span class="dial-val-display" id="home-slider-display">฿12,000</span>
             </div>
-            <div class="p-item-sep" aria-hidden="true"></div>
-            <div class="pacing-item interactive-col" id="col-pacing-week" title="แตะเพื่อดูรายละเอียดรายสัปดาห์">
-              <span class="p-item-lbl">📅 เฉลี่ยสัปดาห์</span>
-              <span class="p-item-val" id="val-per-week">฿750</span>
+
+            <div class="dial-slider-wrap">
+              <input type="range" id="home-income-slider" min="5000" max="50000" step="500" value="12000" class="cash-range-slider" aria-label="เลื่อนปรับยอดเงินเข้า">
             </div>
-            <div class="p-item-sep" aria-hidden="true"></div>
-            <div class="pacing-item interactive-col" id="col-pacing-runway" title="แตะเพื่อดูระยะเวลาเงินกินใช้">
-              <span class="p-item-lbl">⏳ Runway เงินกิน</span>
-              <span class="p-item-val" id="val-runway">30 วัน</span>
+
+            <div class="dial-quick-pills">
+              <button type="button" class="dial-amt-pill" data-amt="8000">฿8k</button>
+              <button type="button" class="dial-amt-pill active" data-amt="12000">฿12k</button>
+              <button type="button" class="dial-amt-pill" data-amt="20000">฿20k</button>
+              <button type="button" class="dial-amt-pill" data-amt="35000">฿35k</button>
+              <button type="button" class="dial-apply-btn" id="btn-apply-slider-income" title="จัดสรรตามยอดนี้จริง">
+                <span>⚡ จัดสรรยอดนี้</span>
+              </button>
             </div>
           </div>
+
+          <!-- 3. CASH APP FLOATING DOCK & QUICK ACTIONS -->
+          <section class="action-cluster-revolut">
+            <button class="btn-revolut-receive" id="btn-open-income" aria-label="ฉันได้รับเงิน แตะเพื่อรับเงินและจัดสรรทันที" title="แตะเพื่อรับเงินและจัดสรรทันที">
+              <div class="revolut-icon-bubble">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+                  <path d="M12 5v14M5 12l7 7 7-7"/>
+                </svg>
+              </div>
+              <div class="revolut-btn-copy">
+                <span class="r-title">ฉันได้รับเงิน</span>
+                <span class="r-desc">จัดสรรแยก 3 กระเป๋าทันที</span>
+              </div>
+              <span class="r-arrow">›</span>
+            </button>
+
+            <button class="btn-revolut-expense" id="btn-open-expense" aria-label="หักรายจ่าย บันทึกค่าใช้จ่าย" title="บันทึกค่าใช้จ่าย">
+              <div class="revolut-icon-bubble expense">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+                  <path d="M5 12h14"/>
+                </svg>
+              </div>
+              <div class="revolut-btn-copy">
+                <span class="r-title">หักรายจ่าย</span>
+                <span class="r-desc">หักจาก Safe-to-Spend</span>
+              </div>
+              <span class="r-arrow">›</span>
+            </button>
+          </section>
+
+          <!-- 4. 1-TAP QUICK EXPENSE PRESET CHIPS -->
+          <div class="cash-presets-card">
+            <div class="presets-header">
+              <span class="presets-label">แตะหักรายจ่ายด่วน (1-Tap Fast Expense):</span>
+            </div>
+            <div class="presets-chip-scroller">
+              <button type="button" class="home-fast-chip" data-name="☕ กาแฟ & เครื่องดื่ม" data-amount="65">
+                <span>☕ กาแฟ 65฿</span>
+              </button>
+              <button type="button" class="home-fast-chip" data-name="🍽️ มื้ออาหารกลางวัน" data-amount="80">
+                <span>🍽️ มื้อข้าว 80฿</span>
+              </button>
+              <button type="button" class="home-fast-chip" data-name="🛒 ช้อปปิ้งของใช้" data-amount="350">
+                <span>🛒 ช้อปปิ้ง 350฿</span>
+              </button>
+              <button type="button" class="home-fast-chip" data-name="🚗 ค่าเดินทาง BTS/แกร็บ" data-amount="120">
+                <span>🚗 เดินทาง 120฿</span>
+              </button>
+            </div>
+          </div>
+
         </div>
-      </article>
 
-      <!-- 2. THE REVOLUT CLEAN ACTION CLUSTER -->
-      <section class="action-cluster-revolut">
-        <button class="btn-revolut-receive" id="btn-open-income" aria-label="ฉันได้รับเงิน แตะเพื่อรับเงินและจัดสรรทันที" title="แตะเพื่อรับเงินและจัดสรรทันที">
-          <div class="revolut-icon-bubble">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
-              <path d="M12 5v14M5 12l7 7 7-7"/>
-            </svg>
+        <!-- RIGHT COLUMN: Swipeable Vault Card Stack (Desktop: Stacked / Mobile: Swipeable Carousel) -->
+        <div class="cash-secondary-col">
+          
+          <div class="deck-header-row">
+            <span class="deck-title">3 ซองเงินที่ได้รับการปกป้อง & บัตร</span>
+            <span class="deck-swipe-hint">ปัดสไลด์เพื่อดูการ์ด →</span>
           </div>
-          <div class="revolut-btn-copy">
-            <span class="r-title">ฉันได้รับเงิน</span>
-            <span class="r-desc">จัดสรรแยก 3 กระเป๋าทันที</span>
-          </div>
-          <span class="r-arrow">›</span>
-        </button>
 
-        <button class="btn-revolut-expense" id="btn-open-expense" aria-label="หักรายจ่าย บันทึกค่าใช้จ่าย" title="บันทึกค่าใช้จ่าย">
-          <div class="revolut-icon-bubble expense">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
-              <path d="M5 12h14"/>
-            </svg>
-          </div>
-          <div class="revolut-btn-copy">
-            <span class="r-title">หักรายจ่าย</span>
-            <span class="r-desc">หักจาก Safe-to-Spend</span>
-          </div>
-          <span class="r-arrow">›</span>
-        </button>
-      </section>
+          <!-- THE SWIPEABLE VAULT DECK CAROUSEL -->
+          <div class="cash-vault-deck" id="vault-swipe-deck">
+            
+            <!-- CARD 0: TITANIUM VIRTUAL CARD -->
+            <article class="vault-deck-card card-titanium" id="hero-card">
+              <div class="apple-card-container">
+                <div class="card-ambient-mesh" aria-hidden="true"></div>
+                <div class="card-header-bar">
+                  <div class="card-chip-brand">
+                    <div class="apple-emv-chip" aria-hidden="true">
+                      <span class="chip-segment"></span>
+                      <span class="chip-segment"></span>
+                      <span class="chip-segment"></span>
+                    </div>
+                    <div class="card-brand-meta">
+                      <span class="card-brand-title">PaySplit</span>
+                      <span class="card-brand-edition">TITANIUM CARD</span>
+                    </div>
+                  </div>
+                  <span class="card-status-badge">ACTIVE</span>
+                </div>
 
-      <!-- 3. Current Split Breakdown Track -->
-      <section class="stream-section">
-        <div class="section-title-row">
-          <span class="stream-label">สัดส่วนการแยกเงินรอบนี้:</span>
-          <span class="stream-tag" id="display-income-total">ยอดรับเข้า ฿12,000</span>
+                <div class="card-pacing-dock">
+                  <div class="pacing-item interactive-col" id="col-pacing-day" title="แตะเพื่อดูรายละเอียดรายวัน">
+                    <span class="p-item-lbl">☀️ เฉลี่ยต่อวัน</span>
+                    <span class="p-item-val highlight" id="val-per-day">฿100</span>
+                  </div>
+                  <div class="p-item-sep" aria-hidden="true"></div>
+                  <div class="pacing-item interactive-col" id="col-pacing-week" title="แตะเพื่อดูรายละเอียดรายสัปดาห์">
+                    <span class="p-item-lbl">📅 เฉลี่ยสัปดาห์</span>
+                    <span class="p-item-val" id="val-per-week">฿750</span>
+                  </div>
+                  <div class="p-item-sep" aria-hidden="true"></div>
+                  <div class="pacing-item interactive-col" id="col-pacing-runway" title="แตะเพื่อดูระยะเวลาเงินกินใช้">
+                    <span class="p-item-lbl">⏳ Runway</span>
+                    <span class="p-item-val" id="val-runway">30 วัน</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 1: ESSENTIALS VAULT -->
+            <article class="vault-deck-card card-essentials">
+              <div class="vault-card-inner">
+                <div class="vcard-top">
+                  <div class="vcard-identity">
+                    <div class="vcard-icon-box essentials">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    </div>
+                    <div>
+                      <h3 class="vcard-title">ค่าใช้จ่ายจำเป็น (Locked)</h3>
+                      <p class="vcard-sub">กักไว้จ่ายค่าห้อง เน็ต และให้แม่</p>
+                    </div>
+                  </div>
+                  <div class="vcard-badge-status locked">100% LOCKED</div>
+                </div>
+                <div class="vcard-amount-row">
+                  <span class="vcard-cur">฿</span>
+                  <span class="vcard-num" id="amount-essentials">6,500</span>
+                </div>
+                <div class="sub-checklist" id="vault-essentials-checklist">
+                  <div class="sub-item"><span>ค่าเช่าห้องพัก (โอนทุกวันที่ 1)</span><span class="sub-item-val">฿4,000</span></div>
+                  <div class="sub-item"><span>เน็ตไฟเบอร์ทำงาน</span><span class="sub-item-val">฿500</span></div>
+                  <div class="sub-item"><span>เงินโอนให้แม่ที่บ้าน</span><span class="sub-item-val">฿2,000</span></div>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 2: BUFFER RUNWAY VAULT -->
+            <article class="vault-deck-card card-buffer">
+              <div class="vault-card-inner">
+                <div class="vcard-top">
+                  <div class="vcard-identity">
+                    <div class="vcard-icon-box buffer">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <div>
+                      <h3 class="vcard-title">เงินสำรองกันเหนียว (Buffer)</h3>
+                      <p class="vcard-sub">กักตุนสำหรับสัปดาห์ที่งานชะลอ</p>
+                    </div>
+                  </div>
+                  <div class="vcard-badge-status buffer">12.5% BUFFER</div>
+                </div>
+                <div class="vcard-amount-row">
+                  <span class="vcard-cur">฿</span>
+                  <span class="vcard-num" id="amount-buffer">1,500</span>
+                </div>
+                <div class="buffer-callout" id="vault-buffer-callout">
+                  <span style="color: var(--text-mid);">กันไว้ 12.5% อัตโนมัติทุกจ็อบ</span>
+                  <span style="color: var(--pastel-buffer-text); font-weight: 700;">รองรับ ~1.5 สัปดาห์</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- CARD 3: SAVINGS GOAL VAULT -->
+            <article class="vault-deck-card card-savings">
+              <div class="vault-card-inner">
+                <div class="vcard-top">
+                  <div class="vcard-identity">
+                    <div class="vcard-icon-box savings">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polygon points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <div>
+                      <h3 class="vcard-title">เงินออมเป้าหมาย (Savings)</h3>
+                      <p class="vcard-sub">กองทุนเครื่องมือทำกิน & อนาคต</p>
+                    </div>
+                  </div>
+                  <div class="vcard-badge-status savings">GOAL ACTIVE</div>
+                </div>
+                <div class="vcard-amount-row">
+                  <span class="vcard-cur">฿</span>
+                  <span class="vcard-num" id="amount-savings">1,000</span>
+                </div>
+                <div class="savings-goal-row">
+                  <div class="goal-desc-row">
+                    <span style="font-weight: 600;" id="vault-savings-goal-title">MacBook Pro M3 Max</span>
+                    <span style="color: var(--pastel-savings-text); font-weight: 700;" id="vault-savings-goal-target">เป้าหมาย ฿45,000</span>
+                  </div>
+                  <div class="goal-bar-track">
+                    <div class="goal-bar-fill" id="vault-savings-goal-bar" style="width: 22%"></div>
+                  </div>
+                  <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
+                    <button class="btn-vault-edit-goal" id="btn-edit-savings-goal" type="button" aria-label="แก้ไขเป้าหมายการออม">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                      <span>กำหนดเป้าหมาย</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+          </div>
+
+          <!-- CAROUSEL DOTS INDICATOR -->
+          <div class="deck-dots-row" id="deck-dots">
+            <button type="button" class="deck-dot active" data-index="0" aria-label="บัตร Titanium"></button>
+            <button type="button" class="deck-dot" data-index="1" aria-label="ค่าใช้จ่ายจำเป็น"></button>
+            <button type="button" class="deck-dot" data-index="2" aria-label="เงินสำรอง"></button>
+            <button type="button" class="deck-dot" data-index="3" aria-label="เงินออม"></button>
+          </div>
+
+          <!-- 5. REAL-TIME ALLOCATION TRACK -->
+          <section class="stream-section">
+            <div class="section-title-row">
+              <span class="stream-label">สัดส่วนการแยกเงินรอบนี้:</span>
+              <span class="stream-tag" id="display-income-total">ยอดรับเข้า ฿12,000</span>
+            </div>
+
+            <div class="stream-track-wrap">
+              <div class="stream-track" id="stream-track-bar" title="แตะเพื่อตรวจดูสัดส่วน">
+                <div class="track-seg seg-essentials" id="bar-essentials" style="width: 54.1%" data-cat="essentials" title="จำเป็น"></div>
+                <div class="track-seg seg-buffer" id="bar-buffer" style="width: 12.5%" data-cat="buffer" title="เงินสำรอง"></div>
+                <div class="track-seg seg-savings" id="bar-savings" style="width: 8.3%" data-cat="savings" title="เงินออมเป้าหมาย"></div>
+                <div class="track-seg seg-safe" id="bar-safe" style="width: 25.1%" data-cat="safe" title="Safe-to-Spend"></div>
+              </div>
+
+              <div class="track-legend-row" id="stream-legend-row">
+                <button type="button" class="legend-dot-item" data-cat="essentials"><span class="legend-dot" style="background: #3B82F6;"></span>จำเป็น</button>
+                <button type="button" class="legend-dot-item" data-cat="buffer"><span class="legend-dot" style="background: #F59E0B;"></span>สำรอง</button>
+                <button type="button" class="legend-dot-item" data-cat="savings"><span class="legend-dot" style="background: #8B5CF6;"></span>ออม</button>
+                <button type="button" class="legend-dot-item" data-cat="safe"><span class="legend-dot" style="background: #10B981;"></span>ใช้ได้จริง</button>
+              </div>
+
+              <div class="stream-inspect-card" id="stream-inspect-card">
+                <span class="inspect-icon" id="inspect-icon">💡</span>
+                <span class="inspect-text" id="inspect-text">แตะที่แถบสีหรือชื่อกระเป๋าเพื่อดูจำนวนเงินที่ถูกจัดสรร</span>
+              </div>
+            </div>
+          </section>
+
         </div>
 
-        <!-- Allocation Progress Bar -->
-        <div class="stream-track-wrap">
-          <div class="stream-track" id="stream-track-bar" title="แตะเพื่อตรวจดูสัดส่วน">
-            <div class="track-seg seg-essentials" id="bar-essentials" style="width: 54.1%" data-cat="essentials" title="จำเป็น"></div>
-            <div class="track-seg seg-buffer" id="bar-buffer" style="width: 12.5%" data-cat="buffer" title="เงินสำรอง"></div>
-            <div class="track-seg seg-savings" id="bar-savings" style="width: 8.3%" data-cat="savings" title="เงินออมเป้าหมาย"></div>
-            <div class="track-seg seg-safe" id="bar-safe" style="width: 25.1%" data-cat="safe" title="Safe-to-Spend"></div>
-          </div>
-
-          <div class="track-legend-row" id="stream-legend-row">
-            <button type="button" class="legend-dot-item" data-cat="essentials"><span class="legend-dot" style="background: #3B82F6;"></span>จำเป็น</button>
-            <button type="button" class="legend-dot-item" data-cat="buffer"><span class="legend-dot" style="background: #F59E0B;"></span>สำรอง</button>
-            <button type="button" class="legend-dot-item" data-cat="savings"><span class="legend-dot" style="background: #8B5CF6;"></span>ออม</button>
-            <button type="button" class="legend-dot-item" data-cat="safe"><span class="legend-dot" style="background: #10B981;"></span>ใช้ได้จริง</button>
-          </div>
-
-          <!-- Interactive Breakdown Inspection Banner (Gimmick!) -->
-          <div class="stream-inspect-card" id="stream-inspect-card">
-            <span class="inspect-icon" id="inspect-icon">💡</span>
-            <span class="inspect-text" id="inspect-text">แตะที่แถบสีหรือชื่อกระเป๋าเพื่อดูจำนวนเงินที่ถูกจัดสรร</span>
-          </div>
-        </div>
-      </section>
-
-
+      </div>
 
     </section>
 
     <!-- ======================================================================
-         TAB 2: กระปุกเงิน & ประวัติ (Vaults & Activity) — 3 Protected Envelopes + Ledger
+         TAB 2: บันทึก & ประวัติ (Activity & Ledger) — Real-time Transaction Ledger
          ====================================================================== -->
     <section class="tab-view" id="tab-vaults">
       <div class="section-heading-row" style="margin-top: 4px;">
         <div>
-          <h2 class="section-h2">3 กระเป๋าที่ได้รับการปกป้อง</h2>
-          <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 2px;">ล็อกไว้ทันทีที่เงินเข้า ไม่ปนกับเงินกินใช้เด็ดขาด</p>
+          <h2 class="section-h2">ประวัติธุรกรรม & กระเป๋าเงิน</h2>
+          <p style="font-size: 0.76rem; color: var(--text-muted); margin-top: 2px;">ตรวจสอบทุกรายการรับเข้าและหักเงินอย่างโปร่งใส</p>
         </div>
       </div>
 
-      <div class="vault-stack">
-        <!-- Vault 1: Essentials -->
-        <article class="vault-card vault-essentials">
-          <div class="vault-top">
-            <div class="vault-identity">
-              <div class="vault-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                </svg>
-              </div>
-              <div>
-                <h3 class="vault-name">ค่าใช้จ่ายจำเป็น (Locked)</h3>
-                <p class="vault-subtext">กักไว้จ่ายค่าห้อง เน็ต และให้แม่</p>
-              </div>
-            </div>
-            <div class="vault-num">฿<span id="amount-essentials">6,500</span></div>
-          </div>
-
-          <div class="sub-checklist" id="vault-essentials-checklist">
-            <div class="sub-item">
-              <span>ค่าเช่าห้องพัก (โอนทุกวันที่ 1)</span>
-              <span class="sub-item-val">฿4,000</span>
-            </div>
-            <div class="sub-item">
-              <span>เน็ตไฟเบอร์ทำงาน</span>
-              <span class="sub-item-val">฿500</span>
-            </div>
-            <div class="sub-item">
-              <span>เงินโอนให้แม่ที่บ้าน</span>
-              <span class="sub-item-val">฿2,000</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Vault 2: Buffer -->
-        <article class="vault-card vault-buffer">
-          <div class="vault-top">
-            <div class="vault-identity">
-              <div class="vault-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                </svg>
-              </div>
-              <div>
-                <h3 class="vault-name">เงินสำรองกันเหนียว (Buffer)</h3>
-                <p class="vault-subtext">กักตุนสำหรับสัปดาห์ที่ไม่มีงาน</p>
-              </div>
-            </div>
-            <div class="vault-num">฿<span id="amount-buffer">1,500</span></div>
-          </div>
-
-          <div class="buffer-callout" id="vault-buffer-callout">
-            <span style="color: var(--text-mid);">กันไว้ 12.5% อัตโนมัติทุกจ็อบ</span>
-            <span style="color: var(--pastel-buffer-text); font-weight: 700;">รองรับ ~1.5 สัปดาห์</span>
-          </div>
-        </article>
-
-        <!-- Vault 3: Savings -->
-        <article class="vault-card vault-savings">
-          <div class="vault-top">
-            <div class="vault-identity">
-              <div class="vault-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <circle cx="12" cy="12" r="10"/>
-                  <polygon points="12 6 12 12 16 14"/>
-                </svg>
-              </div>
-              <div>
-                <h3 class="vault-name">เงินออมเป้าหมาย (Savings)</h3>
-                <p class="vault-subtext">กองทุนเครื่องมือทำกิน & เงินฉุกเฉิน</p>
-              </div>
-            </div>
-            <div class="vault-num">฿<span id="amount-savings">1,000</span></div>
-          </div>
-
-          <div class="savings-goal-row">
-            <div class="goal-desc-row">
-              <span style="font-weight: 600;" id="vault-savings-goal-title">MacBook Pro M3 Max</span>
-              <span style="color: var(--pastel-savings-text); font-weight: 700;" id="vault-savings-goal-target">เป้าหมาย ฿45,000</span>
-            </div>
-            <div class="goal-bar-track">
-              <div class="goal-bar-fill" id="vault-savings-goal-bar" style="width: 22%"></div>
-            </div>
-            <div style="display: flex; justify-content: flex-end; margin-top: 8px;">
-              <button class="btn-vault-edit-goal" id="btn-edit-savings-goal" type="button" aria-label="แก้ไขเป้าหมายการออม">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                <span>กำหนดเป้าหมาย</span>
-              </button>
-            </div>
-          </div>
-        </article>
+      <!-- Quick Vaults Summary Pill Grid in Tab 2 -->
+      <div class="tab2-vaults-summary-grid">
+        <div class="t2-summary-chip essentials">
+          <span class="t2-sc-lbl">🔒 จำเป็นคงที่</span>
+          <span class="t2-sc-val">ล็อก 100%</span>
+        </div>
+        <div class="t2-summary-chip buffer">
+          <span class="t2-sc-lbl">🛡️ เงินสำรอง</span>
+          <span class="t2-sc-val">12.5% สะสม</span>
+        </div>
+        <div class="t2-summary-chip savings">
+          <span class="t2-sc-lbl">💜 เงินออม</span>
+          <span class="t2-sc-val">8.3% เป้าหมาย</span>
+        </div>
       </div>
 
-      <!-- Integrated Activity Feed in Tab 2 -->
+      <!-- Full-Featured Transaction Ledger Panel -->
       <section class="ledger-panel">
         <div class="ledger-top">
           <span>ประวัติการจัดสรรและใช้จ่าย</span>
@@ -601,7 +690,6 @@
           </li>
         </ul>
       </section>
-
     </section>
 
     <!-- ======================================================================

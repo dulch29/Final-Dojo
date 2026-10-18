@@ -785,6 +785,119 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // --------------------------------------------------------------------------
+  // 6. Cash App Bold & Fluid Interactive Experience (Dial Slider, Fast Chips, Deck)
+  // --------------------------------------------------------------------------
+  const homeIncomeSlider = document.getElementById('home-income-slider');
+  const homeSliderDisplay = document.getElementById('home-slider-display');
+  const btnApplySliderIncome = document.getElementById('btn-apply-slider-income');
+  const dialAmtPills = document.querySelectorAll('.dial-amt-pill');
+  const homeFastChips = document.querySelectorAll('.home-fast-chip');
+  const vaultSwipeDeck = document.getElementById('vault-swipe-deck');
+  const deckDots = document.querySelectorAll('.deck-dot');
+
+  // 6.1 Fluid Dial Income Slider Listener
+  if (homeIncomeSlider && homeSliderDisplay) {
+    homeIncomeSlider.addEventListener('input', (e) => {
+      const val = parseInt(e.target.value, 10) || 0;
+      homeSliderDisplay.textContent = `฿${val.toLocaleString('th-TH')}`;
+      
+      dialAmtPills.forEach(pill => {
+        const pillAmt = parseInt(pill.dataset.amt, 10);
+        if (pillAmt === val) {
+          pill.classList.add('active');
+        } else {
+          pill.classList.remove('active');
+        }
+      });
+    });
+  }
+
+  // 6.2 Quick Amount Preset Pills
+  dialAmtPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      playTapSound();
+      triggerHaptic('light');
+      const amt = parseInt(pill.dataset.amt, 10) || 12000;
+      if (homeIncomeSlider) {
+        homeIncomeSlider.value = amt;
+      }
+      if (homeSliderDisplay) {
+        homeSliderDisplay.textContent = `฿${amt.toLocaleString('th-TH')}`;
+      }
+      dialAmtPills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+    });
+  });
+
+  // 6.3 1-Tap Apply Slider Income Allocation
+  if (btnApplySliderIncome) {
+    btnApplySliderIncome.addEventListener('click', () => {
+      const val = parseInt(homeIncomeSlider?.value, 10) || 12000;
+      const split = receiveIncome(val, `รับเงินโอน ฿${val.toLocaleString('th-TH')} (จัดสรรด่วนผ่าน Dial)`);
+      playSuccessFanfare();
+      fireSplitConfetti();
+      triggerHaptic('heavy');
+      showToast(`⚡ จัดสรรเงิน ฿${val.toLocaleString('th-TH')} เรียบร้อย! Safe-to-Spend: ฿${split.safeSpend.toLocaleString('th-TH')}`);
+    });
+  }
+
+  // 6.4 1-Tap Fast Expense Preset Chips
+  homeFastChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const name = chip.dataset.name || 'ค่าใช้จ่ายด่วน';
+      const amt = parseFloat(chip.dataset.amount) || 0;
+      if (amt <= 0) return;
+
+      logExpense(name, amt, 'safe');
+      playExpenseCoin();
+      triggerHaptic('medium');
+      fireMiniConfetti();
+      showToast(`หักรายจ่ายด่วน: ${name} -฿${amt} (หักจาก Safe-to-Spend แล้ว)`);
+    });
+  });
+
+  // 6.5 Swipeable Vault Deck & Carousel Dot Sync
+  if (vaultSwipeDeck && deckDots.length > 0) {
+    let isTicking = false;
+    vaultSwipeDeck.addEventListener('scroll', () => {
+      if (!isTicking) {
+        window.requestAnimationFrame(() => {
+          const firstCard = vaultSwipeDeck.firstElementChild;
+          if (firstCard) {
+            const cardWidth = firstCard.offsetWidth + 14;
+            const scrollIndex = Math.min(
+              deckDots.length - 1, 
+              Math.max(0, Math.round(vaultSwipeDeck.scrollLeft / cardWidth))
+            );
+            deckDots.forEach((dot, idx) => {
+              if (idx === scrollIndex) {
+                dot.classList.add('active');
+              } else {
+                dot.classList.remove('active');
+              }
+            });
+          }
+          isTicking = false;
+        });
+        isTicking = true;
+      }
+    });
+
+    deckDots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        playTapSound();
+        triggerHaptic('light');
+        const idx = parseInt(dot.dataset.index, 10);
+        const targetCard = vaultSwipeDeck.children[idx];
+        if (targetCard) {
+          targetCard.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+      });
+    });
+  }
+
+
 
 
   // --------------------------------------------------------------------------
