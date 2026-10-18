@@ -48,30 +48,30 @@ body {
   letter-spacing: -0.02em;
 }
 
-/* Subtle Neumorphic Background Atmosphere */
+/* Subtle Clean Ambient Atmosphere */
 .ambient-glow {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
   background: 
-    radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.8) 0%, transparent 40%),
-    radial-gradient(circle at 85% 85%, rgba(166, 180, 200, 0.2) 0%, transparent 50%);
+    radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.9) 0%, transparent 40%),
+    radial-gradient(circle at 85% 15%, rgba(16, 185, 129, 0.07) 0%, transparent 50%),
+    radial-gradient(circle at 50% 90%, rgba(37, 99, 235, 0.03) 0%, transparent 60%);
 }
 
 [data-theme="glassmorphism"] .ambient-glow {
   background:
-    radial-gradient(circle at 12% 16%, rgba(167, 243, 208, 0.45) 0%, transparent 45%),
-    radial-gradient(circle at 88% 18%, rgba(199, 210, 254, 0.55) 0%, transparent 45%),
-    radial-gradient(circle at 20% 75%, rgba(254, 215, 170, 0.4) 0%, transparent 45%),
-    radial-gradient(circle at 80% 82%, rgba(221, 214, 254, 0.5) 0%, transparent 45%);
+    radial-gradient(circle at 12% 16%, rgba(167, 243, 208, 0.3) 0%, transparent 45%),
+    radial-gradient(circle at 88% 18%, rgba(199, 210, 254, 0.3) 0%, transparent 45%),
+    radial-gradient(circle at 50% 85%, rgba(221, 214, 254, 0.25) 0%, transparent 45%);
 }
 
 [data-theme="glassmorphism"] .mobile-shell {
-  background: rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 /* ==========================================================================
@@ -94,14 +94,15 @@ body {
 @media (min-width: 600px) {
   body {
     padding: 24px 0 36px;
+    background: #F1F5F9;
   }
 
   .mobile-shell {
     min-height: calc(100vh - 48px);
     border-radius: var(--radius-xl);
-    box-shadow: 16px 16px 36px rgba(166, 180, 200, 0.45), -16px -16px 36px rgba(255, 255, 255, 0.95);
+    box-shadow: 0 24px 64px -12px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(15, 23, 42, 0.05);
     padding: 0 0 120px 0;
-    overflow: hidden; /* Seamlessly clips status bar and header to phone frame corners */
+    overflow: hidden;
   }
 }
 
@@ -272,12 +273,12 @@ body {
 }
 
 .theme-quick-btn {
-  background: var(--bg-surface);
-  border: var(--neu-border-subtle);
+  background: #FFFFFF;
+  border: 1px solid rgba(226, 232, 240, 0.95);
   border-radius: var(--radius-pill);
-  box-shadow: 3px 3px 8px rgba(166, 180, 200, 0.35), -3px -3px 8px rgba(255, 255, 255, 0.95);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
   color: var(--text-pure);
-  padding: 6px 11px;
+  padding: 6px 12px;
   font-size: 0.74rem;
   font-weight: 700;
   cursor: pointer;
@@ -291,10 +292,7 @@ body {
 
 .theme-quick-btn:hover {
   transform: translateY(-1px);
-}
-
-.theme-quick-btn:active {
-  box-shadow: var(--neu-pressed);
+  border-color: rgba(16, 185, 129, 0.4);
 }
 
 .persona-pill {
@@ -303,9 +301,9 @@ body {
   gap: 6px;
   padding: 6px 12px;
   border-radius: var(--radius-pill);
-  background: var(--bg-surface);
-  box-shadow: 3px 3px 8px rgba(166, 180, 200, 0.35), -3px -3px 8px rgba(255, 255, 255, 0.95);
-  border: var(--neu-border-subtle);
+  background: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+  border: 1px solid rgba(226, 232, 240, 0.95);
   font-size: 0.76rem;
   font-weight: 600;
   color: var(--text-mid);
@@ -326,10 +324,12 @@ body {
 
 .persona-pill:hover {
   color: var(--text-pure);
+  border-color: rgba(16, 185, 129, 0.45);
+  transform: translateY(-1px);
 }
 
 .persona-pill:active {
-  box-shadow: var(--neu-pressed);
+  transform: translateY(1px) scale(0.97);
 }
 
 .persona-dot {
@@ -341,12 +341,12 @@ body {
 }
 
 .btn-header-reset {
-  background: var(--bg-surface);
-  border: var(--neu-border-subtle);
+  background: #FFFFFF;
+  border: 1px solid rgba(226, 232, 240, 0.95);
   border-radius: var(--radius-pill);
-  box-shadow: 3px 3px 8px rgba(166, 180, 200, 0.35), -3px -3px 8px rgba(255, 255, 255, 0.95);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
   color: var(--text-mid);
-  padding: 6px 11px;
+  padding: 6px 12px;
   font-size: 0.74rem;
   font-weight: 600;
   cursor: pointer;
@@ -356,6 +356,12 @@ body {
   transition: all var(--duration-fast);
   white-space: nowrap;
   flex-shrink: 0;
+}
+
+.btn-header-reset:hover {
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #EF4444;
+  transform: translateY(-1px);
 }
 
 .btn-header-reset:active {

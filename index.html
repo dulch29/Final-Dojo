@@ -352,68 +352,100 @@
          ====================================================================== -->
     <section class="tab-view active" id="tab-home">
       
-      <!-- 1. The Safe-to-Spend Hero Stage (Open Canvas, Ambient Aura, Display Number) -->
-      <article class="hero-stage" id="hero-card">
-        <div class="hero-aura-glow" aria-hidden="true"></div>
+      <!-- 1. The Apple Card / Revolut Luxury Virtual Card (Hero Stage) -->
+      <article class="apple-card-stage" id="hero-card">
+        <div class="apple-card-container">
+          <!-- Ambient Card Luminescence -->
+          <div class="card-ambient-mesh" aria-hidden="true"></div>
+          
+          <!-- Card Header: EMV Chip & Brand Badge + Plan Pill -->
+          <div class="card-header-bar">
+            <div class="card-chip-brand">
+              <div class="apple-emv-chip" aria-hidden="true">
+                <span class="chip-segment"></span>
+                <span class="chip-segment"></span>
+                <span class="chip-segment"></span>
+              </div>
+              <div class="card-brand-meta">
+                <span class="card-brand-title">PaySplit</span>
+                <span class="card-brand-edition">TITANIUM</span>
+              </div>
+            </div>
 
-        <div class="hero-eyebrow-row">
-          <button class="hero-info-btn plan-switch-trigger" id="btn-info-safe" aria-label="เลือกสูตรและแบบแผนแยกเงิน">
-            <span id="home-active-plan-badge" class="plan-pill-tag">
-              <span class="plan-pill-icon">🛡️</span> <span>ฟรีแลนซ์ ปลอดภัย</span>
-            </span>
-            <span class="plan-change-hint">เปลี่ยนแผน →</span>
-          </button>
-        </div>
+            <button class="card-plan-trigger plan-switch-trigger" id="btn-info-safe" aria-label="เลือกสูตรและแบบแผนแยกเงิน" title="แตะเพื่อเปลี่ยนแบบแผน">
+              <span id="home-active-plan-badge" class="plan-pill-tag">
+                <span class="plan-pill-icon">🛡️</span> <span>ฟรีแลนซ์ ปลอดภัย</span>
+              </span>
+              <span class="plan-change-hint">เปลี่ยนแผน →</span>
+            </button>
+          </div>
 
-        <div class="hero-amount-center">
-          <div class="hero-amount-box interactive-tap" id="hero-amount-box" role="button" tabindex="0" title="แตะเพื่อเช็คความสบายใจ" aria-label="Safe-to-Spend แตะเพื่อเช็คความสบายใจ">
-            <span class="hero-symbol">฿</span>
-            <span class="hero-num" id="safe-spend-amount">3,000</span>
-            <span class="hero-sparkle-pill" aria-hidden="true">✨</span>
-          </div>
-          <div class="hero-label-sub">
-            <span class="hero-label-main">Safe-to-Spend · เงินที่ใช้ได้จริง</span>
-          </div>
-          <div class="hero-safe-toast" id="hero-safe-toast" aria-live="polite"></div>
-        </div>
+          <!-- Card Center: Display Balance & Status -->
+          <div class="card-body-balance">
+            <div class="card-safe-tag">
+              <span class="pulse-live-dot" aria-hidden="true"></span>
+              <span>SAFE-TO-SPEND · เงินที่ใช้ได้จริง 100%</span>
+            </div>
 
-        <!-- Clean Editorial Burn Pacing Metrics (Swiss Minimal Layout, No heavy box) -->
-        <div class="hero-pacing-grid">
-          <div class="pacing-col interactive-col" id="col-pacing-day" title="แตะเพื่อดูรายละเอียดรายวัน">
-            <span class="pacing-lbl">☀️ เฉลี่ยต่อวัน</span>
-            <span class="pacing-val highlight" id="val-per-day">฿100</span>
+            <div class="card-amount-cluster interactive-tap" id="hero-amount-box" role="button" tabindex="0" title="แตะเพื่อเช็คความสบายใจ" aria-label="Safe-to-Spend แตะเพื่อเช็คความสบายใจ">
+              <span class="card-cur">฿</span>
+              <span class="card-num" id="safe-spend-amount">3,000</span>
+              <span class="card-sparkle-pill" aria-hidden="true">✨</span>
+            </div>
+
+            <div class="card-guarantee-note">
+              <span>ล็อกค่าใช้จ่ายจำเป็น & กันเงินสำรองครบถ้วนแล้ว</span>
+            </div>
+
+            <div class="hero-safe-toast" id="hero-safe-toast" aria-live="polite"></div>
           </div>
-          <div class="pacing-divider"></div>
-          <div class="pacing-col interactive-col" id="col-pacing-week" title="แตะเพื่อดูรายละเอียดรายสัปดาห์">
-            <span class="pacing-lbl">📅 เฉลี่ยสัปดาห์</span>
-            <span class="pacing-val" id="val-per-week">฿750</span>
-          </div>
-          <div class="pacing-divider"></div>
-          <div class="pacing-col interactive-col" id="col-pacing-runway" title="แตะเพื่อดูระยะเวลาเงินกินใช้">
-            <span class="pacing-lbl">⏳ Runway เงินกิน</span>
-            <span class="pacing-val" id="val-runway">30 วัน</span>
+
+          <!-- Card Footer: Integrated Pacing Dock -->
+          <div class="card-pacing-dock">
+            <div class="pacing-item interactive-col" id="col-pacing-day" title="แตะเพื่อดูรายละเอียดรายวัน">
+              <span class="p-item-lbl">☀️ เฉลี่ยต่อวัน</span>
+              <span class="p-item-val highlight" id="val-per-day">฿100</span>
+            </div>
+            <div class="p-item-sep" aria-hidden="true"></div>
+            <div class="pacing-item interactive-col" id="col-pacing-week" title="แตะเพื่อดูรายละเอียดรายสัปดาห์">
+              <span class="p-item-lbl">📅 เฉลี่ยสัปดาห์</span>
+              <span class="p-item-val" id="val-per-week">฿750</span>
+            </div>
+            <div class="p-item-sep" aria-hidden="true"></div>
+            <div class="pacing-item interactive-col" id="col-pacing-runway" title="แตะเพื่อดูระยะเวลาเงินกินใช้">
+              <span class="p-item-lbl">⏳ Runway เงินกิน</span>
+              <span class="p-item-val" id="val-runway">30 วัน</span>
+            </div>
           </div>
         </div>
       </article>
 
-      <!-- 2. THE HIGHLIGHT ACTION BAR (Prime Natural Thumb Reach) -->
-      <section class="action-cluster">
-        <button class="btn-highlight-receive" id="btn-open-income" aria-label="ฉันได้รับเงิน แตะเพื่อรับเงินและจัดสรรทันที" title="แตะเพื่อรับเงินและจัดสรรทันที">
-          <span class="btn-icon-bubble" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+      <!-- 2. THE REVOLUT CLEAN ACTION CLUSTER -->
+      <section class="action-cluster-revolut">
+        <button class="btn-revolut-receive" id="btn-open-income" aria-label="ฉันได้รับเงิน แตะเพื่อรับเงินและจัดสรรทันที" title="แตะเพื่อรับเงินและจัดสรรทันที">
+          <div class="revolut-icon-bubble">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
               <path d="M12 5v14M5 12l7 7 7-7"/>
             </svg>
-          </span>
-          <span class="btn-cta-text">ฉันได้รับเงิน</span>
+          </div>
+          <div class="revolut-btn-copy">
+            <span class="r-title">ฉันได้รับเงิน</span>
+            <span class="r-desc">จัดสรรแยก 3 กระเป๋าทันที</span>
+          </div>
+          <span class="r-arrow">›</span>
         </button>
 
-        <button class="btn-frosted-expense" id="btn-open-expense" aria-label="หักรายจ่าย บันทึกค่าใช้จ่าย" title="บันทึกค่าใช้จ่าย">
-          <span class="btn-icon-bubble secondary" aria-hidden="true">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+        <button class="btn-revolut-expense" id="btn-open-expense" aria-label="หักรายจ่าย บันทึกค่าใช้จ่าย" title="บันทึกค่าใช้จ่าย">
+          <div class="revolut-icon-bubble expense">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
               <path d="M5 12h14"/>
             </svg>
-          </span>
-          <span class="btn-cta-text">หักรายจ่าย</span>
+          </div>
+          <div class="revolut-btn-copy">
+            <span class="r-title">หักรายจ่าย</span>
+            <span class="r-desc">หักจาก Safe-to-Spend</span>
+          </div>
+          <span class="r-arrow">›</span>
         </button>
       </section>
 
@@ -876,12 +908,12 @@
       <div style="display: flex; flex-direction: column; gap: 14px;">
         <div>
           <label style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px;">ชื่อรายการ</label>
-          <input type="text" id="drawer-exp-name" value="ค่าฟอนต์ลิขสิทธิ์" style="width: 100%; background: var(--bg-sunken); box-shadow: inset 2px 2px 5px rgba(166, 180, 200, 0.35); border: none; border-radius: var(--radius-sm); padding: 12px 16px; color: var(--text-high); font-size: 0.95rem; outline: none; font-family: var(--font-master);">
+          <input type="text" id="drawer-exp-name" value="ค่าฟอนต์ลิขสิทธิ์" class="form-input" placeholder="เช่น ค่ากาแฟ, ค่าอุปกรณ์">
         </div>
 
         <div>
           <label style="display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px;">จำนวนเงิน (บาท)</label>
-          <input type="number" id="drawer-exp-amount" class="num-tabular" value="350" inputmode="numeric" style="width: 100%; background: var(--bg-sunken); box-shadow: inset 2px 2px 5px rgba(166, 180, 200, 0.35); border: none; border-radius: var(--radius-sm); padding: 12px 16px; color: var(--text-high); font-size: 1.25rem; font-weight: 700; outline: none; font-family: var(--font-master);">
+          <input type="number" id="drawer-exp-amount" class="form-input num-tabular" value="350" inputmode="numeric" style="font-size: 1.25rem; font-weight: 700;">
         </div>
 
         <button class="btn-highlight-receive" id="btn-confirm-drawer-exp" style="width: 100%; height: 54px; margin-top: 4px;">

@@ -1,122 +1,75 @@
 /* ==========================================================================
-   PaySplit Design Tokens — Multi-Theme UI System
-   Styles: Neumorphism (Soft UI), Modern Minimal, Glassmorphism
+   PaySplit Design Tokens — Apple Minimal & Revolut Clean UI System
+   Executive-Grade Aesthetics: Pure Porcelain, Subtle Hairlines, Diffuse Ambient Depth
    Master Font: IBM Plex Sans Thai
    ========================================================================== */
 
 :root,
+[data-theme="minimal"],
 [data-theme="hybrid"],
 [data-theme="neumorphic"] {
-  /* 1. Canvas & Architectural Palette — Neo-Tactile Hybrid */
+  /* 1. Canvas & Architectural Palette — Apple Porcelain & Revolut Pure */
   --bg-canvas: #F8FAFC;
-  --bg-app: #FFFFFF;
-  --bg-surface: rgba(255, 255, 255, 0.88);
-  --bg-card: #FFFFFF;
-  --bg-subtle: #F1F5F9;
-  --bg-sunken: #F1F5F9;
-  --glass-blur: 16px;
-
-  /* 2. Tactile Dual Shadows & Elevation */
-  --neu-flat: 0 4px 14px rgba(15, 23, 42, 0.05);
-  --neu-convex: #FFFFFF;
-  --neu-concave: #F8FAFC;
-  --neu-card: 0 12px 30px -4px rgba(15, 23, 42, 0.05), 0 4px 12px -2px rgba(15, 23, 42, 0.02);
-  --neu-card-sm: 0 4px 14px -2px rgba(15, 23, 42, 0.05);
-  --neu-chip: 0 2px 8px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.03);
-  
-  /* Tactile Press States (Physical Feel) */
-  --neu-pressed: inset 2px 2px 5px rgba(15, 23, 42, 0.12), inset -2px -2px 5px rgba(255, 255, 255, 0.85);
-  --neu-pressed-deep: inset 3px 3px 6px rgba(15, 23, 42, 0.15), inset -3px -3px 6px rgba(255, 255, 255, 0.9);
-  
-  --neu-border-subtle: 1px solid rgba(226, 232, 240, 0.8);
-  --hero-card-bg: linear-gradient(180deg, #F0FDF4 0%, #FFFFFF 100%);
-  --nav-bg: rgba(255, 255, 255, 0.92);
-  --nav-notch-fill: var(--bg-canvas);
-}
-
-/* Style Option 2: Ultra Minimal (Completely Flat, Clean, Crisp) */
-[data-theme="minimal"] {
-  --bg-canvas: #FAFAFA;
   --bg-app: #FFFFFF;
   --bg-surface: #FFFFFF;
   --bg-card: #FFFFFF;
-  --bg-subtle: #F4F4F5;
-  --bg-sunken: #F4F4F5;
-  --glass-blur: 0px;
-
-  --neu-flat: none;
-  --neu-convex: #FFFFFF;
-  --neu-concave: #FAFAFA;
-  --neu-card: 0 1px 3px rgba(0, 0, 0, 0.05);
-  --neu-card-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-  --neu-chip: 0 1px 2px rgba(0, 0, 0, 0.04);
-  --neu-pressed: inset 0 2px 4px rgba(0, 0, 0, 0.08);
-  --neu-pressed-deep: inset 0 2px 6px rgba(0, 0, 0, 0.1);
-  --neu-border-subtle: 1px solid #E4E4E7;
-  --hero-card-bg: #FFFFFF;
-  --nav-bg: #FFFFFF;
-  --nav-notch-fill: var(--bg-canvas);
-}
-
-/* Theme 3: Glassmorphism (Translucent Frosted Crystal & Sheen) */
-[data-theme="glassmorphism"] {
-  --bg-canvas: #E8EEF5;
-  --bg-app: rgba(255, 255, 255, 0.62);
-  --bg-surface: rgba(255, 255, 255, 0.68);
-  --bg-card: rgba(255, 255, 255, 0.72);
-  --bg-subtle: rgba(255, 255, 255, 0.45);
-  --bg-sunken: rgba(255, 255, 255, 0.4);
+  --bg-subtle: #F1F5F9;
+  --bg-sunken: #F8FAFC;
   --glass-blur: 20px;
 
-  --neu-flat: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
-  --neu-convex: rgba(255, 255, 255, 0.85);
-  --neu-concave: rgba(255, 255, 255, 0.5);
-  --neu-card: 0 8px 32px 0 rgba(31, 38, 135, 0.08), inset 0 1px 1px 0 rgba(255, 255, 255, 0.95);
-  --neu-card-sm: 0 4px 18px 0 rgba(31, 38, 135, 0.06), inset 0 1px 1px 0 rgba(255, 255, 255, 0.85);
-  --neu-chip: 0 2px 10px rgba(31, 38, 135, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.8);
-  --neu-pressed: inset 0 2px 5px rgba(31, 38, 135, 0.12), inset 0 -1px 2px rgba(255, 255, 255, 0.6);
-  --neu-pressed-deep: inset 0 3px 8px rgba(31, 38, 135, 0.15);
-  --neu-border-subtle: 1px solid rgba(255, 255, 255, 0.85);
-  --hero-card-bg: rgba(255, 255, 255, 0.65);
-  --nav-bg: rgba(255, 255, 255, 0.78);
-  --nav-notch-fill: transparent;
-}
+  /* 2. Apple-Grade Diffuse Ambient Shadows (Zero Muddy Gray Shadows) */
+  --neu-flat: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --neu-convex: #FFFFFF;
+  --neu-concave: #F8FAFC;
+  --neu-card: 0 12px 32px -4px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+  --neu-card-sm: 0 4px 16px -2px rgba(15, 23, 42, 0.05);
+  --neu-chip: 0 2px 6px rgba(15, 23, 42, 0.04);
+  
+  /* Tactile Press States (Physical Precision) */
+  --neu-pressed: scale(0.97);
+  --neu-pressed-deep: scale(0.95);
+  
+  --neu-border-subtle: 1px solid rgba(0, 0, 0, 0.06);
+  --apple-border: 1px solid rgba(15, 23, 42, 0.07);
+  --apple-border-focus: 1.5px solid #10B981;
+  --hero-card-bg: linear-gradient(145deg, #FFFFFF 0%, #F6FAF7 100%);
+  --nav-bg: rgba(255, 255, 255, 0.94);
+  --nav-notch-fill: var(--bg-canvas);
 
-:root {
-  /* 3. Highlight CTA (Vibrant Mint Emerald Neumorphic Button) */
+  /* 3. Highlight CTA (Vibrant Emerald Gradient Pill) */
   --highlight-main: #10B981;
   --highlight-dark: #059669;
   --highlight-gradient: linear-gradient(135deg, #10B981 0%, #059669 100%);
-  --highlight-neu-shadow: 6px 8px 18px rgba(16, 185, 129, 0.38), -4px -4px 12px rgba(255, 255, 255, 0.9);
-  --highlight-pressed: inset 3px 3px 6px rgba(4, 120, 87, 0.5), inset -3px -3px 6px rgba(52, 211, 153, 0.3);
+  --highlight-neu-shadow: 0 8px 24px -2px rgba(16, 185, 129, 0.35), 0 2px 6px rgba(16, 185, 129, 0.2);
+  --highlight-pressed: scale(0.97);
 
   /* 4. Pastel Colors for Distinct Categories */
-  /* Safe-to-Spend: Mint Sage Pastel */
-  --pastel-safe-bg: #E8F8F0;
+  /* Safe-to-Spend: Vibrant Emerald & Soft Sage */
+  --pastel-safe-bg: #ECFDF5;
   --pastel-safe-text: #065F46;
   --pastel-safe-accent: #10B981;
-  --pastel-safe-border: rgba(167, 243, 208, 0.7);
+  --pastel-safe-border: rgba(167, 243, 208, 0.8);
 
-  /* Essentials: Periwinkle Baby Blue */
-  --pastel-essentials-bg: #EBF3FC;
+  /* Essentials: Electric Royal Blue */
+  --pastel-essentials-bg: #EFF6FF;
   --pastel-essentials-text: #1E40AF;
-  --pastel-essentials-accent: #3B82F6;
-  --pastel-essentials-border: rgba(191, 219, 254, 0.75);
+  --pastel-essentials-accent: #2563EB;
+  --pastel-essentials-border: rgba(191, 219, 254, 0.8);
 
-  /* Buffer: Warm Peach Apricot */
-  --pastel-buffer-bg: #FEF7EA;
+  /* Buffer: Warm Honey Amber */
+  --pastel-buffer-bg: #FFFBEB;
   --pastel-buffer-text: #92400E;
   --pastel-buffer-accent: #F59E0B;
-  --pastel-buffer-border: rgba(253, 230, 138, 0.75);
+  --pastel-buffer-border: rgba(253, 230, 138, 0.8);
 
-  /* Savings: Soft Lilac Lavender */
-  --pastel-savings-bg: #F6EFFE;
-  --pastel-savings-text: #6B21A8;
-  --pastel-savings-accent: #8B5CF6;
-  --pastel-savings-border: rgba(233, 213, 255, 0.75);
+  /* Savings: Royal Lilac Violet */
+  --pastel-savings-bg: #F5F3FF;
+  --pastel-savings-text: #6D28D9;
+  --pastel-savings-accent: #7C3AED;
+  --pastel-savings-border: rgba(221, 214, 254, 0.8);
 
-  /* Expense: Soft Coral Rose */
-  --pastel-expense-bg: #FEECEE;
+  /* Expense: Crimson Rose */
+  --pastel-expense-bg: #FFF1F2;
   --pastel-expense-text: #BE123C;
   --pastel-expense-accent: #F43F5E;
 
@@ -125,23 +78,34 @@
   --font-display: var(--font-master);
   --font-body: var(--font-master);
 
-  /* Text Contrast & Legibility */
-  --text-pure: #131E2C;
-  --text-high: #243346;
-  --text-mid: #52637A;
-  --text-muted: #7E90A6;
-  --text-light: #A5B6C8;
+  /* Text Contrast & Legibility (Deep Executive Carbon) */
+  --text-pure: #090E17;
+  --text-high: #1E293B;
+  --text-mid: #64748B;
+  --text-muted: #94A3B8;
+  --text-light: #CBD5E1;
 
-  /* 6. Radii & Geometry */
+  /* 6. Radii & Geometry (Modern Squircle) */
   --radius-xs: 8px;
   --radius-sm: 14px;
-  --radius-md: 18px;
-  --radius-lg: 24px;
+  --radius-md: 20px;
+  --radius-lg: 26px;
   --radius-xl: 32px;
   --radius-pill: 9999px;
 
-  /* 7. Timing & Easing */
-  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  --duration-fast: 150ms;
-  --duration-normal: 250ms;
+  /* 7. Timing & Easing (Apple Fluid Spring) */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 180ms;
+  --duration-normal: 280ms;
+}
+
+/* Glassmorphism theme inherits clean porcelain with frosted backdrop */
+[data-theme="glassmorphism"] {
+  --bg-canvas: #F1F5F9;
+  --bg-app: rgba(255, 255, 255, 0.85);
+  --bg-surface: rgba(255, 255, 255, 0.9);
+  --bg-card: rgba(255, 255, 255, 0.92);
+  --bg-subtle: rgba(241, 245, 249, 0.8);
+  --bg-sunken: rgba(248, 250, 252, 0.8);
+  --glass-blur: 24px;
 }
