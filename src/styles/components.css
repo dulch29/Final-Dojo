@@ -1334,7 +1334,7 @@
   background: var(--bg-sunken);
   box-shadow: inset 2px 2px 5px rgba(166, 180, 200, 0.3), inset -2px -2px 5px rgba(255, 255, 255, 0.9);
   border-radius: var(--radius-sm);
-  padding: 10px 14px;
+  padding: 8px 12px;
 }
 
 .split-rule-row.highlight {
@@ -1382,7 +1382,7 @@
 
 .rule-value {
   font-family: var(--font-master);
-  font-size: 0.92rem;
+  font-size: 0.86rem;
   font-weight: 700;
   color: var(--text-pure);
   text-align: right;
@@ -2305,9 +2305,16 @@
 }
 
 .plan-change-hint {
+  display: none;
   color: var(--highlight-main);
   font-size: 0.72rem;
   font-weight: 600;
+}
+
+@media (min-width: 480px) {
+  .plan-change-hint {
+    display: inline;
+  }
 }
 
 .persona-avatar-chip {

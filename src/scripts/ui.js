@@ -44,11 +44,11 @@ export function renderApp(state) {
   const statusMsg = document.getElementById('safe-status-msg');
   if (statusMsg) {
     if (!state.hasReceivedIncome || state.incomeTotal === 0) {
-      statusMsg.textContent = 'ยังไม่มีรายรับรอบนี้ · พร้อมแยกเงินทันที';
+      statusMsg.textContent = 'พร้อมแยกเงินทันที';
     } else if (state.safeSpendBalance > 0) {
-      statusMsg.textContent = '● ซองเงินล็อกแล้ว 100%';
+      statusMsg.textContent = 'ล็อก 3 ซองแล้ว 100%';
     } else {
-      statusMsg.textContent = 'ใช้ครบแล้ว · ซองจำเป็นปลอดภัย';
+      statusMsg.textContent = 'ใช้ครบแล้ว · ล็อกปลอดภัย';
     }
   }
 
