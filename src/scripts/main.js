@@ -11,7 +11,16 @@ import {
   ALLOCATION_PLANS
 } from './state.js';
 import { renderApp, showToast, syncUserProfileUI } from './ui.js';
-import { fireSplitConfetti, triggerHaptic } from './animations.js';
+import { fireSplitConfetti, fireMiniConfetti, triggerHaptic } from './animations.js';
+import { 
+  playNotificationChime,
+  playSuccessFanfare,
+  playTapSound,
+  playExpenseCoin,
+  playSafeSpendCelebration,
+  isSoundEnabled,
+  setSoundEnabled
+} from './sfx.js';
 import { 
   initAuth, 
   subscribeAuth, 
@@ -469,6 +478,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const curvedNotch = document.getElementById('nav-curved-notch');
 
   const switchTab = (tabId, index) => {
+    playTapSound();
     tabButtons.forEach(btn => {
       btn.classList.toggle('active', btn.dataset.tab === tabId);
     });
@@ -494,13 +504,125 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // --------------------------------------------------------------------------
+  // 3. Interactive Hero Stage Gimmicks (Tap Safe-to-Spend & Pacing Metrics)
+  // --------------------------------------------------------------------------
+  const heroAmountBox = document.getElementById('hero-amount-box');
+  const heroSafeToast = document.getElementById('hero-safe-toast');
+  let heroToastTimer = null;
 
+  if (heroAmountBox) {
+    heroAmountBox.addEventListener('click', () => {
+      triggerHaptic('medium');
+      playSafeSpendCelebration();
+      fireMiniConfetti();
+
+      const state = getState();
+      const amtStr = Number(state.safeSpendBalance).toLocaleString('th-TH');
+
+      if (heroSafeToast) {
+        heroSafeToast.textContent = `✨ ฿${amtStr} นี้กินใช้ได้ 100% สบายใจ ไร้กังวล!`;
+        heroSafeToast.classList.add('show');
+        clearTimeout(heroToastTimer);
+        heroToastTimer = setTimeout(() => {
+          heroSafeToast.classList.remove('show');
+        }, 3000);
+      }
+    });
+  }
+
+  // Pacing Columns Tap Tooltips
+  const colPacingDay = document.getElementById('col-pacing-day');
+  const colPacingWeek = document.getElementById('col-pacing-week');
+  const colPacingRunway = document.getElementById('col-pacing-runway');
+
+  if (colPacingDay) {
+    colPacingDay.addEventListener('click', () => {
+      playTapSound();
+      triggerHaptic('light');
+      const state = getState();
+      const dayAmt = Math.max(0, Math.round(state.safeSpendBalance / 30));
+      showToast(`☀️ งบเฉลี่ยวันละ ฿${dayAmt.toLocaleString('th-TH')} ช่วยให้กินใช้สบายได้ตลอด 30 วัน`);
+    });
+  }
+
+  if (colPacingWeek) {
+    colPacingWeek.addEventListener('click', () => {
+      playTapSound();
+      triggerHaptic('light');
+      const state = getState();
+      const weekAmt = Math.max(0, Math.round(state.safeSpendBalance / 4));
+      showToast(`📅 งบเฉลี่ยสัปดาห์ละ ฿${weekAmt.toLocaleString('th-TH')} สำหรับอาหาร กาแฟ และช้อปปิ้ง`);
+    });
+  }
+
+  if (colPacingRunway) {
+    colPacingRunway.addEventListener('click', () => {
+      playTapSound();
+      triggerHaptic('light');
+      const state = getState();
+      const runwayDays = state.safeSpendBalance > 0 ? 30 : 0;
+      showToast(`⏳ รันเวย์ ${runwayDays} วัน คือระยะเวลาที่เงินกินใช้จะพอเพียงก่อนถึงรอบเงินถัดไป`);
+    });
+  }
 
   // --------------------------------------------------------------------------
+  // 3.1 Interactive Stream Track & Legend Pills Inspection
+  // --------------------------------------------------------------------------
+  const inspectCard = document.getElementById('stream-inspect-card');
+  const inspectIcon = document.getElementById('inspect-icon');
+  const inspectText = document.getElementById('inspect-text');
 
+  const inspectCategory = (cat) => {
+    playTapSound();
+    triggerHaptic('light');
+    const state = getState();
+    const total = state.incomeTotal || 1;
+
+    if (cat === 'essentials') {
+      if (inspectIcon) inspectIcon.textContent = '🔒';
+      const pct = Math.round((state.essentialsBalance / total) * 100);
+      if (inspectText) {
+        inspectText.innerHTML = `<strong>ค่าใช้จ่ายจำเป็น:</strong> ฿${state.essentialsBalance.toLocaleString('th-TH')} (${pct}%) — กักไว้จ่ายค่าห้อง & เน็ต`;
+      }
+    } else if (cat === 'buffer') {
+      if (inspectIcon) inspectIcon.textContent = '🛡️';
+      const pct = Math.round((state.bufferBalance / total) * 100);
+      if (inspectText) {
+        inspectText.innerHTML = `<strong>เงินสำรองกันสะดุด:</strong> ฿${state.bufferBalance.toLocaleString('th-TH')} (${pct}%) — กักตุนยามงานชะลอ`;
+      }
+    } else if (cat === 'savings') {
+      if (inspectIcon) inspectIcon.textContent = '💜';
+      const pct = Math.round((state.savingsBalance / total) * 100);
+      if (inspectText) {
+        inspectText.innerHTML = `<strong>เงินออมเป้าหมาย:</strong> ฿${state.savingsBalance.toLocaleString('th-TH')} (${pct}%) — เก็บสะสมเข้าเป้าหมาย`;
+      }
+    } else if (cat === 'safe') {
+      if (inspectIcon) inspectIcon.textContent = '✨';
+      const pct = Math.round((state.safeSpendBalance / total) * 100);
+      if (inspectText) {
+        inspectText.innerHTML = `<strong>Safe-to-Spend:</strong> ฿${state.safeSpendBalance.toLocaleString('th-TH')} (${pct}%) — เงินกินใช้ได้จริง 100% ไร้กังวล`;
+      }
+    }
+
+    if (inspectCard) {
+      inspectCard.style.borderColor = 'rgba(16, 185, 129, 0.7)';
+      inspectCard.style.transform = 'scale(1.02)';
+      setTimeout(() => {
+        if (inspectCard) inspectCard.style.transform = 'scale(1)';
+      }, 180);
+    }
+  };
+
+  document.querySelectorAll('.track-seg, .legend-dot-item').forEach(el => {
+    el.addEventListener('click', () => {
+      const cat = el.dataset.cat;
+      if (cat) inspectCategory(cat);
+    });
+  });
 
   // --------------------------------------------------------------------------
-  // 4. Highlight Action: "ฉันได้รับเงิน" (Opens Bottom Drawer)
+  // 4. Highlight Action: "ฉันได้รับเงิน" (Opens Bottom Drawer with Live Split Preview)
   // --------------------------------------------------------------------------
   const btnOpenIncome = document.getElementById('btn-open-income');
   const incomeDrawerBackdrop = document.getElementById('income-sheet-backdrop');
@@ -508,8 +630,43 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnConfirmDrawerIncome = document.getElementById('btn-confirm-drawer-income');
   const drawerIncomeInput = document.getElementById('drawer-income-input');
 
+  const previewValEssentials = document.getElementById('preview-val-essentials');
+  const previewValBuffer = document.getElementById('preview-val-buffer');
+  const previewValSavings = document.getElementById('preview-val-savings');
+  const previewValSafe = document.getElementById('preview-val-safe');
+  const previewActivePlanTag = document.getElementById('preview-active-plan-tag');
+
+  const updateDrawerSplitPreview = (income) => {
+    const state = getState();
+    const plan = ALLOCATION_PLANS[state.activePlan] || ALLOCATION_PLANS.freelance_safety;
+    if (previewActivePlanTag) previewActivePlanTag.textContent = `${plan.emoji} ${plan.shortName}`;
+
+    let essentials = 0;
+    if (plan.id === 'classic_50_30_20') {
+      essentials = Math.round(income * 0.50);
+    } else {
+      essentials = state.commitments?.total || 6500;
+    }
+
+    const bufPct = plan.id === 'custom' ? (state.customPlanRates?.bufferPercent || 0.12) : plan.bufferPercent;
+    const savPct = plan.id === 'custom' ? (state.customPlanRates?.savingsPercent || 0.10) : plan.savingsPercent;
+
+    const buffer = Math.round(income * bufPct);
+    const savings = Math.round(income * savPct);
+    const safeSpend = Math.max(0, income - essentials - buffer - savings);
+
+    if (previewValEssentials) previewValEssentials.textContent = `฿${essentials.toLocaleString('th-TH')}`;
+    if (previewValBuffer) previewValBuffer.textContent = `฿${buffer.toLocaleString('th-TH')}`;
+    if (previewValSavings) previewValSavings.textContent = `฿${savings.toLocaleString('th-TH')}`;
+    if (previewValSafe) previewValSafe.textContent = `฿${safeSpend.toLocaleString('th-TH')}`;
+  };
+
   const openIncomeDrawer = () => {
+    playTapSound();
+    triggerHaptic('light');
     if (incomeDrawerBackdrop) incomeDrawerBackdrop.classList.add('open');
+    const curVal = parseFloat(drawerIncomeInput && drawerIncomeInput.value) || 12000;
+    updateDrawerSplitPreview(curVal);
     if (drawerIncomeInput) drawerIncomeInput.focus();
   };
 
@@ -525,6 +682,34 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Live Input Listener
+  if (drawerIncomeInput) {
+    drawerIncomeInput.addEventListener('input', () => {
+      const val = parseFloat(drawerIncomeInput.value) || 0;
+      updateDrawerSplitPreview(val);
+    });
+  }
+
+  // Quick Amount Increment Pills
+  document.querySelectorAll('.quick-amt-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      playTapSound();
+      triggerHaptic('light');
+
+      if (pill.id === 'btn-reset-income-input') {
+        if (drawerIncomeInput) drawerIncomeInput.value = 0;
+        updateDrawerSplitPreview(0);
+        return;
+      }
+
+      const addVal = parseInt(pill.dataset.add, 10) || 0;
+      const current = parseFloat(drawerIncomeInput?.value) || 0;
+      const next = current + addVal;
+      if (drawerIncomeInput) drawerIncomeInput.value = next;
+      updateDrawerSplitPreview(next);
+    });
+  });
+
   if (btnConfirmDrawerIncome) {
     btnConfirmDrawerIncome.addEventListener('click', () => {
       const amount = parseFloat(drawerIncomeInput && drawerIncomeInput.value) || 0;
@@ -535,6 +720,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const split = receiveIncome(amount, `รับเงินโอน ${amount.toLocaleString('th-TH')} ฿`);
       closeIncomeDrawer();
+      playSuccessFanfare();
       fireSplitConfetti();
       triggerHaptic('heavy');
       showToast(`จัดสรรเงินสำเร็จ! Safe-to-Spend: ${split.safeSpend.toLocaleString('th-TH')} ฿`);
@@ -542,7 +728,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --------------------------------------------------------------------------
-  // 5. Expense Actions: "หักรายจ่าย" (Opens Expense Drawer)
+  // 5. Expense Actions: "หักรายจ่าย" (Opens Expense Drawer with Quick Chips)
   // --------------------------------------------------------------------------
   const btnOpenExpense = document.getElementById('btn-open-expense');
   const expenseDrawerBackdrop = document.getElementById('expense-sheet-backdrop');
@@ -552,6 +738,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const drawerExpAmount = document.getElementById('drawer-exp-amount');
 
   const openExpenseDrawer = () => {
+    playTapSound();
+    triggerHaptic('light');
     if (expenseDrawerBackdrop) expenseDrawerBackdrop.classList.add('open');
   };
 
@@ -567,6 +755,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // 1-Tap Quick Expense Category Chips
+  document.querySelectorAll('.exp-preset-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      playTapSound();
+      triggerHaptic('light');
+      const name = chip.dataset.name;
+      const amt = chip.dataset.amount;
+      if (drawerExpName && name) drawerExpName.value = name;
+      if (drawerExpAmount && amt) drawerExpAmount.value = amt;
+    });
+  });
+
   if (btnConfirmDrawerExp) {
     btnConfirmDrawerExp.addEventListener('click', () => {
       const name = (drawerExpName && drawerExpName.value.trim()) || 'ค่าใช้จ่ายทั่วไป';
@@ -579,6 +779,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       logExpense(name, amount, 'safe');
       closeExpenseDrawer();
+      playExpenseCoin();
       triggerHaptic('medium');
       showToast(`บันทึก ${name} -${amount} ฿ (หักจาก Safe-to-Spend สำเร็จ)`);
     });
@@ -840,6 +1041,17 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleHaptic.addEventListener('change', () => {
       triggerHaptic('light');
       showToast(toggleHaptic.checked ? 'เปิดระบบสั่นจำลองปุ่มกดจริง' : 'ปิดระบบสั่น');
+    });
+  }
+
+  const toggleSound = document.getElementById('toggle-sound');
+  if (toggleSound) {
+    toggleSound.checked = isSoundEnabled();
+    toggleSound.addEventListener('change', () => {
+      setSoundEnabled(toggleSound.checked);
+      if (toggleSound.checked) playTapSound();
+      triggerHaptic('light');
+      showToast(toggleSound.checked ? 'เปิดระบบเสียงสัมผัสสังเคราะห์ (Sound FX)' : 'ปิดระบบเสียง');
     });
   }
 

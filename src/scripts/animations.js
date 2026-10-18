@@ -52,6 +52,19 @@ export function fireSplitConfetti() {
 }
 
 /**
+ * Trigger Mini Gentle Confetti Sparkle for Balance Tap
+ */
+export function fireMiniConfetti() {
+  confetti({
+    particleCount: 24,
+    spread: 55,
+    origin: { y: 0.38 },
+    colors: ['#10B981', '#34D399', '#6EE7B7', '#A7F3D0'],
+    disableForReducedMotion: true
+  });
+}
+
+/**
  * Mobile Haptic Feedback Vibration
  */
 export function triggerHaptic(type = 'medium') {

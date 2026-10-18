@@ -4,7 +4,7 @@
  */
 
 let audioCtx = null;
-let isMuted = false;
+let isMuted = typeof window !== 'undefined' && localStorage.getItem('paysplit_sound') === 'false';
 
 function getAudioContext() {
   if (!audioCtx) {
@@ -21,15 +21,26 @@ function getAudioContext() {
 
 export function setMuted(muted) {
   isMuted = muted;
+  if (typeof localStorage !== 'undefined') {
+    localStorage.setItem('paysplit_sound', muted ? 'false' : 'true');
+  }
 }
 
 export function toggleMuted() {
-  isMuted = !isMuted;
+  setMuted(!isMuted);
   return isMuted;
 }
 
 export function getMuted() {
   return isMuted;
+}
+
+export function isSoundEnabled() {
+  return !isMuted;
+}
+
+export function setSoundEnabled(enabled) {
+  setMuted(!enabled);
 }
 
 /**
@@ -237,5 +248,87 @@ export function playSuccessFanfare() {
 
     osc.start(now + idx * 0.08);
     osc.stop(now + idx * 0.08 + 0.75);
+  });
+}
+
+/**
+ * 8. Tactile Tap: Gentle wooden bubble pop for tabs, toggles, quick pills
+ */
+export function playTapSound() {
+  if (isMuted) return;
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(340, now);
+  osc.frequency.exponentialRampToValueAtTime(95, now + 0.04);
+  
+  gain.gain.setValueAtTime(0.12, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.045);
+  
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  
+  osc.start(now);
+  osc.stop(now + 0.05);
+}
+
+/**
+ * 9. Expense Coin: Bright crisp two-tone metallic tink for money deductions
+ */
+export function playExpenseCoin() {
+  if (isMuted) return;
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+  
+  [987.77, 783.99].forEach((freq, idx) => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(freq, now + idx * 0.045);
+    
+    gain.gain.setValueAtTime(0, now + idx * 0.045);
+    gain.gain.linearRampToValueAtTime(0.15, now + idx * 0.045 + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.045 + 0.16);
+    
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    
+    osc.start(now + idx * 0.045);
+    osc.stop(now + idx * 0.045 + 0.18);
+  });
+}
+
+/**
+ * 10. Safe-to-Spend Celebration: Sparkling uplifting celestial harp chime
+ */
+export function playSafeSpendCelebration() {
+  if (isMuted) return;
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const now = ctx.currentTime;
+  
+  const notes = [392.00, 523.25, 659.25, 783.99, 987.77, 1046.50, 1318.51];
+  notes.forEach((freq, idx) => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq, now + idx * 0.045);
+    
+    gain.gain.setValueAtTime(0, now + idx * 0.045);
+    gain.gain.linearRampToValueAtTime(0.14, now + idx * 0.045 + 0.015);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.045 + 0.42);
+    
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    
+    osc.start(now + idx * 0.045);
+    osc.stop(now + idx * 0.045 + 0.45);
   });
 }

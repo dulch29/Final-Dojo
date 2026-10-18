@@ -366,29 +366,31 @@
         </div>
 
         <div class="hero-amount-center">
-          <div class="hero-amount-box">
+          <div class="hero-amount-box interactive-tap" id="hero-amount-box" role="button" tabindex="0" title="แตะเพื่อเช็คความสบายใจ" aria-label="Safe-to-Spend แตะเพื่อเช็คความสบายใจ">
             <span class="hero-symbol">฿</span>
             <span class="hero-num" id="safe-spend-amount">3,000</span>
+            <span class="hero-sparkle-pill" aria-hidden="true">✨</span>
           </div>
           <div class="hero-label-sub">
             <span class="hero-label-main">Safe-to-Spend · เงินที่ใช้ได้จริง</span>
           </div>
+          <div class="hero-safe-toast" id="hero-safe-toast" aria-live="polite"></div>
         </div>
 
         <!-- Clean Editorial Burn Pacing Metrics (Swiss Minimal Layout, No heavy box) -->
         <div class="hero-pacing-grid">
-          <div class="pacing-col">
-            <span class="pacing-lbl">เฉลี่ยต่อวัน</span>
+          <div class="pacing-col interactive-col" id="col-pacing-day" title="แตะเพื่อดูรายละเอียดรายวัน">
+            <span class="pacing-lbl">☀️ เฉลี่ยต่อวัน</span>
             <span class="pacing-val highlight" id="val-per-day">฿100</span>
           </div>
           <div class="pacing-divider"></div>
-          <div class="pacing-col">
-            <span class="pacing-lbl">เฉลี่ยสัปดาห์</span>
+          <div class="pacing-col interactive-col" id="col-pacing-week" title="แตะเพื่อดูรายละเอียดรายสัปดาห์">
+            <span class="pacing-lbl">📅 เฉลี่ยสัปดาห์</span>
             <span class="pacing-val" id="val-per-week">฿750</span>
           </div>
           <div class="pacing-divider"></div>
-          <div class="pacing-col">
-            <span class="pacing-lbl">Runway เงินกิน</span>
+          <div class="pacing-col interactive-col" id="col-pacing-runway" title="แตะเพื่อดูระยะเวลาเงินกินใช้">
+            <span class="pacing-lbl">⏳ Runway เงินกิน</span>
             <span class="pacing-val" id="val-runway">30 วัน</span>
           </div>
         </div>
@@ -424,18 +426,24 @@
 
         <!-- Allocation Progress Bar -->
         <div class="stream-track-wrap">
-          <div class="stream-track">
-            <div class="track-seg seg-essentials" id="bar-essentials" style="width: 54.1%" title="จำเป็น 6,500฿"></div>
-            <div class="track-seg seg-buffer" id="bar-buffer" style="width: 12.5%" title="เงินสำรอง"></div>
-            <div class="track-seg seg-savings" id="bar-savings" style="width: 8.3%" title="เงินออมเป้าหมาย"></div>
-            <div class="track-seg seg-safe" id="bar-safe" style="width: 25.1%" title="Safe-to-Spend"></div>
+          <div class="stream-track" id="stream-track-bar" title="แตะเพื่อตรวจดูสัดส่วน">
+            <div class="track-seg seg-essentials" id="bar-essentials" style="width: 54.1%" data-cat="essentials" title="จำเป็น"></div>
+            <div class="track-seg seg-buffer" id="bar-buffer" style="width: 12.5%" data-cat="buffer" title="เงินสำรอง"></div>
+            <div class="track-seg seg-savings" id="bar-savings" style="width: 8.3%" data-cat="savings" title="เงินออมเป้าหมาย"></div>
+            <div class="track-seg seg-safe" id="bar-safe" style="width: 25.1%" data-cat="safe" title="Safe-to-Spend"></div>
           </div>
 
-          <div class="track-legend-row">
-            <span class="legend-dot-item"><span class="legend-dot" style="background: #3B82F6;"></span>จำเป็น</span>
-            <span class="legend-dot-item"><span class="legend-dot" style="background: #F59E0B;"></span>สำรอง</span>
-            <span class="legend-dot-item"><span class="legend-dot" style="background: #8B5CF6;"></span>ออม</span>
-            <span class="legend-dot-item"><span class="legend-dot" style="background: #10B981;"></span>ใช้ได้จริง</span>
+          <div class="track-legend-row" id="stream-legend-row">
+            <button type="button" class="legend-dot-item" data-cat="essentials"><span class="legend-dot" style="background: #3B82F6;"></span>จำเป็น</button>
+            <button type="button" class="legend-dot-item" data-cat="buffer"><span class="legend-dot" style="background: #F59E0B;"></span>สำรอง</button>
+            <button type="button" class="legend-dot-item" data-cat="savings"><span class="legend-dot" style="background: #8B5CF6;"></span>ออม</button>
+            <button type="button" class="legend-dot-item" data-cat="safe"><span class="legend-dot" style="background: #10B981;"></span>ใช้ได้จริง</button>
+          </div>
+
+          <!-- Interactive Breakdown Inspection Banner (Gimmick!) -->
+          <div class="stream-inspect-card" id="stream-inspect-card">
+            <span class="inspect-icon" id="inspect-icon">💡</span>
+            <span class="inspect-text" id="inspect-text">แตะที่แถบสีหรือชื่อกระเป๋าเพื่อดูจำนวนเงินที่ถูกจัดสรร</span>
           </div>
         </div>
       </section>
@@ -665,8 +673,8 @@
       <div class="profile-block">
         <div class="block-header-row">
           <div class="block-title-group">
-            <span class="block-icon">📳</span>
-            <span class="block-title">การตั้งค่าสัมผัส (Haptic)</span>
+            <span class="block-icon">🎛️</span>
+            <span class="block-title">การตอบสนอง & ความรู้สึก (Sensory FX)</span>
           </div>
         </div>
 
@@ -678,6 +686,17 @@
             </div>
             <label class="toggle-switch">
               <input type="checkbox" checked id="toggle-haptic">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-toggle-row">
+            <div>
+              <div class="setting-name">เสียงสัมผัสสังเคราะห์ (Sound FX)</div>
+              <div class="setting-hint">เสียงเตือนสดใสนุ่มนวล (Chime, Pop, Coin) ไม่ใช้เน็ต</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked id="toggle-sound">
               <span class="slider"></span>
             </label>
           </div>
@@ -781,7 +800,42 @@
         <input type="number" id="drawer-income-input" class="num-tabular" value="12000" min="500" step="500" inputmode="numeric" style="background: transparent; border: none; font-size: 2.2rem; font-weight: 700; color: var(--text-pure); width: 100%; outline: none; font-family: var(--font-master);">
       </div>
 
-      <button class="btn-highlight-receive" id="btn-confirm-drawer-income" style="width: 100%; height: 56px; font-size: 1.05rem;">
+      <!-- Quick Amount Increment Pills (Gimmick!) -->
+      <div class="drawer-quick-pills-row" id="income-quick-pills">
+        <button type="button" class="quick-amt-pill" data-add="1000">+1,000</button>
+        <button type="button" class="quick-amt-pill" data-add="5000">+5,000</button>
+        <button type="button" class="quick-amt-pill" data-add="10000">+10,000</button>
+        <button type="button" class="quick-amt-pill" data-add="25000">+25,000</button>
+        <button type="button" class="quick-amt-pill pill-reset" id="btn-reset-income-input" title="ล้างยอด">↺ ล้าง</button>
+      </div>
+
+      <!-- Live Split Preview Box (Instant Delight) -->
+      <div class="drawer-live-preview-box" id="drawer-income-live-preview">
+        <div class="preview-title-row">
+          <span class="preview-label">คำนวณแยก 3 ซองอัตโนมัติ:</span>
+          <span class="preview-plan-badge" id="preview-active-plan-tag">🛡️ ปลอดภัย</span>
+        </div>
+        <div class="preview-mini-grid">
+          <div class="preview-mini-card essentials">
+            <span class="preview-mini-label">🔒 ล็อกจำเป็น</span>
+            <span class="preview-mini-val" id="preview-val-essentials">฿6,500</span>
+          </div>
+          <div class="preview-mini-card buffer">
+            <span class="preview-mini-label">🛡️ สำรอง</span>
+            <span class="preview-mini-val" id="preview-val-buffer">฿1,500</span>
+          </div>
+          <div class="preview-mini-card savings">
+            <span class="preview-mini-label">💜 ออม</span>
+            <span class="preview-mini-val" id="preview-val-savings">฿1,000</span>
+          </div>
+          <div class="preview-mini-card safe">
+            <span class="preview-mini-label">✨ ใช้ได้จริง</span>
+            <span class="preview-mini-val" id="preview-val-safe">฿3,000</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-highlight-receive" id="btn-confirm-drawer-income" style="width: 100%; height: 56px; font-size: 1.05rem; margin-top: 4px;">
         <span>แยกเงินเข้ากระเป๋าทันที</span>
       </button>
     </div>
@@ -795,6 +849,28 @@
       <div class="drawer-title-row">
         <h3 class="drawer-h3">บันทึกรายจ่าย (Expense)</h3>
         <button class="drawer-close" id="btn-close-exp-drawer" aria-label="ปิด">✕</button>
+      </div>
+
+      <!-- Quick Preset Expense Chips (1-Tap Logging Gimmick!) -->
+      <div class="drawer-preset-chips-wrap">
+        <span class="drawer-chips-label">แตะเพื่อกรอกด่วน:</span>
+        <div class="drawer-chips-scroller">
+          <button type="button" class="exp-preset-chip" data-name="☕ กาแฟ & เครื่องดื่ม" data-amount="65">
+            <span>☕ กาแฟ 65฿</span>
+          </button>
+          <button type="button" class="exp-preset-chip" data-name="🍽️ มื้ออาหารกลางวัน" data-amount="80">
+            <span>🍽️ มื้อข้าว 80฿</span>
+          </button>
+          <button type="button" class="exp-preset-chip" data-name="🛒 ช้อปปิ้งของใช้" data-amount="350">
+            <span>🛒 ช้อปปิ้ง 350฿</span>
+          </button>
+          <button type="button" class="exp-preset-chip" data-name="🚗 ค่าเดินทาง BTS/แกร็บ" data-amount="120">
+            <span>🚗 เดินทาง 120฿</span>
+          </button>
+          <button type="button" class="exp-preset-chip" data-name="📦 ค่าพัสดุ/ของส่ง" data-amount="50">
+            <span>📦 พัสดุ 50฿</span>
+          </button>
+        </div>
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 14px;">
