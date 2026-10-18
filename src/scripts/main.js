@@ -494,13 +494,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Quick link from Home mini vault card to Vaults tab (index 1)
-  const quickLinkVaults = document.getElementById('quick-link-vaults');
-  if (quickLinkVaults) {
-    quickLinkVaults.addEventListener('click', () => {
-      switchTab('tab-vaults', 1);
-    });
-  }
+
 
   // --------------------------------------------------------------------------
   // 3. Quick Scenario Presets (Hick's Law: 3 Meaningful Income Presets)

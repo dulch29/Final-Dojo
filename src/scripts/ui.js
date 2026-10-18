@@ -40,17 +40,7 @@ export function renderApp(state) {
     animateCounter(safeEl, prevValues.safe, state.safeSpendBalance, 500);
   }
 
-  // Status Message (Single line, crisp)
-  const statusMsg = document.getElementById('safe-status-msg');
-  if (statusMsg) {
-    if (!state.hasReceivedIncome || state.incomeTotal === 0) {
-      statusMsg.textContent = 'พร้อมแยกเงินทันที';
-    } else if (state.safeSpendBalance > 0) {
-      statusMsg.textContent = 'ล็อก 3 ซองแล้ว 100%';
-    } else {
-      statusMsg.textContent = 'ใช้ครบแล้ว · ล็อกปลอดภัย';
-    }
-  }
+
 
   // Burn Pacing Guide
   const perDayEl = document.getElementById('val-per-day');
@@ -130,19 +120,7 @@ export function renderApp(state) {
   if (goalTargetEl) goalTargetEl.textContent = `เป้าหมาย ฿${target.toLocaleString('th-TH')} (${goalProgress}%)`;
   if (goalBarFill) goalBarFill.style.width = `${goalProgress}%`;
 
-  // Dynamic Mini Vaults Capsule on Home Screen
-  const quickVaultsTitle = document.getElementById('quick-vaults-summary-title');
-  const quickVaultsDesc = document.getElementById('quick-vaults-summary-desc');
-  if (quickVaultsTitle && quickVaultsDesc) {
-    const lockedTotal = state.essentialsBalance + state.bufferBalance + state.savingsBalance;
-    if (state.incomeTotal > 0) {
-      quickVaultsTitle.textContent = `ล็อกไว้ 3 ซองเงิน (฿${lockedTotal.toLocaleString('th-TH')})`;
-      quickVaultsDesc.textContent = `จำเป็น ฿${state.essentialsBalance.toLocaleString('th-TH')} · สำรอง ฿${state.bufferBalance.toLocaleString('th-TH')} · ออม ฿${state.savingsBalance.toLocaleString('th-TH')}`;
-    } else {
-      quickVaultsTitle.textContent = 'ล็อกไว้ 3 ซองเงิน (พร้อมจัดสรร)';
-      quickVaultsDesc.textContent = `ภาระจำเป็น ฿${(state.commitments?.total || 0).toLocaleString('th-TH')} · เงินสำรอง · ${goal.title}`;
-    }
-  }
+
 
   // 3. Liquid Split Progress Bar
   const totalIncome = state.incomeTotal || 1;
