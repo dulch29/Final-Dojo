@@ -380,9 +380,9 @@
             <span class="theme-quick-text" id="header-theme-tag">Hybrid</span>
           </button>
 
-          <button class="persona-pill" id="btn-open-persona" aria-label="ดูข้อมูลโปรไฟล์คุณมินท์" title="ดูข้อมูล Persona คุณมินท์">
-            <span class="persona-dot" aria-hidden="true"></span>
-            <span>มินท์ (26)</span>
+          <button class="persona-pill" id="btn-open-persona" aria-label="ดูข้อมูลโปรไฟล์" title="ดูข้อมูลผู้ใช้">
+            <span class="persona-avatar-chip" id="header-user-avatar">MR</span>
+            <span id="header-user-name">มินท์ (26) · Demo</span>
           </button>
 
           <button class="btn-header-reset" id="btn-reset-demo" aria-label="รีเซ็ตข้อมูลเดโม" title="รีเซ็ตเดโม">
@@ -411,11 +411,11 @@
             <span id="safe-status-msg">ล็อก 3 ซองแล้ว · ปลอดภัย 100%</span>
           </div>
 
-          <button class="hero-info-btn" id="btn-info-safe" aria-label="ดูสูตรการคำนวณ Safe-to-Spend">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>
-            </svg>
-            <span>สูตรแยกเงิน</span>
+          <button class="hero-info-btn plan-switch-trigger" id="btn-info-safe" aria-label="เลือกสูตรและแบบแผนแยกเงิน">
+            <span id="home-active-plan-badge" class="plan-pill-tag">
+              <span class="plan-pill-icon">🛡️</span> <span>ฟรีแลนซ์ ปลอดภัย</span>
+            </span>
+            <span class="plan-change-hint">เปลี่ยนแผน →</span>
           </button>
         </div>
 
@@ -686,13 +686,16 @@
       </div>
 
       <!-- User Profile Link Capsule (Tap to view full profile & persona) -->
-      <div class="settings-profile-capsule" id="btn-settings-open-profile" title="เปิดดูโปรไฟล์และบริบทคุณมินท์">
-        <div class="capsule-avatar-mini">MR</div>
+      <div class="settings-profile-capsule" id="btn-settings-open-profile" title="เปิดดูโปรไฟล์และตั้งค่าภาระจำเป็น">
+        <div class="capsule-avatar-mini" id="settings-user-avatar">MR</div>
         <div class="capsule-info">
-          <div class="capsule-name">มินท์ รัตนสุวรรณ (26) · หาดใหญ่</div>
-          <div class="capsule-meta">Freelance Brand & UI Designer · ยืนยัน NDID แล้ว</div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span class="capsule-name" id="settings-user-name">มินท์ รัตนสุวรรณ (26)</span>
+            <span class="status-tag-active" id="settings-user-tag" style="font-size: 0.68rem; padding: 2px 7px;">Demo</span>
+          </div>
+          <div class="capsule-meta" id="settings-user-role">Freelance Brand & UI Designer · mint.design@email.com</div>
         </div>
-        <div class="capsule-action">โปรไฟล์ →</div>
+        <div class="capsule-action">โปรไฟล์ / ภาระจำเป็น →</div>
       </div>
 
       <!-- 1. UI Style Gallery (Testing Multiple UI Styles) -->
@@ -750,11 +753,11 @@
         <div class="block-header-row">
           <div class="block-title-group">
             <span class="block-icon">⚙️</span>
-            <span class="block-title">สูตรแยกเงินเมื่อเงินเข้า (Smart Split Rules)</span>
+            <span class="block-title">แบบแผนการแยกเงิน (Active Plan)</span>
           </div>
-          <span class="status-tag-active">อัตโนมัติ</span>
+          <span class="status-tag-active" id="settings-active-plan-name">🛡️ แผนฟรีแลนซ์ ปลอดภัยสูง</span>
         </div>
-        <p class="block-desc">เมื่อเงินโอนเข้าบัญชี ระบบจะทำการแยกเข้า 3 ซองเงินอัตโนมัติทันที</p>
+        <p class="block-desc" id="settings-active-plan-desc">ล็อกภาระจำเป็น 100% · กันสำรองงานชะลอ 12.5% · ออมฉุกเฉิน 8.3%</p>
         
         <div class="split-rule-items">
           <div class="split-rule-row">
@@ -762,10 +765,10 @@
               <span class="rule-bullet essentials"></span>
               <div>
                 <div class="rule-label">ค่าใช้จ่ายจำเป็นคงที่ (Fixed Essentials)</div>
-                <div class="rule-sub">ค่าห้อง 4k · เน็ต 500 · ส่งที่บ้าน 2k</div>
+                <div class="rule-sub">ค่าห้อง · เน็ต · ส่งที่บ้าน (หักครอบคลุม 100%)</div>
               </div>
             </div>
-            <div class="rule-value">฿6,500 <span class="rule-unit">/เดือน</span></div>
+            <div class="rule-value" id="settings-essentials-rule-val">฿6,500 <span class="rule-unit">/เดือน</span></div>
           </div>
 
           <div class="split-rule-row">
@@ -773,10 +776,10 @@
               <span class="rule-bullet buffer"></span>
               <div>
                 <div class="rule-label">เงินกันสะดุดรายได้ (Income Buffer)</div>
-                <div class="rule-sub">สำรองฉุกเฉินยามงานดีเลย์หรือเว้นช่วง</div>
+                <div class="rule-sub">สำรองฉุกเฉินยามงานดีเลย์หรือเว้นช่วงว่าง</div>
               </div>
             </div>
-            <div class="rule-value">12.5% <span class="rule-unit">ของยอด</span></div>
+            <div class="rule-value" id="settings-buffer-rule-val">12.5% <span class="rule-unit">ของยอด</span></div>
           </div>
 
           <div class="split-rule-row">
@@ -784,10 +787,10 @@
               <span class="rule-bullet savings"></span>
               <div>
                 <div class="rule-label">เงินออมเป้าหมาย (Savings Goal)</div>
-                <div class="rule-sub">กองทุน MacBook Pro M3 Max</div>
+                <div class="rule-sub">สะสมเงินก้อนเพื่อเป้าหมายชีวิตและอนาคต</div>
               </div>
             </div>
-            <div class="rule-value">8.3% <span class="rule-unit">ของยอด</span></div>
+            <div class="rule-value" id="settings-savings-rule-val">8.3% <span class="rule-unit">ของยอด</span></div>
           </div>
 
           <div class="split-rule-row highlight">
@@ -795,16 +798,16 @@
               <span class="rule-bullet safe"></span>
               <div>
                 <div class="rule-label">Safe-to-Spend (เงินกินใช้สบายใจ)</div>
-                <div class="rule-sub">ปลอดความกังวล ใช้ได้ 100% เต็มที่</div>
+                <div class="rule-sub">ปลอดความกังวล ใช้ได้ 100% เต็มที่ ไม่กระทบค่าห้อง</div>
               </div>
             </div>
             <div class="rule-value safe-text">ยอดคงเหลือทั้งหมด</div>
           </div>
         </div>
 
-        <button class="btn-rule-edit" id="btn-edit-rules">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-          <span>ปรับแต่งสัดส่วนสูตรการแยกเงิน</span>
+        <button class="btn-rule-edit" id="btn-edit-rules" type="button">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          <span>เลือก / เปลี่ยนแบบแผนการแยกเงิน (Select Plan)</span>
         </button>
       </div>
 
@@ -1015,52 +1018,53 @@
     </div>
   </div>
 
-  <!-- Persona Context Modal for Judges -->
+  <!-- Persona Context & User Profile Modal -->
   <div class="sheet-backdrop" id="persona-modal-backdrop">
-    <div class="glass-bottom-drawer" style="max-height: 85vh; overflow-y: auto;" role="dialog" aria-modal="true">
+    <div class="glass-bottom-drawer" style="max-height: 88vh; overflow-y: auto;" role="dialog" aria-modal="true">
       <div class="drawer-drag-pill"></div>
       
       <div class="drawer-title-row">
-        <h3 class="drawer-h3">โปรไฟล์ผู้ใช้ & ข้อมูล Persona</h3>
+        <h3 class="drawer-h3">โปรไฟล์ผู้ใช้ & ภาระจำเป็นคงที่</h3>
         <button class="drawer-close" id="btn-close-persona-drawer" aria-label="ปิด">✕</button>
       </div>
 
       <!-- Full Profile Hero Inside Modal -->
-      <div class="profile-hero-card" style="margin-bottom: 2px;">
+      <div class="profile-hero-card" style="margin-bottom: 8px;">
         <div class="profile-avatar-wrap">
-          <div class="profile-avatar">MR</div>
-          <div class="avatar-status-dot" title="สถานะ: พร้อมรับงาน"></div>
+          <div class="profile-avatar" id="modal-user-avatar">MR</div>
+          <div class="avatar-status-dot" title="สถานะ: ออนไลน์"></div>
           <button class="avatar-edit-btn" id="btn-edit-avatar" title="เปลี่ยนรูปโปรไฟล์">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
           </button>
         </div>
         <div class="profile-hero-info">
           <div class="profile-name-row">
-            <h3 class="profile-user-name">มินท์ รัตนสุวรรณ</h3>
-            <span class="badge-kyc-verified" title="ยืนยันตัวตนระดับ NDID เรียบร้อยแล้ว">
+            <h3 class="profile-user-name" id="modal-user-name">มินท์ รัตนสุวรรณ</h3>
+            <span class="badge-kyc-verified" id="modal-user-badge">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>ยืนยัน NDID แล้ว</span>
+              <span>ยืนยันข้อมูลแล้ว</span>
             </span>
           </div>
-          <div class="profile-user-role">Freelance Brand & UI Designer · หาดใหญ่</div>
+          <div class="profile-user-role" id="modal-user-role">Freelance Brand & UI Designer · หาดใหญ่</div>
           <div class="profile-contact-meta">
-            <span>mint.design@email.com</span>
+            <span id="modal-user-email">mint.design@email.com</span>
             <span class="meta-separator">•</span>
-            <span>พร้อมเพย์ 081-923-8921</span>
+            <span>PaySplit Secure Active</span>
           </div>
         </div>
       </div>
 
-      <div style="font-size: 0.85rem; color: var(--text-mid); line-height: 1.6; display: flex; flex-direction: column; gap: 10px;">
+      <!-- 1. Persona Backstory (Shown ONLY for Demo Mint) -->
+      <div id="demo-persona-story-box" style="display: flex; flex-direction: column; gap: 10px; font-size: 0.84rem; line-height: 1.6;">
         <div style="background: var(--bg-sunken); border-radius: var(--radius-md); padding: 12px 14px; border: var(--neu-border-subtle);">
-          <strong style="color: var(--text-pure); display: block; margin-bottom: 4px;">🎯 เบื้องหลังโจทย์: คุณมินท์ (26 ปี)</strong>
+          <strong style="color: var(--text-pure); display: block; margin-bottom: 4px;">🎯 เบื้องหลังโจทย์: คุณมินท์ (26 ปี) · Demo</strong>
           <span>ฟรีแลนซ์ออกแบบแบรนด์ รายได้ผันผวน 8,000–25,000 ฿/เดือน เมื่อเงินเข้า บัญชีธนาคารแสดงเพียงยอดรวมก้อนเดียว ทำให้เกิดความกลัวและวิตกกังวล ไม่กล้าใช้จ่ายเพราะกลัวไม่มีเงินจ่ายค่าห้องสิ้นเดือน</span>
         </div>
 
         <div style="background: var(--pastel-essentials-bg); border-radius: var(--radius-md); padding: 12px 14px; border: 1px solid var(--pastel-essentials-border);">
-          <strong style="color: var(--pastel-essentials-text); display: block; margin-bottom: 4px;">🔒 ภาระจำเป็นคงที่ที่ต้องล็อกทันที (฿6,500/เดือน):</strong>
+          <strong style="color: var(--pastel-essentials-text); display: block; margin-bottom: 4px;">🔒 ภาระจำเป็นคงที่ที่ระบบล็อกทันที (฿6,500/เดือน):</strong>
           <div style="display: flex; flex-direction: column; gap: 4px; font-size: 0.8rem; color: var(--text-high);">
-            <div style="display: flex; justify-content: space-between;"><span>• ค่าเช่าห้องพัก (โอนทุกวันที่ 1)</span><strong>4,000 ฿</strong></div>
+            <div style="display: flex; justify-content: space-between;"><span>• ค่าเช่าห้องพัก (โอนทุกสิ้นเดือน)</span><strong>4,000 ฿</strong></div>
             <div style="display: flex; justify-content: space-between;"><span>• อินเทอร์เน็ตไฟเบอร์ทำงาน</span><strong>500 ฿</strong></div>
             <div style="display: flex; justify-content: space-between;"><span>• โอนให้แม่ที่บ้าน</span><strong>2,000 ฿</strong></div>
           </div>
@@ -1072,8 +1076,161 @@
         </div>
       </div>
 
-      <button class="btn-highlight-receive" id="btn-close-persona-confirm" style="width: 100%; height: 50px; margin-top: 6px; font-size: 0.96rem;">
-        <span>เข้าใจภาพรวมแล้ว กลับสู่แอป</span>
+      <!-- 2. Real User Editable Commitments Panel (Shown for Real Authenticated Users) -->
+      <div id="user-commitments-edit-box" style="display: none;">
+        <div style="background: var(--bg-sunken); border-radius: var(--radius-md); padding: 14px; border: var(--neu-border-subtle); margin-bottom: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <strong style="color: var(--text-pure); font-size: 0.9rem;">🔒 ตั้งค่าภาระจำเป็นคงที่ของคุณ</strong>
+            <span id="edit-commit-total-display" style="font-weight: 700; color: var(--highlight-main); font-size: 0.95rem;">฿6,500/เดือน</span>
+          </div>
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.4;">
+            เงินก้อนนี้จะถูกล็อกเก็บไว้ใน "ซองค่าใช้จ่ายจำเป็น" ทันทีที่เงินเข้า เพื่อรับประกันว่าคุณจะมีเงินจ่ายเสมอ 100%
+          </p>
+
+          <form id="form-edit-commitments" style="display: flex; flex-direction: column; gap: 10px;">
+            <div>
+              <label for="edit-commit-rent" style="font-size: 0.78rem; font-weight: 600; color: var(--text-mid); display: block; margin-bottom: 4px;">
+                🏠 ค่าห้องพัก / ผ่อนบ้าน (฿/เดือน)
+              </label>
+              <input type="number" id="edit-commit-rent" class="form-input" min="0" step="100" value="4000" required inputmode="numeric">
+            </div>
+
+            <div>
+              <label for="edit-commit-net" style="font-size: 0.78rem; font-weight: 600; color: var(--text-mid); display: block; margin-bottom: 4px;">
+                📶 ค่าอินเทอร์เน็ต / ค่าน้ำไฟ / เครื่องมือทำงาน (฿/เดือน)
+              </label>
+              <input type="number" id="edit-commit-net" class="form-input" min="0" step="50" value="500" required inputmode="numeric">
+            </div>
+
+            <div>
+              <label for="edit-commit-home" style="font-size: 0.78rem; font-weight: 600; color: var(--text-mid); display: block; margin-bottom: 4px;">
+                👵 ส่งให้ครอบครัว / ค่าใช้จ่ายคงที่อื่น (฿/เดือน)
+              </label>
+              <input type="number" id="edit-commit-home" class="form-input" min="0" step="100" value="2000" required inputmode="numeric">
+            </div>
+
+            <button type="submit" class="btn-highlight-receive" id="btn-save-commitments" style="width: 100%; height: 46px; margin-top: 4px; font-size: 0.9rem;">
+              <span>💾 บันทึกภาระจำเป็น</span>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <button class="btn-highlight-receive" id="btn-close-persona-confirm" style="width: 100%; height: 48px; margin-top: 10px; font-size: 0.92rem; background: var(--bg-card); color: var(--text-high); border: var(--neu-border-subtle); box-shadow: var(--neu-chip);">
+        <span>ปิดหน้าต่างนี้</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       Allocation Plans Selection Drawer Modal (ไหนหน้าที่ให้เลือกแบบแผน)
+       ====================================================================== -->
+  <div class="sheet-backdrop" id="plans-modal-backdrop">
+    <div class="glass-bottom-drawer" style="max-height: 88vh; overflow-y: auto;" role="dialog" aria-modal="true">
+      <div class="drawer-drag-pill"></div>
+      
+      <div class="drawer-title-row">
+        <div>
+          <h3 class="drawer-h3">เลือกแบบแผนการแยกเงิน</h3>
+          <p class="drawer-sub-hint">เลือกว่าต้องการให้ระบบจัดสรรเงินอัตโนมัติแบบใดเมื่อเงินเข้า</p>
+        </div>
+        <button class="drawer-close" id="btn-close-plans-drawer" aria-label="ปิด">✕</button>
+      </div>
+
+      <div class="plan-options-list">
+        <!-- Plan 1: Freelance Safety (Recommended) -->
+        <div class="plan-option-card active" data-plan-id="freelance_safety">
+          <div class="plan-card-header">
+            <div class="plan-title-wrap">
+              <span class="plan-emoji">🛡️</span>
+              <div>
+                <div class="plan-name">แผนฟรีแลนซ์ ปลอดภัยสูง <span class="plan-badge rec">แนะนำ</span></div>
+                <div class="plan-desc">ล็อกภาระจำเป็น 100% ป้องกันช็อต · เหมาะสำหรับคนรายได้ไม่แน่นอน</div>
+              </div>
+            </div>
+            <div class="plan-radio-dot active"></div>
+          </div>
+          <div class="plan-ratios-summary">
+            <span class="ratio-pill essentials">🔒 ภาระจำเป็น 100%</span>
+            <span class="ratio-pill buffer">🛡️ สำรองงานดีเลย์ 12.5%</span>
+            <span class="ratio-pill savings">💎 เงินออม 8.3%</span>
+            <span class="ratio-pill safe">🎉 Safe-to-Spend ส่วนที่เหลือ</span>
+          </div>
+        </div>
+
+        <!-- Plan 2: Classic 50/30/20 -->
+        <div class="plan-option-card" data-plan-id="classic_50_30_20">
+          <div class="plan-card-header">
+            <div class="plan-title-wrap">
+              <span class="plan-emoji">⚖️</span>
+              <div>
+                <div class="plan-name">แผนสมดุลชีวิต 50/30/20 <span class="plan-badge classic">คลาสสิก</span></div>
+                <div class="plan-desc">สูตรการเงินระดับสากล แบ่ง 3 กองชัดเจน · เหมาะสำหรับรายได้สม่ำเสมอ</div>
+              </div>
+            </div>
+            <div class="plan-radio-dot"></div>
+          </div>
+          <div class="plan-ratios-summary">
+            <span class="ratio-pill essentials">🔒 จำเป็น 50%</span>
+            <span class="ratio-pill safe">🎉 กินใช้ส่วนตัว 30%</span>
+            <span class="ratio-pill buffer">🛡️ สำรอง 10%</span>
+            <span class="ratio-pill savings">💎 ออม 10%</span>
+          </div>
+        </div>
+
+        <!-- Plan 3: Aggressive Wealth -->
+        <div class="plan-option-card" data-plan-id="aggressive_wealth">
+          <div class="plan-card-header">
+            <div class="plan-title-wrap">
+              <span class="plan-emoji">🚀</span>
+              <div>
+                <div class="plan-name">แผนเร่งสร้างตัว <span class="plan-badge aggressive">ออมหนัก</span></div>
+                <div class="plan-desc">เน้นสะสมเงินก้อนโตและพอร์ตลงทุน · ออมเข้มข้น 25%</div>
+              </div>
+            </div>
+            <div class="plan-radio-dot"></div>
+          </div>
+          <div class="plan-ratios-summary">
+            <span class="ratio-pill essentials">🔒 ภาระจำเป็นคงที่</span>
+            <span class="ratio-pill savings">💎 ออม/ลงทุน 25%</span>
+            <span class="ratio-pill buffer">🛡️ สำรอง 10%</span>
+            <span class="ratio-pill safe">🎉 กินใช้ส่วนที่เหลือ</span>
+          </div>
+        </div>
+
+        <!-- Plan 4: Custom Configuration -->
+        <div class="plan-option-card custom-option" data-plan-id="custom">
+          <div class="plan-card-header">
+            <div class="plan-title-wrap">
+              <span class="plan-emoji">⚙️</span>
+              <div>
+                <div class="plan-name">แผนกำหนดสัดส่วนเอง <span class="plan-badge custom">Custom</span></div>
+                <div class="plan-desc">ปรับเปอร์เซ็นต์เงินสำรองและเงินออมตามสไตล์ชีวิตคุณ</div>
+              </div>
+            </div>
+            <div class="plan-radio-dot"></div>
+          </div>
+          <div class="custom-sliders-box" id="custom-sliders-box" style="margin-top: 10px;">
+            <div class="custom-slider-row">
+              <div class="slider-label-row">
+                <span>🛡️ เงินสำรองสะดุด (Buffer):</span>
+                <strong id="custom-val-buffer">12%</strong>
+              </div>
+              <input type="range" id="custom-slider-buffer" min="5" max="25" step="1" value="12" class="custom-range-input">
+            </div>
+            <div class="custom-slider-row" style="margin-top: 8px;">
+              <div class="slider-label-row">
+                <span>💎 เงินออมเป้าหมาย (Savings):</span>
+                <strong id="custom-val-savings">10%</strong>
+              </div>
+              <input type="range" id="custom-slider-savings" min="5" max="30" step="1" value="10" class="custom-range-input">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-highlight-receive" id="btn-confirm-plan-choice" style="width: 100%; height: 50px; margin-top: 14px; font-size: 0.98rem;">
+        <span>ใช้งานแบบแผนนี้ทันที</span>
       </button>
     </div>
   </div>

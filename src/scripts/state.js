@@ -3,6 +3,55 @@
  * Tailored for Freelance Persona: Mint (26, Graphic Designer, Hat Yai)
  */
 
+export const ALLOCATION_PLANS = {
+  freelance_safety: {
+    id: 'freelance_safety',
+    name: 'แผนฟรีแลนซ์ ปลอดภัยสูง',
+    shortName: 'ฟรีแลนซ์ ปลอดภัย',
+    emoji: '🛡️',
+    badge: 'แนะนำสำหรับฟรีแลนซ์',
+    description: 'ล็อกภาระจำเป็น 100% · กันสำรองงานชะลอ 12.5% · ออมฉุกเฉิน 8.3%',
+    bufferPercent: 0.125,
+    savingsPercent: 0.0833,
+    type: 'fixed_then_percent'
+  },
+  classic_50_30_20: {
+    id: 'classic_50_30_20',
+    name: 'แผนสมดุลชีวิต 50/30/20',
+    shortName: 'สมดุล 50/30/20',
+    emoji: '⚖️',
+    badge: 'คลาสสิก ยอดนิยม',
+    description: 'จำเป็น 50% · กินใช้สบายใจ 30% · ออมและสำรอง 20%',
+    bufferPercent: 0.10,
+    savingsPercent: 0.10,
+    essentialsPercent: 0.50,
+    safeSpendPercent: 0.30,
+    type: 'percentage'
+  },
+  aggressive_wealth: {
+    id: 'aggressive_wealth',
+    name: 'แผนเร่งสร้างตัว (ออมหนัก)',
+    shortName: 'เร่งสร้างตัว',
+    emoji: '🚀',
+    badge: 'เน้นเก็บเงินก้อน',
+    description: 'ล็อกภาระจำเป็นคงที่ · ออมลงทุนเข้มข้น 25% · สำรองสภาพคล่อง 10%',
+    bufferPercent: 0.10,
+    savingsPercent: 0.25,
+    type: 'fixed_then_percent'
+  },
+  custom: {
+    id: 'custom',
+    name: 'แผนกำหนดสัดส่วนเอง',
+    shortName: 'กำหนดเอง',
+    emoji: '⚙️',
+    badge: 'ปรับแต่งอิสระ',
+    description: 'กำหนดเปอร์เซ็นต์เงินสำรองและเงินออมตามสไตล์คุณ',
+    bufferPercent: 0.12,
+    savingsPercent: 0.10,
+    type: 'fixed_then_percent'
+  }
+};
+
 export const INITIAL_STATE = {
   // Total Income received in this cycle
   incomeTotal: 0,
@@ -21,7 +70,14 @@ export const INITIAL_STATE = {
     safeSpend: 0
   },
 
-  // Fixed Commitments for Mint
+  // Active Allocation Strategy
+  activePlan: 'freelance_safety',
+  customPlanRates: {
+    bufferPercent: 0.12,
+    savingsPercent: 0.10
+  },
+
+  // Fixed Commitments
   commitments: {
     rent: 4000,
     internet: 500,
@@ -57,44 +113,52 @@ export function getState() {
 }
 
 /**
- * Calculate Split based on Mint's financial algorithm
+ * Calculate Split based on active allocation plan
  * @param {number} income 
+ * @param {string} planId
+ * @param {object} customRates
  */
-export function calculateSplit(income) {
-  const commitmentsTarget = state.commitments.total; // 6,500฿
+export function calculateSplit(income, planId = state.activePlan, customRates = state.customPlanRates) {
+  const plan = ALLOCATION_PLANS[planId] || ALLOCATION_PLANS.freelance_safety;
+  const commitmentsTarget = state.commitments.total || 6500;
   
   let essentials = 0;
   let buffer = 0;
   let savings = 0;
   let safeSpend = 0;
 
-  if (income <= commitmentsTarget) {
-    // Edge case: income smaller than fixed commitments
-    essentials = income;
-    buffer = 0;
-    savings = 0;
-    safeSpend = 0;
+  if (income <= 0) {
+    return { income: 0, essentials: 0, buffer: 0, savings: 0, safeSpend: 0, planId };
+  }
+
+  if (plan.id === 'classic_50_30_20') {
+    // 50/30/20 standard percentage model
+    essentials = Math.round(income * 0.50);
+    safeSpend = Math.round(income * 0.30);
+    buffer = Math.round(income * 0.10);
+    savings = income - essentials - safeSpend - buffer; // Remaining 10%
   } else {
-    // Normal / Ideal allocation for Mint:
-    // Fixed commitments covered first: 6,500฿
-    essentials = commitmentsTarget;
+    // Fixed commitments + percentage buffer/savings + remainder safe to spend
+    const bufRate = plan.id === 'custom' ? (customRates.bufferPercent || 0.12) : plan.bufferPercent;
+    const savRate = plan.id === 'custom' ? (customRates.savingsPercent || 0.10) : plan.savingsPercent;
 
-    // Remaining pool:
-    const remainingAfterEssentials = income - essentials;
-
-    // Buffer: ~12.5% of income (or ~27% of remaining)
-    buffer = Math.round(income * 0.125);
-
-    // Savings: ~8.33% of income (e.g. 1,000 on 12k)
-    savings = Math.round(income * 0.0833);
-
-    // Safe to spend: Everything else left over for guilt-free living!
-    safeSpend = income - essentials - buffer - savings;
-
-    // Safety checks
-    if (safeSpend < 0) {
+    if (income <= commitmentsTarget) {
+      essentials = income;
+      buffer = 0;
+      savings = 0;
       safeSpend = 0;
-      buffer = Math.max(0, remainingAfterEssentials - savings);
+    } else {
+      essentials = commitmentsTarget;
+      buffer = Math.round(income * bufRate);
+      savings = Math.round(income * savRate);
+      safeSpend = income - essentials - buffer - savings;
+
+      if (safeSpend < 0) {
+        safeSpend = 0;
+        const remaining = income - essentials;
+        savings = Math.min(savings, remaining);
+        buffer = Math.max(0, remaining - savings);
+      }
     }
   }
 
@@ -103,7 +167,8 @@ export function calculateSplit(income) {
     essentials,
     buffer,
     savings,
-    safeSpend
+    safeSpend,
+    planId: plan.id
   };
 }
 
@@ -173,14 +238,71 @@ export function logExpense(name, amount, category = 'safe', emoji = '💸') {
 }
 
 /**
+ * Set and Apply Allocation Plan
+ * @param {string} planId 
+ * @param {object} customRates 
+ */
+export function setAllocationPlan(planId, customRates = null) {
+  if (ALLOCATION_PLANS[planId]) {
+    state.activePlan = planId;
+  }
+  if (customRates) {
+    state.customPlanRates = {
+      ...state.customPlanRates,
+      ...customRates
+    };
+  }
+
+  // If income was already received, re-split dynamically
+  if (state.incomeTotal > 0) {
+    const split = calculateSplit(state.incomeTotal, state.activePlan, state.customPlanRates);
+    state.essentialsBalance = split.essentials;
+    state.bufferBalance = split.buffer;
+    state.savingsBalance = split.savings;
+    state.safeSpendBalance = split.safeSpend;
+    state.initialAllocations = {
+      essentials: split.essentials,
+      buffer: split.buffer,
+      savings: split.savings,
+      safeSpend: split.safeSpend
+    };
+  }
+
+  notify();
+  return ALLOCATION_PLANS[state.activePlan];
+}
+
+/**
  * Update User Commitments (from profile or registration)
  */
 export function updateUserCommitments(commitments) {
   if (!commitments) return;
+  const rent = typeof commitments.rent === 'number' ? commitments.rent : (state.commitments.rent || 0);
+  const internet = typeof commitments.internet === 'number' ? commitments.internet : (state.commitments.internet || 0);
+  const sentHome = typeof commitments.sentHome === 'number' ? commitments.sentHome : (state.commitments.sentHome || 0);
+  const total = typeof commitments.total === 'number' ? commitments.total : (rent + internet + sentHome);
+
   state.commitments = {
-    ...state.commitments,
-    ...commitments
+    rent,
+    internet,
+    sentHome,
+    total
   };
+
+  if (state.incomeTotal > 0) {
+    const split = calculateSplit(state.incomeTotal, state.activePlan, state.customPlanRates);
+    state.essentialsBalance = split.essentials;
+    state.bufferBalance = split.buffer;
+    state.savingsBalance = split.savings;
+    state.safeSpendBalance = split.safeSpend;
+    state.initialAllocations = {
+      essentials: split.essentials,
+      buffer: split.buffer,
+      savings: split.savings,
+      safeSpend: split.safeSpend
+    };
+  }
+
   notify();
 }
 

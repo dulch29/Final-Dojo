@@ -132,6 +132,22 @@ export async function logoutUser() {
   notifyAuth(null);
 }
 
+// 5. Update Current User Profile / Commitments
+export async function updateCurrentUserProfile(updates) {
+  if (!currentUser) return;
+  currentUser = { ...currentUser, ...updates };
+  localStorage.setItem('paysplit_active_user', JSON.stringify(currentUser));
+  if (!currentUser.isDemo && currentUser.uid) {
+    try {
+      await saveUserData(currentUser.uid, currentUser);
+    } catch (e) {
+      console.warn('Could not sync profile to cloud:', e);
+    }
+  }
+  notifyAuth(currentUser);
+  return currentUser;
+}
+
 // Initialize Auth Listener from Local Storage and Firebase
 export function initAuth() {
   const cached = localStorage.getItem('paysplit_active_user');

@@ -1,5 +1,14 @@
-import { subscribe, getState, receiveIncome, logExpense, updateUserCommitments, resetDemo } from './state.js';
-import { renderApp, showToast } from './ui.js';
+import { 
+  subscribe, 
+  getState, 
+  receiveIncome, 
+  logExpense, 
+  updateUserCommitments, 
+  resetDemo,
+  setAllocationPlan,
+  ALLOCATION_PLANS
+} from './state.js';
+import { renderApp, showToast, syncUserProfileUI } from './ui.js';
 import { fireSplitConfetti, triggerHaptic } from './animations.js';
 import { 
   initAuth, 
@@ -8,7 +17,8 @@ import {
   loginWithEmail, 
   registerWithEmail, 
   logoutUser, 
-  getCurrentUser 
+  getCurrentUser,
+  updateCurrentUserProfile 
 } from './auth.js';
 import { initCinematicMotion, replayCinematic } from './motion-cinematic.js';
 
@@ -73,15 +83,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (viewAppMain) viewAppMain.style.display = 'flex';
     if (bottomNavBar) bottomNavBar.style.display = 'flex';
 
-    if (btnOpenPersona && user) {
-      const nameSpan = btnOpenPersona.querySelector('span:last-child');
-      if (nameSpan) {
-        nameSpan.textContent = user.isDemo ? 'มินท์ (26)' : (user.displayName || 'ผู้ใช้');
+    if (user) {
+      syncUserProfileUI(user);
+      if (user.commitments) {
+        updateUserCommitments(user.commitments);
       }
-    }
-
-    if (user && user.commitments) {
-      updateUserCommitments(user.commitments);
     }
 
     // Seed standard scenario on initial login if not yet seeded
@@ -450,12 +456,12 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnStrategyReset) btnStrategyReset.addEventListener('click', handleReset);
 
   // --------------------------------------------------------------------------
-  // 8. Persona Context Drawer
+  // 8. Persona & User Profile Drawer
   // --------------------------------------------------------------------------
-  const btnInfoSafe = document.getElementById('btn-info-safe');
   const personaBackdrop = document.getElementById('persona-modal-backdrop');
   const btnClosePersona = document.getElementById('btn-close-persona-drawer');
   const btnClosePersonaConfirm = document.getElementById('btn-close-persona-confirm');
+  const formEditCommitments = document.getElementById('form-edit-commitments');
 
   const openPersona = () => {
     if (personaBackdrop) personaBackdrop.classList.add('open');
@@ -466,7 +472,6 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   if (btnOpenPersona) btnOpenPersona.addEventListener('click', openPersona);
-  if (btnInfoSafe) btnInfoSafe.addEventListener('click', openPersona);
   if (btnClosePersona) btnClosePersona.addEventListener('click', closePersona);
   if (btnClosePersonaConfirm) btnClosePersonaConfirm.addEventListener('click', closePersona);
   if (personaBackdrop) {
@@ -474,6 +479,111 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.target === personaBackdrop) closePersona();
     });
   }
+
+  // Handle Edit Commitments Form Submit (Real User)
+  if (formEditCommitments) {
+    formEditCommitments.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const rent = parseInt(document.getElementById('edit-commit-rent')?.value, 10) || 0;
+      const net = parseInt(document.getElementById('edit-commit-net')?.value, 10) || 0;
+      const home = parseInt(document.getElementById('edit-commit-home')?.value, 10) || 0;
+      const total = rent + net + home;
+
+      const commitments = { rent, internet: net, sentHome: home, total };
+      updateUserCommitments(commitments);
+      await updateCurrentUserProfile({ commitments });
+
+      triggerHaptic('medium');
+      fireSplitConfetti();
+      showToast(`บันทึกภาระจำเป็น ฿${total.toLocaleString('th-TH')}/เดือน สำเร็จ!`);
+      closePersona();
+    });
+  }
+
+  // --------------------------------------------------------------------------
+  // 8.1 Allocation Plans Selection Drawer Modal (ไหนหน้าที่ให้เลือกแบบแผน)
+  // --------------------------------------------------------------------------
+  const btnInfoSafe = document.getElementById('btn-info-safe');
+  const plansModalBackdrop = document.getElementById('plans-modal-backdrop');
+  const btnClosePlansDrawer = document.getElementById('btn-close-plans-drawer');
+  const btnConfirmPlanChoice = document.getElementById('btn-confirm-plan-choice');
+  const planOptionCards = document.querySelectorAll('.plan-option-card');
+
+  const customSliderBuffer = document.getElementById('custom-slider-buffer');
+  const customSliderSavings = document.getElementById('custom-slider-savings');
+  const customValBuffer = document.getElementById('custom-val-buffer');
+  const customValSavings = document.getElementById('custom-val-savings');
+
+  const openPlansModal = () => {
+    if (plansModalBackdrop) plansModalBackdrop.classList.add('open');
+  };
+
+  const closePlansModal = () => {
+    if (plansModalBackdrop) plansModalBackdrop.classList.remove('open');
+  };
+
+  if (btnInfoSafe) btnInfoSafe.addEventListener('click', openPlansModal);
+  if (btnClosePlansDrawer) btnClosePlansDrawer.addEventListener('click', closePlansModal);
+  if (btnConfirmPlanChoice) {
+    btnConfirmPlanChoice.addEventListener('click', () => {
+      triggerHaptic('medium');
+      closePlansModal();
+      showToast('เปิดใช้แบบแผนการแยกเงินเรียบร้อยแล้ว');
+    });
+  }
+
+  if (plansModalBackdrop) {
+    plansModalBackdrop.addEventListener('click', (e) => {
+      if (e.target === plansModalBackdrop) closePlansModal();
+    });
+  }
+
+  // Select Plan Cards
+  planOptionCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const planId = card.dataset.planId;
+      if (!planId) return;
+
+      planOptionCards.forEach(c => {
+        c.classList.remove('active');
+        const dot = c.querySelector('.plan-radio-dot');
+        if (dot) dot.classList.remove('active');
+      });
+
+      card.classList.add('active');
+      const activeDot = card.querySelector('.plan-radio-dot');
+      if (activeDot) activeDot.classList.add('active');
+
+      let customRates = null;
+      if (planId === 'custom') {
+        const buf = parseInt(customSliderBuffer?.value || '12', 10) / 100;
+        const sav = parseInt(customSliderSavings?.value || '10', 10) / 100;
+        customRates = { bufferPercent: buf, savingsPercent: sav };
+      }
+
+      const selectedPlan = setAllocationPlan(planId, customRates);
+      triggerHaptic('medium');
+      showToast(`สลับใช้: ${selectedPlan.name}`);
+    });
+  });
+
+  // Custom Sliders
+  const handleCustomSliderChange = () => {
+    if (!customSliderBuffer || !customSliderSavings) return;
+    const bufVal = parseInt(customSliderBuffer.value, 10);
+    const savVal = parseInt(customSliderSavings.value, 10);
+
+    if (customValBuffer) customValBuffer.textContent = `${bufVal}%`;
+    if (customValSavings) customValSavings.textContent = `${savVal}%`;
+
+    setAllocationPlan('custom', {
+      bufferPercent: bufVal / 100,
+      savingsPercent: savVal / 100
+    });
+  };
+
+  if (customSliderBuffer) customSliderBuffer.addEventListener('input', handleCustomSliderChange);
+  if (customSliderSavings) customSliderSavings.addEventListener('input', handleCustomSliderChange);
 
   // --------------------------------------------------------------------------
   // 9. Multi-UI Style Theme System (Neumorphic / Modern Minimal / Glassmorphism)
@@ -550,7 +660,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnEditRules) {
     btnEditRules.addEventListener('click', () => {
       triggerHaptic('light');
-      showToast('ระบบปรับสูตรแบบกำหนดเอง (Custom Rules) พร้อมใช้ใน v1.2');
+      openPlansModal();
     });
   }
 
@@ -609,6 +719,7 @@ document.addEventListener('DOMContentLoaded', () => {
       closeIncomeDrawer();
       closeExpDrawer();
       closePersona();
+      closePlansModal();
       closeAuthModal();
     }
   });
